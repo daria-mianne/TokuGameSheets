@@ -1,6 +1,5 @@
 import { MenuButton } from "./MenuButton";
 
-
 interface ButtonMapping {
     [name: string]: string
 }
@@ -12,26 +11,29 @@ export function MenuBar() {
         'Character Viewer': '/characters/view',
     };
 
-    const adminButtons: ButtonMapping = {
-        'Ability Designer': '/ability-designer',
-    };
-
-    return (
+    return (<>
         <div style={{
             display: 'flex',
             flexDirection: 'row',
-            height: '36px',
-            width: '100%',
             position: 'sticky',
             backgroundColor: '#102064',
         }}>
+            <MenuButton name='Home' destination='/' />
             {
                 // FIXME: Make this check window.currentUser.isAdmin when the login functionality is added https://github.com/daria-mianne/TokuGameSheets/issues/5
-                Object.keys(adminButtons).map((name) => <MenuButton name={name} destination={adminButtons[name]} />)
+                true ? <MenuButton name='Ability Designer' destination='/ability-designer' /> : ''
             }
             {
                 Object.keys(standardButtons).map((name) => <MenuButton name={name} destination={standardButtons[name]} />)
             }
+            <div style={{
+                marginLeft: 'auto',
+                display: 'flex',
+            }}>
+                {
+                    <MenuButton name='Account' destination='/account' />
+                }
+            </div>
         </div>
-    )
+    </>);
 }
