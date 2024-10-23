@@ -1,4 +1,5 @@
 //import './app.css'
+import { AbilityCreator } from './components/creationForms/AbilityCreator'
 import { MenuBar } from './components/menubar/MenuBar'
 
 export function App() {
@@ -11,6 +12,7 @@ export function App() {
             textRendering: 'optimizeLegibility',
         }}>
             <MenuBar />
+            <AbilityCreator />
         </div>
     )
 }
