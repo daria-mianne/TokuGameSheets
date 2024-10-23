@@ -1,5 +1,6 @@
 //import './app.css'
 import { AbilityCreator } from './components/creationForms/AbilityCreator'
+import { CharacterCreator } from './components/creationForms/CharacterCreator'
 import { MenuBar } from './components/menubar/MenuBar'
 
 export function App() {
@@ -13,6 +14,7 @@ export function App() {
         }}>
             <MenuBar />
             <AbilityCreator />
+            <CharacterCreator />
         </div>
     )
 }
