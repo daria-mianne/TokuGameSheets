@@ -93,6 +93,42 @@
         <mxCell id="06jQEKfHEUzu6eFfH_fs-25" value="Character Viewer" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="690" y="219.31" width="120" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-27" target="06jQEKfHEUzu6eFfH_fs-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-27" target="06jQEKfHEUzu6eFfH_fs-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-27" value="Ability Editor" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="120" y="320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-28" target="06jQEKfHEUzu6eFfH_fs-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-28" value="Create New" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="40" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-30" target="06jQEKfHEUzu6eFfH_fs-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-30" value="Open Existing" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="200" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-32" target="06jQEKfHEUzu6eFfH_fs-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-32" value="Basic Info Form" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="120" y="480" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-38" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="06jQEKfHEUzu6eFfH_fs-35" target="06jQEKfHEUzu6eFfH_fs-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-35" value="Ability Text" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="120" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="06jQEKfHEUzu6eFfH_fs-37" value="Ability Triggers" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="120" y="640" width="120" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
