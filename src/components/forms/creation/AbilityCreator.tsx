@@ -9,12 +9,12 @@ export function AbilityCreator() {
                 flexDirection: "column",
             }}>
                 <label>
-                    Ability Name:
-                    <input id="AbilityName" type="text" maxLength={100} />
+                    Ability Name (max length 100 chars):
+                    <input id="AbilityName" type="text" maxLength={100} required={true} />
                 </label>
                 <label>
                     Ability Type:
-                    <select id="AbilityType">
+                    <select id="AbilityType" required={true}>
                         <option value="armory">Armor / Weapon</option>
                         <option value="iconic">Iconic</option>
                         <option value="personal">Personal</option>
@@ -22,8 +22,8 @@ export function AbilityCreator() {
                     </select>
                 </label>
                 <label>
-                    Ability Description:
-                    <textarea id="AbilityDescription" rows={4} cols={50} maxLength={10000} style={{
+                    Ability Description (max length 10,000 chars):
+                    <textarea id="AbilityDescription" rows={4} cols={50} maxLength={10000} required={true} style={{
                         resize: "both",
                     }} />
                 </label>

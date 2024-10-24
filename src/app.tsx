@@ -1,7 +1,9 @@
 //import './app.css'
-import { AbilityCreator } from './components/creationForms/AbilityCreator'
-import { CharacterCreator } from './components/creationForms/CharacterCreator'
-import { MenuBar } from './components/menubar/MenuBar'
+import { AbilityCreator } from './components/forms/creation/AbilityCreator';
+import { AccountCreator } from './components/forms/creation/AccountCreator';
+import { CharacterCreator } from './components/forms/creation/CharacterCreator';
+import { InvitationCreator } from './components/forms/creation/InvitationCreator';
+import { MenuBar } from './components/menubar/MenuBar';
 
 export function App() {
     return (
@@ -13,6 +15,8 @@ export function App() {
             textRendering: 'optimizeLegibility',
         }}>
             <MenuBar />
+            <InvitationCreator />
+            <AccountCreator />
             <AbilityCreator />
             <CharacterCreator />
         </div>
