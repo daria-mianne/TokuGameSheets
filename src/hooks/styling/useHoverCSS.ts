@@ -1,4 +1,4 @@
-import { CSSProperties } from "preact/compat";
+import { CSSProperties } from 'preact/compat';
 import { useState } from 'preact/hooks';
 
 export function useHoverCSS(defaultStyle: CSSProperties = {}, hoverStyle: CSSProperties) {

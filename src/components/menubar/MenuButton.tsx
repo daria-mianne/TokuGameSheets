@@ -2,9 +2,9 @@ import { CSSProperties } from 'preact/compat';
 import { useHoverCSS } from '../../hooks/styling/useHoverCSS';
 
 export interface MenuButtonProps {
-    name: string,
-    destination: string,
-};
+    name: string;
+    destination: string;
+}
 
 export function MenuButton(props: MenuButtonProps) {
     const { name, destination } = props;
@@ -32,7 +32,7 @@ export function MenuButton(props: MenuButtonProps) {
         ...defaultCSS,
         backgroundColor: '#2030AC',
         border: '2px solid #646CFF',
-    }
+    };
 
     const hoverProps = useHoverCSS(defaultCSS, hoverCSS);
 
@@ -40,5 +40,5 @@ export function MenuButton(props: MenuButtonProps) {
         <a {...hoverProps} href={destination}>
             {name}
         </a>
-    )
+    );
 }
