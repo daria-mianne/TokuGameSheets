@@ -41,7 +41,7 @@ export function MenuBar() {
                         display: 'flex',
                     }}
                 >
-                    {<MenuButton name='Account' destination='/account' />}
+                    <MenuButton name='Account' destination='/account' />
                 </div>
             </div>
         </>

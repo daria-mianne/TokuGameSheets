@@ -1,9 +1,14 @@
 //import './app.css'
-import { AbilityCreator } from './components/forms/creation/AbilityCreator';
-import { AccountCreator } from './components/forms/creation/AccountCreator';
-import { CharacterCreator } from './components/forms/creation/CharacterCreator';
-import { InvitationCreator } from './components/forms/creation/InvitationCreator';
+import { lazy, LocationProvider, ErrorBoundary, Router, Route } from 'preact-iso';
+
 import { MenuBar } from './components/menubar/MenuBar';
+import { Home } from './components/pages/Home';
+import { FourOhFour } from './components/pages/404';
+
+const InvitationCreator = lazy(() => import('./components/forms/creation/InvitationCreator'));
+const AccountCreator = lazy(() => import('./components/forms/creation/AccountCreator'));
+const AbilityCreator = lazy(() => import('./components/forms/creation/AbilityCreator'));
+const CharacterCreator = lazy(() => import('./components/forms/creation/CharacterCreator'));
 
 export function App() {
     return (
@@ -17,10 +22,18 @@ export function App() {
             }}
         >
             <MenuBar />
-            <InvitationCreator />
-            <AccountCreator />
-            <AbilityCreator />
-            <CharacterCreator />
+            <LocationProvider>
+                <ErrorBoundary>
+                    <Router>
+                        <Home path='/' />
+                        <Route path='/invitation' component={InvitationCreator} />
+                        <Route path='/ability-designer' component={AbilityCreator} />
+                        <Route path='/account-creator/:token' component={AccountCreator} />
+                        <Route path='/characters/create' component={CharacterCreator} />
+                        <FourOhFour default />
+                    </Router>
+                </ErrorBoundary>
+            </LocationProvider>
         </div>
     );
 }

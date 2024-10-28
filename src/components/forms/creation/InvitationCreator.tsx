@@ -1,4 +1,4 @@
-export function InvitationCreator() {
+export default function InvitationCreator() {
     // FIXME: If the user isn't an admin, render an error page instead (requires https://github.com/daria-mianne/TokuGameSheets/issues/5 to be done)
 
     return (

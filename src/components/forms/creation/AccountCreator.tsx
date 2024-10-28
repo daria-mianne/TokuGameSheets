@@ -1,6 +1,6 @@
 import { Dispatch, StateUpdater, useState } from 'preact/hooks';
 
-export function AccountCreator() {
+export default function AccountCreator() {
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [emailsMatch, setEmailsMatch] = useState(true);
     const checkSame = (setFunc: Dispatch<StateUpdater<boolean>>, a?: string, b?: string) => setFunc(a === b);

@@ -59,7 +59,7 @@ function generateNPCRelationshipInputs(numNPCRelationships: number) {
     return inputs;
 }
 
-export function CharacterCreator() {
+export default function CharacterCreator() {
     const [numPersonalityTraits, setNumPersonalityTraits] = useState(MIN_PERSONALITY_TRAITS);
     const [numNPCRelationships, setNumNPCRelationships] = useState(MIN_NPC_RELATIONSHIPS);
 
