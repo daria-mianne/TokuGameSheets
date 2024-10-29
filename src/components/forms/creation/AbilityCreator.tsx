@@ -37,11 +37,11 @@ export default function AbilityCreator() {
                             }}
                         />
                     </label>
-                    <label>
+                    <div>
                         Ability Mechanics:
                         <br />
                         &nbsp;&nbsp;&nbsp;&nbsp;This section to come in a later update.
-                    </label>
+                    </div>
                     <input type='submit' value='Submit' />
                 </div>
             </form>
