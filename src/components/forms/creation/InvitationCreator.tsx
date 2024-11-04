@@ -15,10 +15,13 @@ export default function InvitationCreator() {
                 >
                     <label>
                         Make user an admin?
+                        <br />
                         <input type='checkbox' id='isAdmin'></input>
                     </label>
+                    <br />
                     <label>
-                        Email to send invitation to (max length 500 chars):&nbsp;
+                        Email to send invitation to (max length 500 chars):
+                        <br />
                         <SimpleTextField id='recipient' maxLength={500} required={true} onSave={() => {} /*FIXME*/} />
                     </label>
                     <input type='submit' value='Submit' />

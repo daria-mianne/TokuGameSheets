@@ -15,11 +15,11 @@ export interface SimpleTextProps extends FieldProps {
     initialText?: string;
     maxLength?: number;
     placeholder?: string;
-    resizable?: 'horizontal' | 'vertical' | 'both';
+    resizable?: 'horizontal' | 'vertical' | 'both' | 'block' | 'inline' | 'none';
     rows?: number;
     validation?: RegExp;
 }
 
 export interface PasswordProps extends FieldProps {
-    flexDirection?: 'horizontal' | 'vertical';
+    flexDirection?: 'row' | 'column';
 }

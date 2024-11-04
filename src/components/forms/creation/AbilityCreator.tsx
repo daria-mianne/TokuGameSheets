@@ -15,10 +15,13 @@ export default function AbilityCreator() {
                 >
                     <label>
                         Ability Name (max length 100 chars):
+                        <br />
                         <input id='AbilityName' type='text' maxLength={100} required={true} />
                     </label>
+                    <br />
                     <label>
                         Ability Type:
+                        <br />
                         <select id='AbilityType' required={true}>
                             <option value='armory'>Armor / Weapon</option>
                             <option value='iconic'>Iconic</option>
@@ -26,8 +29,10 @@ export default function AbilityCreator() {
                             <option value='team'>Team</option>
                         </select>
                     </label>
+                    <br />
                     <label>
                         Ability Description (max length 10,000 chars):
+                        <br />
                         <SimpleTextField
                             id='AbilityDescription'
                             rows={4}
@@ -38,6 +43,7 @@ export default function AbilityCreator() {
                             onSave={() => {} /*FIXME*/}
                         />
                     </label>
+                    <br />
                     <div>
                         Ability Mechanics:
                         <br />

@@ -1,5 +1,6 @@
 import { Dispatch, StateUpdater, useState } from 'preact/hooks';
 import { PasswordField } from '../fields/PasswordField';
+import ErrorBanner from '../ErrorBanner';
 
 export default function AccountCreator() {
     const [emailsMatch, setEmailsMatch] = useState(true);
@@ -21,18 +22,25 @@ export default function AccountCreator() {
                 >
                     <h2>Required Fields</h2>
                     <label>
-                        Username (alphanumeric only, max length 100 chars):&nbsp;
+                        Username (alphanumeric only, max length 100 chars):
+                        <br />
                         <input id='username' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required={true} />
                     </label>
+                    <br />
                     <PasswordField required={true} onSave={() => {} /*FIXME*/} />
+                    <br />
                     <h2>Optional Fields</h2>
                     <label>
-                        Display Name (max length 100 chars):&nbsp;
+                        Display Name (max length 100 chars):
+                        <br />
                         <input id='displayName' type='text' maxLength={100} required={false} />
                     </label>
                     <label>
-                        Recovery email address (max length 500 chars):&nbsp;
-                        {emailsMatch ? '' : 'EMAILS MUST MATCH'}
+                        Recovery email address (max length 500 chars):
+                        <br />
+                        We only use your email address to assist with recovering your account and will never use it for any other purpose.
+                        <br />
+                        {emailsMatch ? '' : <ErrorBanner message='EMAILS MUST MATCH' />}
                         <input
                             id='emailMain'
                             type='text'
@@ -42,8 +50,8 @@ export default function AccountCreator() {
                         />
                     </label>
                     <label>
-                        Confirm recovery email address:&nbsp;
-                        {emailsMatch ? '' : 'EMAILS MUST MATCH'}
+                        Confirm recovery email address:
+                        <br />
                         <input
                             id='emailConfirm'
                             type='text'

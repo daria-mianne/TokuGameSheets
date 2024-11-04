@@ -22,11 +22,11 @@ export function SimpleTextField(props: SimpleTextProps) {
     return (
         <>
             {props.validation ? value.match(props.validation) ? '' : <ErrorBanner message={`Doesn't match pattern: ${props.validation}`} /> : ''}
-            {props.resizable ? (
-                <textarea {...htmlProps}>value</textarea>
+            {props.resizable && props.resizable !== 'none' ? (
+                <textarea {...htmlProps}>{value}</textarea>
             ) : (
-                <input type='text' {...htmlProps}>
-                    value
+                <input type='text' {...htmlProps} onKeyUp={(e) => debouncedSetValue(e.target?.value)}>
+                    {value}
                 </input>
             )}
         </>
