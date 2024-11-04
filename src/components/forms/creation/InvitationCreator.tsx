@@ -1,3 +1,5 @@
+import { SimpleTextField } from '../fields/SimpleTextField';
+
 export default function InvitationCreator() {
     // FIXME: If the user isn't an admin, render an error page instead (requires https://github.com/daria-mianne/TokuGameSheets/issues/5 to be done)
 
@@ -17,7 +19,7 @@ export default function InvitationCreator() {
                     </label>
                     <label>
                         Email to send invitation to (max length 500 chars):&nbsp;
-                        <input type='text' id='recipient' maxLength={500} required={true} />
+                        <SimpleTextField id='recipient' maxLength={500} required={true} onSave={() => {} /*FIXME*/} />
                     </label>
                     <input type='submit' value='Submit' />
                 </div>

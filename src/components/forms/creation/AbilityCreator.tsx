@@ -1,3 +1,5 @@
+import { SimpleTextField } from '../fields/SimpleTextField';
+
 export default function AbilityCreator() {
     // FIXME: if the current user isn't an admin, render an error page instead (requires https://github.com/daria-mianne/TokuGameSheets/issues/5 to be done)
 
@@ -26,15 +28,14 @@ export default function AbilityCreator() {
                     </label>
                     <label>
                         Ability Description (max length 10,000 chars):
-                        <textarea
+                        <SimpleTextField
                             id='AbilityDescription'
                             rows={4}
-                            cols={50}
+                            columns={50}
                             maxLength={10000}
                             required={true}
-                            style={{
-                                resize: 'both',
-                            }}
+                            resizable='both'
+                            onSave={() => {} /*FIXME*/}
                         />
                     </label>
                     <div>

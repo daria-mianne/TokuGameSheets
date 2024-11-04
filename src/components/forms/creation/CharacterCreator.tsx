@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { SimpleTextField } from '../fields/SimpleTextField';
 
 const MIN_PERSONALITY_TRAITS = 1;
 const MIN_NPC_RELATIONSHIPS = 2;
@@ -9,7 +10,7 @@ function generatePersonalityTraitInputs(numPersonalityTraits: number) {
         inputs.push(
             <label>
                 Trait {id + 1}:&nbsp;
-                <input id={`PersonalityTrait${id}`} type='text' maxLength={1000} required={id < MIN_PERSONALITY_TRAITS} />
+                <SimpleTextField id={`PersonalityTrait${id}`} maxLength={1000} required={id < MIN_PERSONALITY_TRAITS} onSave={() => {} /*FIXME*/} />
             </label>
         );
     }
@@ -30,7 +31,7 @@ function generateNPCRelationshipInputs(numNPCRelationships: number) {
                 >
                     <label>
                         NPC name (max length 200 chars):&nbsp;
-                        <input id={`NPCRelName${id}`} type='text' maxLength={200} required={id < MIN_NPC_RELATIONSHIPS} />
+                        <SimpleTextField id={`NPCRelName${id}`} maxLength={200} required={id < MIN_NPC_RELATIONSHIPS} onSave={() => {} /*FIXME*/} />
                     </label>
                     <label>
                         Relationship Type:&nbsp;
@@ -75,15 +76,15 @@ export default function CharacterCreator() {
                 >
                     <label>
                         Character Name (max length 200 chars):
-                        <input id='CharacterName' type='text' maxLength={200} required={true} />
+                        <SimpleTextField id='CharacterName' maxLength={200} required={true} onSave={() => {} /*FIXME*/} />
                     </label>
                     <label>
                         Character Pronouns (max length 100 chars):
-                        <input id='CharacterPronouns' type='text' maxLength={100} required={true} />
+                        <SimpleTextField id='CharacterPronouns' maxLength={100} required={true} onSave={() => {} /*FIXME*/} />
                     </label>
                     <label>
                         Ranger Color (max length 50 chars):
-                        <input id='RangerColor' type='text' maxLength={50} required={true} />
+                        <SimpleTextField id='RangerColor' maxLength={50} required={true} onSave={() => {} /*FIXME*/} />
                     </label>
                     <label>
                         Personality Traits:

@@ -1,7 +1,7 @@
 import { Dispatch, StateUpdater, useState } from 'preact/hooks';
+import { PasswordField } from '../fields/PasswordField';
 
 export default function AccountCreator() {
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [emailsMatch, setEmailsMatch] = useState(true);
     const checkSame = (setFunc: Dispatch<StateUpdater<boolean>>, a?: string, b?: string) => setFunc(a === b);
     const getElementText = (id: string) => document.getElementById(id)?.innerText;
@@ -24,28 +24,7 @@ export default function AccountCreator() {
                         Username (alphanumeric only, max length 100 chars):&nbsp;
                         <input id='username' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required={true} />
                     </label>
-                    <label>
-                        Password (max length 100 chars):&nbsp;
-                        {passwordsMatch ? '' : 'PASSWORDS MUST MATCH'}
-                        <input
-                            id='passwordMain'
-                            type='password'
-                            maxLength={100}
-                            required={true}
-                            onInput={() => checkSame(setPasswordsMatch, getElementText('passwordMain'), getElementText('passwordConfirm'))}
-                        />
-                    </label>
-                    <label>
-                        Confirm Password:&nbsp;
-                        {passwordsMatch ? '' : 'PASSWORDS MUST MATCH'}
-                        <input
-                            id='passwordConfirm'
-                            type='password'
-                            maxLength={100}
-                            required={true}
-                            onInput={() => checkSame(setPasswordsMatch, getElementText('passwordMain'), getElementText('passwordConfirm'))}
-                        />
-                    </label>
+                    <PasswordField required={true} onSave={() => {} /*FIXME*/} />
                     <h2>Optional Fields</h2>
                     <label>
                         Display Name (max length 100 chars):&nbsp;
