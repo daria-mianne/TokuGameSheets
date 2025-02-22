@@ -1,6 +1,4 @@
-//import './app.css'
 import { lazy, LocationProvider, ErrorBoundary, Router, Route } from 'preact-iso';
-
 import { MenuBar } from './components/menubar/MenuBar';
 import { Home } from './components/pages/Home';
 import { FourOhFour } from './components/pages/404';
