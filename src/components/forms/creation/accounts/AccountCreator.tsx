@@ -1,11 +1,31 @@
-import { Dispatch, StateUpdater, useState } from 'preact/hooks';
-import { PasswordField } from '../fields/PasswordField';
+import { useState } from 'preact/hooks';
 import ErrorBanner from '@components/forms/ErrorBanner';
+import { Form, FormControl } from '@shelacek/formica';
+import { AccountCreationData } from './types';
+import { FormControlValidationProps } from '@utils/externalTypes';
+
+const containsLowercase = '(?=.*[a-z])';
+const containsUppercase = '(?=.*[A-Z])';
+const containsNumber = '(?=.*[0-9])';
+const containsSymbol = '(?=.*[@!#$%^&*\\(\\)_+=])';
+const passwordPattern = containsLowercase + containsUppercase + containsNumber + containsSymbol;
 
 export default function AccountCreator() {
-    const [emailsMatch, setEmailsMatch] = useState(true);
-    const checkSame = (setFunc: Dispatch<StateUpdater<boolean>>, a?: string, b?: string) => setFunc(a === b);
-    const getElementText = (id: string) => document.getElementById(id)?.innerText;
+    const [formData, setFormData] = useState<AccountCreationData>({
+        username: '',
+        password: '',
+        confirmPassword: '',
+        displayName: '',
+        recoveryEmail: '',
+        confirmEmail: '',
+    });
+
+    const handleSubmit = (event: Event) => {
+        if ((event.target as HTMLFormElement)?.checkValidity()) {
+            // TODO: API call
+        }
+        console.log('Account Creation Form Data', formData); // TODO: Remove this
+    };
 
     // FIXME: Make form check for valid token in URL query param, associate all submitted data with that token, and invalidate the token if the account creation is successful
     //        (requires https://github.com/daria-mianne/TokuGameSheets/issues/4 and part of https://github.com/daria-mianne/TokuGameSheets/issues/12 to be done)
@@ -13,7 +33,7 @@ export default function AccountCreator() {
     return (
         <>
             <h1>Account Creator</h1>
-            <form id='AccountCreation'>
+            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
                 <div
                     style={{
                         display: 'flex',
@@ -21,48 +41,98 @@ export default function AccountCreator() {
                     }}
                 >
                     <h2>Required Fields</h2>
-                    <label>
-                        Username (alphanumeric only, max length 100 chars):
-                        <br />
-                        <input id='username' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required />
-                    </label>
+                    <FormControl name='username' class='form-input'>
+                        {({ touched, validity }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Username (alphanumeric only, length between 5 and 100 chars){' '}
+                                    <input name='username' type='text' pattern='[a-zA-Z0-9]+' minLength={5} maxLength={100} required />
+                                </label>
+                                {touched && validity.tooShort && <ErrorBanner message='Username must be at least 5 characters long' />}
+                                {touched && validity.patternMismatch && <ErrorBanner message='Username must be alphanumeric only' />}
+                            </>
+                        )}
+                    </FormControl>
                     <br />
-                    <PasswordField required onSave={() => { } /*FIXME*/} />
+                    <h3>Password</h3>
+                    Requirements:
+                    <ul>
+                        <li>Must be 8 to 128 characters</li>
+                        <li>Must contain an uppercase letter</li>
+                        <li>Must contain a lowercase letter</li>
+                        <li>Must contain a number</li>
+                        <li>Must contain at least one symbol from this list: !@#$%^&*()=_+</li>
+                    </ul>
+                    <FormControl name='password' class='form-input'>
+                        {({ touched, validity }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Password <input name='password' type='password' minlength={8} maxlength={128} pattern={passwordPattern} />
+                                </label>
+                                {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
+                                {touched && validity.patternMismatch && <ErrorBanner message='Password does not contain required character types!' />}
+                            </>
+                        )}
+                    </FormControl>
+                    <FormControl name='confirmPassword' class='form-input'>
+                        {({ touched }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Confirm password <input name='confirmPassword' type='password' minLength={8} maxlength={128} />
+                                </label>
+                                <div style={{ color: 'red' }}>
+                                    {touched && formData.confirmPassword !== formData.password && <ErrorBanner message='Passwords do not match!' />}
+                                </div>
+                            </>
+                        )}
+                    </FormControl>
                     <br />
                     <h2>Optional Fields</h2>
-                    <label>
-                        Display Name (max length 100 chars):
-                        <br />
-                        <input id='displayName' type='text' maxLength={100} required={false} />
-                    </label>
-                    <label>
-                        Recovery email address (max length 500 chars):
-                        <br />
-                        We only use your email address to assist with recovering your account and will never use it for any other purpose.
-                        <br />
-                        {emailsMatch ? '' : <ErrorBanner message='EMAILS MUST MATCH' />}
-                        <input
-                            id='emailMain'
-                            type='text'
-                            maxLength={500}
-                            required={false}
-                            onInput={() => checkSame(setEmailsMatch, getElementText('emailMain'), getElementText('emailConfirm'))}
-                        />
-                    </label>
-                    <label>
-                        Confirm recovery email address:
-                        <br />
-                        <input
-                            id='emailConfirm'
-                            type='text'
-                            maxLength={500}
-                            required={getElementText('emailMain') !== ''}
-                            onInput={() => checkSame(setEmailsMatch, getElementText('emailMain'), getElementText('emailConfirm'))}
-                        />
-                    </label>
+                    <FormControl name='displayName' class='form-input'>
+                        {({ touched, validity }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Display Name (alphanumeric only, max length 100 chars){' '}
+                                    <input name='displayName' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required={false} />
+                                </label>
+                                {touched && formData.displayName !== '' && validity.tooShort && (
+                                    <ErrorBanner message='Display name must be at least 5 characters long' />
+                                )}
+                                {touched && formData.displayName !== '' && validity.patternMismatch && (
+                                    <ErrorBanner message='Display name must be alphanumeric only' />
+                                )}
+                            </>
+                        )}
+                    </FormControl>
+                    <h3>Email</h3>
+                    <p>We only use your email address to assist with recovering your account and will never use it for any other purpose.</p>
+                    <FormControl name='recoveryEmail' class='form-input'>
+                        {({ touched, validity }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Recovery email address{' '}
+                                    <input name='recoveryEmail' type='email' pattern='.+@.+\..+' maxLength={500} required={false} />
+                                </label>
+                                {touched && formData.recoveryEmail !== '' && validity.patternMismatch && (
+                                    <ErrorBanner message='Invalid email address!' />
+                                )}
+                            </>
+                        )}
+                    </FormControl>
+                    <FormControl name='confirmEmail' class='form-input'>
+                        {({ touched }: FormControlValidationProps) => (
+                            <>
+                                <label>
+                                    Confirm recovery email address{' '}
+                                    <input name='confirmEmail' type='email' maxLength={500} required={!!formData.recoveryEmail} />
+                                </label>
+                                {touched && formData.confirmEmail !== formData.recoveryEmail && <ErrorBanner message='Emails do not match!' />}
+                            </>
+                        )}
+                    </FormControl>
                     <input type='submit' value='Submit' />
                 </div>
-            </form>
+            </Form>
         </>
     );
 }
