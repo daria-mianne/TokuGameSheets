@@ -10,29 +10,30 @@ export default function AbilityDesigner() {
         name: '',
         type: AbilityType.ARMORY,
         description: '',
-        mechanics: null
+        mechanics: null,
     });
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             // TODO: API call
         }
-    }
+        console.log('Ability Designer Form Data', formData); // TODO: Remove this
+    };
 
     return (
         <>
             <h1>Ability Designer</h1>
-            <Form class="validated" value={formData} onChange={setFormData} onSubmit={handleSubmit}>
+            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
                 <label>
                     Ability Name (max length 100 chars):
                     <br />
-                    <input name='name' type='text' maxLength={100} required={true} />
+                    <input name='name' type='text' maxLength={100} required />
                 </label>
                 <br />
                 <label>
                     Ability Type:
                     <br />
-                    <select id='type' required={true}>
+                    <select id='type' required>
                         <option value={AbilityType.ARMORY}>Armor / Weapon</option>
                         <option value={AbilityType.ICONIC}>Iconic</option>
                         <option value={AbilityType.PERSONAL}>Personal</option>
@@ -43,7 +44,7 @@ export default function AbilityDesigner() {
                 <label>
                     Ability Description (max length 10,000 chars):
                     <br />
-                    <textarea name='description' rows={4} cols={50} maxLength={10000} required={true} style={{resize: 'both'}} />
+                    <textarea name='description' rows={4} cols={50} maxLength={10000} required style={{ resize: 'both' }} />
                 </label>
                 <br />
                 <FormGroup>
@@ -52,7 +53,7 @@ export default function AbilityDesigner() {
                 </FormGroup>
                 <br />
                 <br />
-                <button type="submit">Submit form</button>
+                <button type='submit'>Submit form</button>
             </Form>
         </>
     );

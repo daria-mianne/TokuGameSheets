@@ -24,10 +24,10 @@ export default function AccountCreator() {
                     <label>
                         Username (alphanumeric only, max length 100 chars):
                         <br />
-                        <input id='username' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required={true} />
+                        <input id='username' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required />
                     </label>
                     <br />
-                    <PasswordField required={true} onSave={() => {} /*FIXME*/} />
+                    <PasswordField required onSave={() => { } /*FIXME*/} />
                     <br />
                     <h2>Optional Fields</h2>
                     <label>

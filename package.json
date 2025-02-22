@@ -6,6 +6,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
+        "lint": "eslint --fix .",
+        "pretty": "prettier --write .",
         "preview": "vite preview",
         "prepare": "husky",
         "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"

@@ -12,7 +12,7 @@ export function PasswordField(props: PasswordProps) {
     const [mainValue, setMainValue] = useState('');
     const [confirmValue, setConfirmValue] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [validLength, setValidLength] = useState(false);
     const [meetsReqs, setMeetsReqs] = useState(false);
     const debouncedSetMainValue = debounce(setMainValue, 100);

@@ -6,7 +6,7 @@ import { FourOhFour } from './components/pages/404';
 const InvitationCreator = lazy(() => import('./components/forms/creation/InvitationCreator'));
 const AccountCreator = lazy(() => import('./components/forms/creation/AccountCreator'));
 const AbilityDesigner = lazy(() => import('./components/forms/creation/abilities/AbilityDesigner'));
-const CharacterCreator = lazy(() => import('./components/forms/creation/CharacterCreator'));
+const CharacterCreator = lazy(() => import('./components/forms/creation/characters/CharacterCreator'));
 
 export function App() {
     return (

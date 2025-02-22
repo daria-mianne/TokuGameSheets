@@ -22,7 +22,7 @@ export default function InvitationCreator() {
                     <label>
                         Email to send invitation to (max length 500 chars):
                         <br />
-                        <SimpleTextField id='recipient' maxLength={500} required={true} onSave={() => {} /*FIXME*/} />
+                        <SimpleTextField id='recipient' maxLength={500} required onSave={() => { } /*FIXME*/} />
                     </label>
                     <input type='submit' value='Submit' />
                 </div>
