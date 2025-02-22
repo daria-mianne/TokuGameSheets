@@ -6,6 +6,12 @@ const DEV_ENV = false;
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    build: {
+        manifest: true,
+        rollupOptions: {
+            input: './src/main.tsx',
+        },
+    },
     plugins: [
         preact({
             babel: {
@@ -14,4 +20,9 @@ export default defineConfig({
         }),
         tsconfigPaths(),
     ],
+    server: {
+        cors: {
+            origin: 'https://tokusheets.rec97.space',
+        },
+    },
 });
