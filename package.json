@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@babel/plugin-transform-react-jsx-source": "^7.25.9",
+        "@shelacek/formica": "^2.0.2",
         "preact": "^10.24.1",
         "preact-iso": "^2.8.1"
     },

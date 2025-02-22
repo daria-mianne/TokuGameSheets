@@ -7,7 +7,7 @@ import { FourOhFour } from './components/pages/404';
 
 const InvitationCreator = lazy(() => import('./components/forms/creation/InvitationCreator'));
 const AccountCreator = lazy(() => import('./components/forms/creation/AccountCreator'));
-const AbilityCreator = lazy(() => import('./components/forms/creation/AbilityCreator'));
+const AbilityDesigner = lazy(() => import('./components/forms/creation/abilities/AbilityDesigner'));
 const CharacterCreator = lazy(() => import('./components/forms/creation/CharacterCreator'));
 
 export function App() {
@@ -27,7 +27,7 @@ export function App() {
                     <Router>
                         <Home path='/' />
                         <Route path='/invitation' component={InvitationCreator} />
-                        <Route path='/ability-designer' component={AbilityCreator} />
+                        <Route path='/ability-designer' component={AbilityDesigner} />
                         <Route path='/account-creator/:token' component={AccountCreator} />
                         <Route path='/characters/create' component={CharacterCreator} />
                         <FourOhFour default />
