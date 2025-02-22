@@ -5,7 +5,7 @@ import { InvitationData } from './types';
 export default function InvitationCreator() {
     const [formData, setFormData] = useState<InvitationData>({
         isAdmin: false,
-        recipient: ''
+        recipient: '',
     });
     // FIXME: If the current user isn't an admin, render an error page instead (requires https://github.com/daria-mianne/TokuGameSheets/issues/5 to be done)
 
@@ -19,7 +19,7 @@ export default function InvitationCreator() {
     return (
         <>
             <h1>Invitation Creator</h1>
-            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit} >
+            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
                 <div
                     style={{
                         display: 'flex',

@@ -11,15 +11,19 @@ export default function CharacterCreator() {
         name: '',
         pronouns: '',
         color: RangerColor.UNKNOWN,
-        personalityTraits: [{
-            trait: ''
-        }],
+        personalityTraits: [
+            {
+                trait: '',
+            },
+        ],
         personalAbilities: [],
-        npcRelationships: [{
-            name: '',
-            valence: RelationshipValence.NEUTRAL,
-            description: ''
-        }],
+        npcRelationships: [
+            {
+                name: '',
+                valence: RelationshipValence.NEUTRAL,
+                description: '',
+            },
+        ],
     });
 
     const handleChange = (value: CharacterDetails) => {
@@ -30,7 +34,7 @@ export default function CharacterCreator() {
             // TODO: Invalidate form
         }
         setFormData(value);
-    }
+    };
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
@@ -42,7 +46,7 @@ export default function CharacterCreator() {
     return (
         <>
             <h1>Character Creator</h1>
-            <Form class='validated' value={formData} onChange={handleChange} onSubmit={handleSubmit} >
+            <Form class='validated' value={formData} onChange={handleChange} onSubmit={handleSubmit}>
                 <h2>Basic Attributes</h2>
                 <label>
                     Character Name (max length 200 chars):
@@ -60,18 +64,19 @@ export default function CharacterCreator() {
                     Ranger Color:
                     <br />
                     <select name='color' required>
-                        {
-                            Object.values(RangerColor)
-                                .map((color) => (<option value={color}>{startCase(color)}</option>))
-                        }
+                        {Object.values(RangerColor).map((color) => (
+                            <option value={color}>{startCase(color)}</option>
+                        ))}
                     </select>
                 </label>
                 <br />
                 <h2>Personality Traits</h2>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
                     <FormArray name='personalityTraits'>
                         <div style={{ flexDirection: 'row' }}>
                             <label>
@@ -79,7 +84,12 @@ export default function CharacterCreator() {
                             </label>
                             <FormAction>
                                 {(actionProps) => {
-                                    if (actionProps?.remove) return <button type='button' onClick={actionProps.remove}>Remove Trait</button>;
+                                    if (actionProps?.remove)
+                                        return (
+                                            <button type='button' onClick={actionProps.remove}>
+                                                Remove Trait
+                                            </button>
+                                        );
                                     return null;
                                 }}
                             </FormAction>
@@ -87,7 +97,12 @@ export default function CharacterCreator() {
                     </FormArray>
                     <FormAction name='personalityTraits' item={{ trait: '' }}>
                         {(actionProps) => {
-                            if (actionProps?.add) return <button type='button' onClick={actionProps.add}>Add another Trait</button>;
+                            if (actionProps?.add)
+                                return (
+                                    <button type='button' onClick={actionProps.add}>
+                                        Add another Trait
+                                    </button>
+                                );
                             return null;
                         }}
                     </FormAction>
@@ -97,30 +112,29 @@ export default function CharacterCreator() {
                 This section to come in a later update.
                 <br />
                 <h2>Notable NPC Relationships</h2>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
                     <FormArray name='npcRelationships'>
                         <label>
-                            NPC name (max length 200 chars) <input type='text'
-                                name='name'
-                                maxLength={200}
-                                required
-                            />
+                            NPC name (max length 200 chars) <input type='text' name='name' maxLength={200} required />
                         </label>
                         <br />
                         <label>
-                            Relationship Type <select name='valence' required>
-                                {
-                                    Object.values(RelationshipValence)
-                                        .map((valence) => (<option value={valence}>{startCase(valence)}</option>))
-                                }
+                            Relationship Type{' '}
+                            <select name='valence' required>
+                                {Object.values(RelationshipValence).map((valence) => (
+                                    <option value={valence}>{startCase(valence)}</option>
+                                ))}
                             </select>
                         </label>
                         <br />
                         <label>
-                            Relationship Description (max length 1,000 chars) <textarea
+                            Relationship Description (max length 1,000 chars){' '}
+                            <textarea
                                 name='description'
                                 rows={1}
                                 maxLength={1000}
@@ -133,18 +147,31 @@ export default function CharacterCreator() {
                         <br />
                         <FormAction>
                             {(actionProps) => {
-                                if (actionProps?.remove) return <button type='button' onClick={actionProps.remove}>Remove Relationship</button>;
+                                if (actionProps?.remove)
+                                    return (
+                                        <button type='button' onClick={actionProps.remove}>
+                                            Remove Relationship
+                                        </button>
+                                    );
                                 return null;
                             }}
                         </FormAction>
                     </FormArray>
-                    <FormAction name='npcRelationships' item={{
-                        name: '',
-                        valence: RelationshipValence.NEUTRAL,
-                        description: '',
-                    }}>
+                    <FormAction
+                        name='npcRelationships'
+                        item={{
+                            name: '',
+                            valence: RelationshipValence.NEUTRAL,
+                            description: '',
+                        }}
+                    >
                         {(actionProps) => {
-                            if (actionProps?.add) return <button type='button' onClick={actionProps.add}>Add another NPC Relationship</button>;
+                            if (actionProps?.add)
+                                return (
+                                    <button type='button' onClick={actionProps.add}>
+                                        Add another NPC Relationship
+                                    </button>
+                                );
                             return null;
                         }}
                     </FormAction>

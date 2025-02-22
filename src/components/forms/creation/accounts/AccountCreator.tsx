@@ -1,6 +1,6 @@
 import { Dispatch, StateUpdater, useState } from 'preact/hooks';
 import { PasswordField } from '../fields/PasswordField';
-import ErrorBanner from '../ErrorBanner';
+import ErrorBanner from '@components/forms/ErrorBanner';
 
 export default function AccountCreator() {
     const [emailsMatch, setEmailsMatch] = useState(true);

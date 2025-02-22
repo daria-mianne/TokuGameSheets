@@ -1,12 +1,12 @@
 import { lazy, LocationProvider, ErrorBoundary, Router, Route } from 'preact-iso';
-import { MenuBar } from './components/menubar/MenuBar';
-import { Home } from './components/pages/Home';
-import { FourOhFour } from './components/pages/404';
+import { MenuBar } from '@components/menubar/MenuBar';
+import { Home } from '@components/pages/Home';
+import { FourOhFour } from '@components/pages/404';
 
-const InvitationCreator = lazy(() => import('./components/forms/creation/accounts/InvitationCreator'));
-const AccountCreator = lazy(() => import('./components/forms/creation/accounts/AccountCreator'));
-const AbilityDesigner = lazy(() => import('./components/forms/creation/abilities/AbilityDesigner'));
-const CharacterCreator = lazy(() => import('./components/forms/creation/characters/CharacterCreator'));
+const InvitationCreator = lazy(() => import('@components/forms/creation/accounts/InvitationCreator'));
+const AccountCreator = lazy(() => import('@components/forms/creation/accounts/AccountCreator'));
+const AbilityDesigner = lazy(() => import('@components/forms/creation/abilities/AbilityDesigner'));
+const CharacterCreator = lazy(() => import('@components/forms/creation/characters/CharacterCreator'));
 
 export function App() {
     return (
