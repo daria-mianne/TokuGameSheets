@@ -1,3 +1,3 @@
-localhost:5000 {
-	respond "Hello from caddy!"
+tokusheets.rec97.space {
+	reverse_proxy /api/* localhost:5000
 }
