@@ -9,7 +9,7 @@ export default defineConfig({
     build: {
         manifest: true,
         rollupOptions: {
-            input: './src/main.tsx',
+            input: './src/frontend/main.tsx',
         },
     },
     plugins: [

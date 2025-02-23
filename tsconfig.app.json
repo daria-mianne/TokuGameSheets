@@ -9,10 +9,10 @@
         "paths": {
             "react": ["node_modules/preact/compat/"],
             "react-dom": ["node_modules/preact/compat/"],
-            "@components/*": ["src/components/*"],
-            "@hooks/*": ["src/hooks/*"],
-            "@models/*": ["src/models/*"],
-            "@utils/*": ["src/utils/*"]
+            "@components/*": ["src/frontend/components/*"],
+            "@hooks/*": ["src/frontend/hooks/*"],
+            "@models/*": ["src/frontend/models/*"],
+            "@utils/*": ["src/frontend/utils/*"]
         },
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -28,5 +28,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src"]
+    "include": ["src/frontend"]
 }

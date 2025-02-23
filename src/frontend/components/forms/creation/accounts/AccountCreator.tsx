@@ -1,8 +1,8 @@
 import { useState } from 'preact/hooks';
-import ErrorBanner from '@components/forms/ErrorBanner';
+import ErrorBanner from 'src/frontend/components/forms/ErrorBanner';
 import { Form, FormControl } from '@shelacek/formica';
 import { AccountCreationData } from './types';
-import { FormControlValidationProps } from '@utils/externalTypes';
+import { FormControlValidationProps } from 'src/frontend/utils/externalTypes';
 
 const containsLowercase = '(?=.*[a-z])';
 const containsUppercase = '(?=.*[A-Z])';
