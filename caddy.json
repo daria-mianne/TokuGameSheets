@@ -1,0 +1,19 @@
+{
+    "apps": {
+        "http": {
+            "servers": {
+                "tokugamesheets": {
+                    "listen": [":5000"],
+                    "routes": [
+                        {
+                            "handle": [{
+                                "handler": "static_response",
+                                "body": "Hello, world, from caddy!"
+                            }]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
