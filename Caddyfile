@@ -1,3 +1,6 @@
-tokusheets.rec97.space {
-	reverse_proxy /api/* localhost:5000
+tokusheets.rec97.space:80 {
+	proxy / 127.0.0.1:5000 {
+		websocket
+		transparent
+	}
 }

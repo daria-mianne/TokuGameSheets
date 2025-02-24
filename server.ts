@@ -14,8 +14,7 @@ app.get('/api/hello', (_, res) => {
 
 // Default handler
 app.get('*', (_, res) => {
-    res.statusCode = 400;
-    res.send();
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const port = process.env.PORT || 5000;
