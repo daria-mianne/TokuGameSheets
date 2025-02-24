@@ -8,7 +8,7 @@ const __dirname = import.meta.dirname;
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // API routes
-app.get('/api/hello', (_, res) => {
+app.get('/api/v0/hello', (_, res) => {
     res.json({ message: 'Hello, world!' });
 });
 

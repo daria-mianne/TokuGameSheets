@@ -1,3 +1,26 @@
+(global) {
+    header {
+        # disable FLoC tracking
+        Permissions-Policy interest-cohort=()
+
+        # enable HSTS
+        Strict-Transport-Security max-age=31536000;
+
+        # keep referrer data off
+        Referrer-Policy no-referrer
+
+        # Prevent appearing in search engines
+        X-Robots-Tag noindex
+    }
+}
+
 tokusheets.rec97.space {
-	reverse_proxy localhost:5000
+    import global
+
+	reverse_proxy localhost:5000 {
+        header_up -CF-Connecting-IP
+        header_up -X-Forwarded-For
+        header_down -etag
+        header_down -alt-svc
+    }
 }
