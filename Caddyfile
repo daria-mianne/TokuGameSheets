@@ -12,6 +12,10 @@
         # Prevent appearing in search engines
         X-Robots-Tag noindex
     }
+
+    servers {
+        protocols h2
+    }
 }
 
 tokusheets.rec97.space {
