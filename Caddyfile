@@ -1,9 +1,3 @@
-{
-    servers {
-        protocols h3
-    }
-}
-
 (global) {
     header {
         # disable FLoC tracking
