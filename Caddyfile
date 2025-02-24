@@ -1,3 +1,9 @@
+{
+    servers {
+        protocols h2
+    }
+}
+
 (global) {
     header {
         # disable FLoC tracking
@@ -12,19 +18,14 @@
         # Prevent appearing in search engines
         X-Robots-Tag noindex
     }
-
-    servers {
-        protocols h2
-    }
 }
 
-tokusheets.rec97.space {
+https://tokusheets.rec97.space {
     import global
 
-	reverse_proxy localhost:5000 {
+    reverse_proxy localhost:5000 {
         header_up -CF-Connecting-IP
         header_up -X-Forwarded-For
-        header_down -etag
         header_down -alt-svc
     }
 }
