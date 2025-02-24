@@ -1,6 +1,6 @@
 {
     servers {
-        protocols h2
+        protocols h3
     }
 }
 
