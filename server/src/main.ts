@@ -13,6 +13,12 @@ app.get('/api/v0/hello', (_, res) => {
     res.status(200).json({ message: 'Hello, world!' });
 });
 
+// Health check
+app.get('/api/healthcheck', (_, res) => {
+    // TODO: actually perform a healthcheck
+    res.status(200).send();
+})
+
 // Default handler
 app.get('*', (_, res) => {
     res.status(400).send();

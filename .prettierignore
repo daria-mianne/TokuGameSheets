@@ -1,0 +1,10 @@
+# ignore artifacts
+*/dist
+*/node_modules
+
+# ignore VCS stuff
+.git
+.jj
+
+# ignore .dockerignore
+.dockerignore

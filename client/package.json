@@ -5,8 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "NODE_ENV='dev' vite",
+        "build": "vite build --emptyOutDir",
         "start": "NODE_ENV='production' vite",
-        "build": "tsc -b && vite build",
         "lint": "eslint --fix .; prettier --write .",
         "preview": "vite preview",
         "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"

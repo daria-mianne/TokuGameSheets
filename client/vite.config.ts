@@ -9,15 +9,19 @@ const DEV_ENV = false;
 export default defineConfig((env) => {
     const envVars = loadEnv(env.mode, './');
 
-    const serverURL = new URL(
-        envVars.VITE_SERVER_URL ?? '<http://localhost:5000>'
+    const serverURL = new URL(process.env.NODE_ENV === 'production'
+        ? envVars.VITE_SERVER_URL
+        : 'http://localhost:5000'
     );
-    const serverAPIPath = envVars.VITE_SERVER_API_PATH ?? '/api/v0';
+    const serverAPIPath = process.env.NODE_ENV === 'production'
+        ? envVars.VITE_SERVER_API_PATH ?? '/api/v0'
+        : ':5000/' + (envVars.VITE_SERVER_API_PATH ?? '/api/v0');
 
     return {
         envDir: './',
         define: {
             __API_PATH__: JSON.stringify(serverAPIPath),
+            __JS_SERVER_URL__: JSON.stringify(serverURL.href),
         },
         build: {
             manifest: true,
@@ -41,7 +45,7 @@ export default defineConfig((env) => {
             port: 5173,
             proxy: {
                 [serverAPIPath]: serverURL.origin,
-            }
+            },
         },
     };
 });
