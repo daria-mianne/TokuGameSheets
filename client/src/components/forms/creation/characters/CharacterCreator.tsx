@@ -71,6 +71,7 @@ export default function CharacterCreator() {
                 </label>
                 <br />
                 <h2>Personality Traits</h2>
+                <p>Max length 1,000 chars each.</p>
                 <div
                     style={{
                         display: 'flex',
@@ -80,7 +81,7 @@ export default function CharacterCreator() {
                     <FormArray name='personalityTraits'>
                         <div style={{ flexDirection: 'row' }}>
                             <label>
-                                Trait <input type='text' name='trait' maxLength={1000} required />
+                                Trait () <input type='text' name='trait' maxLength={1000} required />
                             </label>
                             <FormAction>
                                 {(actionProps) => {

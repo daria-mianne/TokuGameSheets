@@ -110,7 +110,7 @@ export default function AccountCreator() {
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Recovery email address{' '}
+                                    Recovery email address (max length 500 characters){' '}
                                     <input name='recoveryEmail' type='email' pattern='.+@.+\..+' maxLength={500} required={false} />
                                 </label>
                                 {touched && formData.recoveryEmail !== '' && validity.patternMismatch && (

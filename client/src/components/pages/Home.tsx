@@ -1,6 +1,7 @@
+import { apiBaseUrl } from "@hooks/api/constants";
 import { useEffect, useState } from "preact/hooks";
 
-const apiURL = __API_PATH__ + '/hello';
+const helloApiUrl = apiBaseUrl + '/hello';
 
 export function Home() {
     const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,7 @@ export function Home() {
     const helloAPICall = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(apiURL);
+            const response = await fetch(helloApiUrl);
             const data = await response.json();
             setMessage(data.message);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
