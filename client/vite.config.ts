@@ -34,6 +34,7 @@ export default defineConfig((env) => {
             tsconfigPaths(),
         ],
         server: {
+            allowedHosts: ['tokusheets.rec97.space'],
             cors: {
                 origin: 'https://tokusheets.rec97.space',
             },
