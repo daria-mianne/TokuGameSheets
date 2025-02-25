@@ -1,5 +1,5 @@
 import { CSSProperties } from 'preact/compat';
-import { useHoverCSS } from 'src/frontend/hooks/styling/useHoverCSS';
+import { useHoverCSS } from '@hooks/styling/useHoverCSS';
 
 export interface MenuButtonProps {
     name: string;

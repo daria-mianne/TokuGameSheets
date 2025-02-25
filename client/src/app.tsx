@@ -1,12 +1,12 @@
 import { lazy, LocationProvider, ErrorBoundary, Router, Route } from 'preact-iso';
-import { MenuBar } from 'src/frontend/components/menubar/MenuBar';
-import { Home } from 'src/frontend/components/pages/Home';
-import { FourOhFour } from 'src/frontend/components/pages/404';
+import { MenuBar } from '@components/menubar/MenuBar';
+import { Home } from '@components/pages/Home';
+import { FourOhFour } from '@components/pages/404';
 
-const InvitationCreator = lazy(() => import('src/frontend/components/forms/creation/accounts/InvitationCreator'));
-const AccountCreator = lazy(() => import('src/frontend/components/forms/creation/accounts/AccountCreator'));
-const AbilityDesigner = lazy(() => import('src/frontend/components/forms/creation/abilities/AbilityDesigner'));
-const CharacterCreator = lazy(() => import('src/frontend/components/forms/creation/characters/CharacterCreator'));
+const InvitationCreator = lazy(() => import('@components/forms/creation/accounts/InvitationCreator'));
+const AccountCreator = lazy(() => import('@components/forms/creation/accounts/AccountCreator'));
+const AbilityDesigner = lazy(() => import('@components/forms/creation/abilities/AbilityDesigner'));
+const CharacterCreator = lazy(() => import('@components/forms/creation/characters/CharacterCreator'));
 
 export function App() {
     return (
@@ -23,12 +23,12 @@ export function App() {
             <LocationProvider>
                 <ErrorBoundary>
                     <Router>
-                        <Home path='/' />
+                        <Route path='/' component={Home} />
                         <Route path='/invitation' component={InvitationCreator} />
                         <Route path='/ability-designer' component={AbilityDesigner} />
                         <Route path='/account-creator/:token' component={AccountCreator} />
                         <Route path='/characters/create' component={CharacterCreator} />
-                        <FourOhFour default />
+                        <Route default component={FourOhFour} />
                     </Router>
                 </ErrorBoundary>
             </LocationProvider>

@@ -1,0 +1,27 @@
+{
+    "name": "tokugamesheets-server",
+    "private": true,
+    "version": "0.0.0",
+    "main": "main.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "nodemon",
+        "lint": "eslint --fix .; prettier --write .",
+        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"
+    },
+    "keywords": [],
+    "author": "",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2"
+    },
+    "nodemonConfig": {
+        "watch": [
+            "src"
+        ],
+        "exec": "tsc && node ./dist/main.js",
+        "ext": "ts,js,json"
+    }
+}
