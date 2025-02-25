@@ -17,7 +17,7 @@
 https://tokusheets.rec97.space {
     import global
 
-    reverse_proxy localhost:5000 {
+    reverse_proxy localhost:5173 {
         header_up -CF-Connecting-IP
         header_up -X-Forwarded-For
         header_down -alt-svc
