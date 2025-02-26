@@ -8,20 +8,21 @@ const DEV_ENV = false;
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
     const envVars = loadEnv(env.mode, './');
+    const apiPort = 5000;
 
     const serverURL = new URL(process.env.NODE_ENV === 'production'
-        ? envVars.VITE_SERVER_URL
-        : 'http://localhost:5000'
+        ? `${envVars.VITE_SERVER_URL}`
+        : `http://localhost`
     );
-    const serverAPIPath = process.env.NODE_ENV === 'production'
-        ? envVars.VITE_SERVER_API_PATH ?? '/api/v0'
-        : ':5000/' + (envVars.VITE_SERVER_API_PATH ?? '/api/v0');
+    console.log(serverURL);
+    const serverAPIPath = envVars.VITE_SERVER_API_PATH ?? '/api';
 
     return {
         envDir: './',
         define: {
             __API_PATH__: JSON.stringify(serverAPIPath),
-            __JS_SERVER_URL__: JSON.stringify(serverURL.href),
+            __API_PORT__: JSON.stringify(apiPort),
+            __JS_SERVER_URL__: JSON.stringify(serverURL.origin),
         },
         build: {
             manifest: true,
@@ -42,9 +43,17 @@ export default defineConfig((env) => {
             cors: {
                 origin: 'https://tokusheets.rec97.space',
             },
+            host: true,
             port: 5173,
             proxy: {
-                [serverAPIPath]: serverURL.origin,
+                [serverAPIPath]: {
+                    target: {
+                        protocol: 'http:',
+                        host: serverURL.host,
+                        port: apiPort,
+                    },
+                    changeOrigin: true,
+                }
             },
         },
     };
