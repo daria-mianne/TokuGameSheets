@@ -4,19 +4,19 @@ import express from 'express';
 const app = express();
 
 // Register middlewares
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5001' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-app.get('/api/v0/hello', (_, res) => {
+app.get('/api/v0/hello', (req, res) => {
     res.status(200).json({ message: 'Hello, world!' });
 });
 
 // Health check
 app.get('/api/healthcheck', (_, res) => {
     // TODO: actually perform a healthcheck
-    res.status(200).send();
+    res.status(200).json({ message: 'Healthy' });
 })
 
 // Default handler
