@@ -15,7 +15,7 @@ COPY . .
 # EXPOSE 5173
 
 # Run the application.
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
 # TODO: figure out how to get a proper run command that preserves the behavior
 # of making API calls to port 5000 instead of port 5173
 # FROM busybox:latest as runner
