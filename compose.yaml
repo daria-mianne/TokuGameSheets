@@ -15,8 +15,8 @@ services:
     web:
         build:
             context: ./client
-        environment:
-            NODE_ENV: production
+            args:
+                NPM_CMD: ${NPM_CMD:-start}
         ports:
             - 5173:5173
         depends_on:

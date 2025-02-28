@@ -1,5 +1,10 @@
 FROM node:23-alpine
 
+ARG NPM_CMD
+ENV NPM_CMD=${NPM_CMD}
+
+RUN echo $NPM_CMD
+
 WORKDIR /client
 
 COPY package*.json .
@@ -16,7 +21,7 @@ COPY . .
 
 # Run the application.
 ENV FROMDOCKER=true
-CMD ["npm", "run", "start"]
+CMD npm run-script $NPM_CMD
 # TODO: figure out how to get a proper run command that preserves the behavior
 # of making API calls to port 5000 instead of port 5173
 # FROM busybox:latest as runner

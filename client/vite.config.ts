@@ -2,7 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import preact from '@preact/preset-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-const DEV_ENV = true; // todo: dynamic value
+const DEV_ENV = process.env.NODE_ENV === 'dev';
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
