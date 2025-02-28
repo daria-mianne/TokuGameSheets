@@ -1,28 +1,23 @@
 import { defineConfig, loadEnv } from 'vite';
 import preact from '@preact/preset-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { URL } from 'node:url';
 
-const DEV_ENV = false;
+const DEV_ENV = true; // todo: dynamic value
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
     const envVars = loadEnv(env.mode, './');
     const apiPort = 5000;
-
-    const serverURL = new URL(process.env.NODE_ENV === 'production'
-        ? `${envVars.VITE_SERVER_URL}`
-        : `http://localhost`
-    );
-    console.log(serverURL);
-    const serverAPIPath = envVars.VITE_SERVER_API_PATH ?? '/api';
+    const serverAPIPath = envVars.VITE_SERVER_API_PATH;
+    const serverHost = process.env.FROMDOCKER
+        ? envVars.DOCKER_API_HOST ?? 'server'
+        : 'localhost';
 
     return {
         envDir: './',
         define: {
             __API_PATH__: JSON.stringify(serverAPIPath),
             __API_PORT__: JSON.stringify(apiPort),
-            __JS_SERVER_URL__: JSON.stringify(serverURL.origin),
         },
         build: {
             manifest: true,
@@ -47,12 +42,21 @@ export default defineConfig((env) => {
             port: 5173,
             proxy: {
                 [serverAPIPath]: {
-                    target: {
-                        protocol: 'http:',
-                        host: serverURL.host,
-                        port: apiPort,
-                    },
+                    target: `http://${serverHost}:${apiPort}`,
                     changeOrigin: true,
+                    configure: (proxy) => {
+                        if (DEV_ENV) {
+                            proxy.on('error', (err) => {
+                                console.log('PROXY ERROR', err);
+                            });
+                            proxy.on('proxyReq', (proxyReq, req) => {
+                                console.log('Proxying request to target:', req.method, req.url);
+                            });
+                            proxy.on('proxyRes', (proxyRes, req) => {
+                                console.log('Received response from proxy target:', proxyRes.statusCode, req.url);
+                            });
+                        }
+                    },
                 }
             },
         },
