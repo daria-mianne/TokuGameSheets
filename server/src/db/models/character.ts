@@ -1,45 +1,50 @@
-import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { User } from "./user";
 import { Backstory } from "./backstory";
-import { sequelize } from ".";
+import { Ability } from "./ability";
+import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, HasMany, HasOne, Length, Model, NotNull, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
+import { CharacterAbility } from "./characterAbility";
 
-export class Character extends Model<InferAttributes<Character>, InferCreationAttributes<Character>> {
-    declare id: CreationOptional<number>;
-    declare userId: ForeignKey<User['id']>;
-    declare name: string;
-    declare isNpc: boolean;
-    declare pronouns: string;
-    declare backstoryId?: CreationOptional<ForeignKey<Backstory['id']>>;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-    declare deletedAt: CreationOptional<Date>;
+@Table({
+    tableName: 'characters'
+})
+export class Character extends Model {
+    @Column({
+        type: DataType.INTEGER.UNSIGNED
+    })
+    @AutoIncrement
+    @PrimaryKey
+    id: number;
+    
+    @BelongsTo(() => User)
+    userId: number;
+    
+    @Column
+    @Length({ min: 1, max: 200 })
+    @NotNull
+    name: string;
+    
+    @Column
+    @NotNull
+    isNpc: boolean;
+    
+    @Column
+    @Length({ min: 1, max: 100 })
+    @NotNull
+    pronouns: string;
+    
+    @HasOne(() => Backstory)
+    @AllowNull
+    backstoryId?: number;
+    
+    @CreatedAt
+    createdAt: Date;
+    
+    @UpdatedAt
+    updatedAt: Date;
+    
+    @DeletedAt
+    deletedAt: Date;
+
+    @BelongsToMany(() => Ability, () => CharacterAbility)
+    abilities: Ability[];
 }
-
-Character.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        name: {
-            type: DataTypes.STRING(200),
-            allowNull: false,
-        },
-        isNpc: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        pronouns: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
-        deletedAt: DataTypes.DATE,
-    },
-    {
-        sequelize,
-        tableName: 'characters',
-    }
-)

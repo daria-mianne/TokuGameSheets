@@ -1,40 +1,49 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
-import { sequelize } from ".";
+import { Character } from ".";
+import { Invitation } from ".";
+import { AllowNull, AutoIncrement, Column, CreatedAt, DataType, DeletedAt, HasMany, Length, Model, NotNull, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    declare id: CreationOptional<number>;
-    declare username: string;
-    declare displayName?: CreationOptional<string>;
-    declare recoveryEmail?: CreationOptional<string>;
-    declare isAdmin: boolean;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-    declare deletedAt: CreationOptional<Date>;
+@Table({
+    tableName: 'users'
+})
+export class User extends Model {
+    @Column({
+        type: DataType.INTEGER.UNSIGNED
+    })
+    @AutoIncrement
+    @PrimaryKey
+    id: number;
+    
+    @Column
+    @Length({ min: 1, max: 100 })
+    @NotNull
+    username: string;
+    
+    @Column
+    @Length({ min: 1, max: 100 })
+    @AllowNull
+    displayName?: string;
+    
+    @Column
+    @Length({ min: 5, max: 500 })
+    @AllowNull
+    recoveryEmail?: string;
+    
+    @Column
+    @NotNull
+    isAdmin: boolean;
+
+    @HasMany(() => Character)
+    characters: Character[];
+
+    @HasMany(() => Invitation)
+    invitations: Invitation[];
+    
+    @CreatedAt
+    createdAt: Date;
+    
+    @UpdatedAt
+    updatedAt: Date;
+    
+    @DeletedAt
+    deletedAt: Date;
 }
-
-User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        username: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        displayName: DataTypes.STRING(100),
-        recoveryEmail: DataTypes.STRING(500),
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
-        deletedAt: DataTypes.DATE,
-    },
-    {
-        sequelize,
-        tableName: 'users',
-    }
-);

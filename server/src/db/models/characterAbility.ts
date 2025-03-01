@@ -1,17 +1,14 @@
-import { ForeignKey, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import { ForeignKey, Model, Table } from "sequelize-typescript";
 import { Character } from "./character";
 import { Ability } from "./ability";
-import { sequelize } from ".";
 
-export class CharacterAbility extends Model<InferAttributes<CharacterAbility>, InferCreationAttributes<CharacterAbility>> {
-    declare characterId: ForeignKey<Character['id']>;
-    declare abilityId: ForeignKey<Ability['id']>;
+@Table({
+    tableName: 'character_abilities'
+})
+export class CharacterAbility extends Model {
+    @ForeignKey(() => Character)
+    characterId: number;
+
+    @ForeignKey(() => Ability)
+    abilityId: number;
 }
-
-CharacterAbility.init(
-    {},
-    {
-        sequelize,
-        tableName: 'character_abilities',
-    }
-);

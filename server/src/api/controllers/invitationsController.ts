@@ -1,4 +1,4 @@
-import { Invitations } from "@db/models/invitation";
+import { Invitation } from "@db/models/invitation";
 
 export class InvitationsController {
     public static create = (req: Request, res: Response): void => {

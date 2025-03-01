@@ -1,5 +1,6 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
-import { sequelize } from '.';
+import { Character } from ".";
+import { AutoIncrement, BelongsToMany, Column, DataType, Length, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
+import { CharacterAbility } from '.';
 
 export enum AbilityType {
     ARMORY = 'armory',
@@ -8,35 +9,32 @@ export enum AbilityType {
     TEAM = 'team'
 }
 
-export class Ability extends Model<InferAttributes<Ability>, InferCreationAttributes<Ability>> {
-    declare id: CreationOptional<number>;
-    declare adminOnly: boolean;
-    declare type: AbilityType;
-    declare description: string;
-}
+@Table({
+    tableName: 'abilities'
+})
+export class Ability extends Model {
+    @Column({
+        type: DataType.INTEGER.UNSIGNED
+    })
+    @AutoIncrement
+    @PrimaryKey
+    id: number;
+    
+    @Column
+    @NotNull
+    adminOnly: boolean;
+    
+    @Column({
+        type: DataType.ENUM,
+    })
+    @NotNull
+    type: AbilityType;
+    
+    @Column
+    @NotNull
+    @Length({ min: 1, max: 10000 })
+    description: string;
 
-Ability.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        adminOnly: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        type: {
-            type: DataTypes.ENUM,
-            // TODO
-        },
-        description: {
-            type: DataTypes.STRING(10000),
-            allowNull: false,
-        }
-    },
-    {
-        sequelize,
-        tableName: 'abilities_v0'
-    }
-);
+    @BelongsToMany(() => Character, () => CharacterAbility)
+    characters: Character[];
+}

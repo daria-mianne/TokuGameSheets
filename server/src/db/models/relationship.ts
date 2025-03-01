@@ -1,33 +1,29 @@
-import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from "sequelize";
-import { Character } from "./character";
-import { sequelize } from ".";
+import { Character } from ".";
+import { AutoIncrement, Column, DataType, HasMany, Max, Min, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
 
-export class Relationship extends Model<InferAttributes<Relationship>, InferCreationAttributes<Relationship>> {
-    declare id: CreationOptional<number>;
-    declare char1Id: ForeignKey<Character['id']>;
-    declare char2Id: ForeignKey<Character['id']>;
-    declare valence: -1 | 0 | 1;
-    declare description: string;
+@Table({
+    tableName: 'relationships'
+})
+export class Relationship extends Model {
+    @Column({
+        type: DataType.INTEGER.UNSIGNED
+    })
+    @AutoIncrement
+    @PrimaryKey
+    id: number;
+    
+    @Column
+    @Min(-1)
+    @Max(1)
+    @NotNull
+    valence: number;
+    
+    @Column({
+        type: DataType.STRING(1000)
+    })
+    @NotNull
+    description: string;
+
+    @HasMany(() => Character)
+    characterIds: number[];
 }
-
-Relationship.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        valence: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        description: {
-            type: DataTypes.STRING(1000),
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'relationships',
-    }
-);

@@ -1,31 +1,34 @@
-import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model} from "sequelize"
+import { DataTypes } from "sequelize";
 import { User } from "./user";
-import { sequelize } from ".";
+import { AutoIncrement, BelongsTo, Column, CreatedAt, DataType, Default, DeletedAt, ForeignKey, IsUUID, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
 
-export class Invitation extends Model<InferAttributes<Invitation>, InferCreationAttributes<Invitation>> {
-    declare id: CreationOptional<number>;
-    declare guid: string;
-    declare invitingUserId: ForeignKey<User['id']>;
-    declare createdAt: CreationOptional<Date>;
-    declare deletedAt: CreationOptional<Date>;
+@Table({
+    timestamps: true,
+})
+export class Invitation extends Model {
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+    })
+    @AutoIncrement
+    @PrimaryKey
+    id!: number;
+
+    @Column
+    @Default(DataTypes.UUIDV4)
+    @IsUUID(4)
+    @NotNull
+    guid: string;
+
+    @ForeignKey(() => User)
+    @Column
+    invitingUserId: number;
+
+    @BelongsTo(() => User)
+    invitingUser: User;
+
+    @CreatedAt
+    createdAt: Date;
+
+    @DeletedAt
+    deletedAt: Date;
 }
-
-Invitation.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        guid: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        createdAt: DataTypes.DATE,
-        deletedAt: DataTypes.DATE,
-    },
-    {
-        sequelize,
-        tableName: 'invitations',
-    }
-);
