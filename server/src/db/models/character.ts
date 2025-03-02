@@ -5,7 +5,8 @@ import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, 
 import { CharacterAbility } from "./characterAbility";
 
 @Table({
-    tableName: 'characters'
+    tableName: 'characters',
+    paranoid: true,
 })
 export class Character extends Model {
     @Column({
@@ -13,38 +14,38 @@ export class Character extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id: number;
     
     @BelongsTo(() => User)
-    userId: number;
+    declare userId: number;
     
     @Column
     @Length({ min: 1, max: 200 })
     @NotNull
-    name: string;
+    declare name: string;
     
     @Column
     @NotNull
-    isNpc: boolean;
+    declare isNpc: boolean;
     
     @Column
     @Length({ min: 1, max: 100 })
     @NotNull
-    pronouns: string;
+    declare pronouns: string;
     
     @HasOne(() => Backstory)
     @AllowNull
-    backstoryId?: number;
+    declare backstoryId?: number;
     
     @CreatedAt
-    createdAt: Date;
+    declare createdAt: Date;
     
     @UpdatedAt
-    updatedAt: Date;
+    declare updatedAt: Date;
     
     @DeletedAt
-    deletedAt: Date;
+    declare deletedAt: Date;
 
     @BelongsToMany(() => Ability, () => CharacterAbility)
-    abilities: Ability[];
+    declare abilities: Ability[];
 }

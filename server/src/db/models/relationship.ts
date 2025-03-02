@@ -10,20 +10,20 @@ export class Relationship extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id!: number;
     
     @Column
     @Min(-1)
     @Max(1)
     @NotNull
-    valence: number;
+    valence!: number;
     
     @Column({
         type: DataType.STRING(1000)
     })
     @NotNull
-    description: string;
+    declare description: string;
 
     @HasMany(() => Character)
-    characterIds: number[];
+    declare characterIds: number[];
 }

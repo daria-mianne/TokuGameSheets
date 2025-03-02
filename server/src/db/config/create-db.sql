@@ -31,7 +31,7 @@ CREATE TABLE characters(
     name varchar(200) NOT NULL,
     isNpc boolean NOT NULL,
     pronouns varchar(100) NOT NULL,
-    backstoryId references backstories(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    backstoryId references backstories(id) ON UPDATE CASCADE ON DELETE SET NULL,
     createdAt timestamp,
     updatedAt timestamp,
     deletedAt timestamp

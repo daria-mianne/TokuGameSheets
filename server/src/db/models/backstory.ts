@@ -10,12 +10,12 @@ export class Backstory extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id: number;
 
     @Column
     @Length({ min: 0, max: 1000000 })
-    backstory: string;
+    declare backstory: string;
 
     @BelongsTo(() => Character)
-    characterId: number;
+    declare characterId: number;
 }

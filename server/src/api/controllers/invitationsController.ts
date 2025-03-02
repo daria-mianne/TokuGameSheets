@@ -1,34 +1,26 @@
 import { Invitation } from "@db/models/invitation";
 
 export class InvitationsController {
-    public static create = (req: Request, res: Response): void => {
-        if (!req.json?.().inviting_user_id) {
-            res.status(400).json({
-                message: "Invitation creation requires the ID of the inviting user",
-            });
-            return;
+    public static create = async (invitingUserId: number): Promise<Invitation> => {
+        return await Invitation.create({ invitingUserId });
+    }
+
+    public static list = async (): Promise<Invitation[]> => {
+        return await Invitation.findAll();
+    }
+
+    public static find = async (id: number): Promise<Invitation | null> => {
+        return await Invitation.findByPk(id);
+    }
+
+    public static findByGuid = async (guid: string): Promise<Invitation | null> => {
+        return await Invitation.findOne({ where: { guid } });
+    }
+
+    public static delete = async (id: number): Promise<void> => {
+        const invitation = await this.find(id);
+        if (invitation) {
+            await invitation.destroy();
         }
-
-        Invitations.create({
-
-        }).then((data) => {
-            res.send(data);
-        }).catch((err) => {
-            res.status(500).json({
-                message: err.message || "Unknown error occurred while creating invitation",
-            });
-        });
-    }
-
-    public static list(req, res): void => {
-        
-    }
-
-    public static get(req, res): void => {
-        
-    }
-
-    public static delete(req, res): void => {
-        
     }
 }

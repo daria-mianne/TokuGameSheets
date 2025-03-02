@@ -18,23 +18,23 @@ export class Ability extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id: number;
     
     @Column
     @NotNull
-    adminOnly: boolean;
+    declare adminOnly: boolean;
     
     @Column({
         type: DataType.ENUM,
     })
     @NotNull
-    type: AbilityType;
+    declare type: AbilityType;
     
     @Column
     @NotNull
     @Length({ min: 1, max: 10000 })
-    description: string;
+    declare description: string;
 
     @BelongsToMany(() => Character, () => CharacterAbility)
-    characters: Character[];
+    declare characters: Character[];
 }

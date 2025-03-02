@@ -3,7 +3,8 @@ import { Invitation } from ".";
 import { AllowNull, AutoIncrement, Column, CreatedAt, DataType, DeletedAt, HasMany, Length, Model, NotNull, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
 
 @Table({
-    tableName: 'users'
+    tableName: 'users',
+    paranoid: true
 })
 export class User extends Model {
     @Column({
@@ -11,39 +12,39 @@ export class User extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id: number;
     
     @Column
     @Length({ min: 1, max: 100 })
     @NotNull
-    username: string;
+    declare username: string;
     
     @Column
     @Length({ min: 1, max: 100 })
     @AllowNull
-    displayName?: string;
+    declare displayName?: string;
     
     @Column
     @Length({ min: 5, max: 500 })
     @AllowNull
-    recoveryEmail?: string;
+    declare recoveryEmail?: string;
     
     @Column
     @NotNull
-    isAdmin: boolean;
+    declare isAdmin: boolean;
 
     @HasMany(() => Character)
-    characters: Character[];
+    declare characters: Character[];
 
     @HasMany(() => Invitation)
-    invitations: Invitation[];
+    declare invitations: Invitation[];
     
     @CreatedAt
-    createdAt: Date;
+    declare createdAt: Date;
     
     @UpdatedAt
-    updatedAt: Date;
+    declare updatedAt: Date;
     
     @DeletedAt
-    deletedAt: Date;
+    declare deletedAt: Date;
 }

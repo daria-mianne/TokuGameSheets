@@ -10,13 +10,13 @@ export class PersonalityTrait extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id: number;
+    declare id: number;
     
     @BelongsTo(() => Character)
-    characterId: number;
+    declare characterId: number;
     
     @Column
     @Length({ min: 1, max: 1000 })
     @NotNull
-    description: string;
+    declare description: string;
 }

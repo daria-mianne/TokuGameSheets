@@ -7,8 +7,8 @@ import { Ability } from "./ability";
 })
 export class CharacterAbility extends Model {
     @ForeignKey(() => Character)
-    characterId: number;
+    declare characterId: number;
 
     @ForeignKey(() => Ability)
-    abilityId: number;
+    declare abilityId: number;
 }

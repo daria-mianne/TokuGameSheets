@@ -4,6 +4,7 @@ import { AutoIncrement, BelongsTo, Column, CreatedAt, DataType, Default, Deleted
 
 @Table({
     timestamps: true,
+    paranoid: true,
 })
 export class Invitation extends Model {
     @Column({
@@ -11,24 +12,24 @@ export class Invitation extends Model {
     })
     @AutoIncrement
     @PrimaryKey
-    id!: number;
+    declare id: number;
 
     @Column
     @Default(DataTypes.UUIDV4)
     @IsUUID(4)
     @NotNull
-    guid: string;
+    declare guid: string;
 
     @ForeignKey(() => User)
     @Column
-    invitingUserId: number;
+    declare invitingUserId: number;
 
     @BelongsTo(() => User)
-    invitingUser: User;
+    declare invitingUser: User;
 
     @CreatedAt
-    createdAt: Date;
+    declare createdAt: Date;
 
     @DeletedAt
-    deletedAt: Date;
+    declare deletedAt: Date;
 }
