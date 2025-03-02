@@ -1,23 +1,34 @@
-import { DataTypes } from "sequelize";
-import { User } from "./user";
-import { AutoIncrement, BelongsTo, Column, CreatedAt, DataType, Default, DeletedAt, ForeignKey, IsUUID, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
+import { DataTypes } from 'sequelize';
+import { User } from '.';
+import {
+    AutoIncrement,
+    BelongsTo,
+    Column,
+    CreatedAt,
+    Default,
+    DeletedAt,
+    ForeignKey,
+    IsUUID,
+    Model,
+    AllowNull,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 
 @Table({
-    timestamps: true,
+    tableName: 'invitations',
     paranoid: true,
 })
 export class Invitation extends Model {
-    @Column({
-        type: DataType.INTEGER.UNSIGNED,
-    })
     @AutoIncrement
     @PrimaryKey
+    @Column
     declare id: number;
 
-    @Column
     @Default(DataTypes.UUIDV4)
     @IsUUID(4)
-    @NotNull
+    @AllowNull(false)
+    @Column
     declare guid: string;
 
     @ForeignKey(() => User)

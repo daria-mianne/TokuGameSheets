@@ -1,13 +1,18 @@
-import dbConfig from '@db/config/dbConfig';
-import { Sequelize } from 'sequelize';
+import { dbConfig } from '@config/dbConfig';
+import { Sequelize } from 'sequelize-typescript';
+import { Ability } from './ability';
+import { Backstory } from './backstory';
+import { Character } from './character';
+import { CharacterAbility } from './characterAbility';
+import { Invitation } from './invitation';
+import { PersonalityTrait } from './personalityTrait';
+import { Relationship } from './relationship';
+import { User } from './user';
 
-export const connection = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-    host: dbConfig.HOST,
-    dialect: dbConfig.dialect,
-    pool: {
-        ...dbConfig.pool
-    },
+export const connection = new Sequelize({
+    ...dbConfig,
 });
+connection.addModels([Ability, Backstory, Character, CharacterAbility, Invitation, PersonalityTrait, Relationship, User]);
 
 export * from './ability';
 export * from './backstory';

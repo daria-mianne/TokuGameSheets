@@ -1,38 +1,36 @@
-import { Character } from ".";
-import { AutoIncrement, BelongsToMany, Column, DataType, Length, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
+import { Character } from '.';
+import { AllowNull, AutoIncrement, BelongsToMany, Column, DataType, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { CharacterAbility } from '.';
 
 export enum AbilityType {
     ARMORY = 'armory',
     ICONIC = 'iconic',
     PERSONAL = 'personal',
-    TEAM = 'team'
+    TEAM = 'team',
 }
 
 @Table({
-    tableName: 'abilities'
+    tableName: 'abilities',
 })
 export class Ability extends Model {
-    @Column({
-        type: DataType.INTEGER.UNSIGNED
-    })
-    @AutoIncrement
     @PrimaryKey
+    @AutoIncrement
+    @Column
     declare id: number;
-    
+
+    @AllowNull(false)
     @Column
-    @NotNull
     declare adminOnly: boolean;
-    
+
+    @AllowNull(false)
     @Column({
-        type: DataType.ENUM,
+        type: DataType.ENUM(...Object.values(AbilityType)),
     })
-    @NotNull
     declare type: AbilityType;
-    
-    @Column
-    @NotNull
+
+    @AllowNull(false)
     @Length({ min: 1, max: 10000 })
+    @Column
     declare description: string;
 
     @BelongsToMany(() => Character, () => CharacterAbility)

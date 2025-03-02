@@ -1,9 +1,9 @@
-import { ForeignKey, Model, Table } from "sequelize-typescript";
-import { Character } from "./character";
-import { Ability } from "./ability";
+import { ForeignKey, Model, Table } from 'sequelize-typescript';
+import { Character } from '.';
+import { Ability } from '.';
 
 @Table({
-    tableName: 'character_abilities'
+    tableName: 'character_abilities',
 })
 export class CharacterAbility extends Model {
     @ForeignKey(() => Character)

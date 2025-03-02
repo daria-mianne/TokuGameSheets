@@ -1,20 +1,25 @@
 {
     "compilerOptions": {
-        "sourceMap": true,
-        "outDir": "./dist",
-        "strict": true,
-        "lib": ["esnext"],
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "target": "esnext",
-        "moduleResolution": "node",
+        "target": "es2017",
+        "module": "commonjs",
+        "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+        "skipLibCheck": true,
         "baseUrl": "./src/",
         "paths": {
-            "@api/*": ["api/*"],
-            "@db/*": ["db/*"],
-            "@shared-models/*": ["../../shared-models/*"],
+            // top-level indices
+            "@controllers": ["api/controllers"],
+            "@routes": ["api/routes"],
+            "@config": ["db/config"],
+            "@models": ["db/models"],
+            // subfolders
+            "@controllers/*": ["api/controllers/*"],
+            "@routes/*": ["api/routes/*"],
+            "@config/*": ["db/config/*"],
+            "@models/*": ["db/models/*"]
         },
+        "sourceMap": true,
+        "outDir": "./dist",
+        "moduleResolution": "node",
         "removeComments": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -25,7 +30,10 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true
     },
     "exclude": ["node_modules"],
     "include": ["./src/**/*.ts", "../shared-models/**/*.ts"]

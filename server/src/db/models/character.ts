@@ -1,48 +1,58 @@
-import { User } from "./user";
-import { Backstory } from "./backstory";
-import { Ability } from "./ability";
-import { AllowNull, AutoIncrement, BelongsTo, BelongsToMany, Column, CreatedAt, DataType, DeletedAt, HasMany, HasOne, Length, Model, NotNull, PrimaryKey, Table, UpdatedAt } from "sequelize-typescript";
-import { CharacterAbility } from "./characterAbility";
+import { Ability, Backstory, CharacterAbility, User } from '.';
+import {
+    AllowNull,
+    AutoIncrement,
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    CreatedAt,
+    DeletedAt,
+    HasOne,
+    Length,
+    Model,
+    PrimaryKey,
+    Table,
+    UpdatedAt,
+} from 'sequelize-typescript';
 
 @Table({
     tableName: 'characters',
     paranoid: true,
 })
 export class Character extends Model {
-    @Column({
-        type: DataType.INTEGER.UNSIGNED
-    })
     @AutoIncrement
     @PrimaryKey
+    @Column
     declare id: number;
-    
+
     @BelongsTo(() => User)
     declare userId: number;
-    
-    @Column
+
     @Length({ min: 1, max: 200 })
-    @NotNull
+    @AllowNull(false)
+    @Column
     declare name: string;
-    
+
+    @AllowNull(false)
     @Column
-    @NotNull
     declare isNpc: boolean;
-    
-    @Column
+
     @Length({ min: 1, max: 100 })
-    @NotNull
+    @AllowNull(false)
+    @Column
     declare pronouns: string;
-    
+
     @HasOne(() => Backstory)
     @AllowNull
+    @Column
     declare backstoryId?: number;
-    
+
     @CreatedAt
     declare createdAt: Date;
-    
+
     @UpdatedAt
     declare updatedAt: Date;
-    
+
     @DeletedAt
     declare deletedAt: Date;
 

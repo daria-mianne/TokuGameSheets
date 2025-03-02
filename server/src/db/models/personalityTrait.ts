@@ -1,22 +1,20 @@
-import { AutoIncrement, BelongsTo, Column, DataType, Length, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
-import { Character } from "./character";
+import { AutoIncrement, BelongsTo, Column, Length, Model, AllowNull, PrimaryKey, Table } from 'sequelize-typescript';
+import { Character } from '.';
 
 @Table({
-    tableName: 'personality_traits'
+    tableName: 'personality_traits',
 })
 export class PersonalityTrait extends Model {
-    @Column({
-        type: DataType.INTEGER.UNSIGNED
-    })
     @AutoIncrement
     @PrimaryKey
+    @Column
     declare id: number;
-    
+
     @BelongsTo(() => Character)
     declare characterId: number;
-    
-    @Column
+
     @Length({ min: 1, max: 1000 })
-    @NotNull
+    @AllowNull(false)
+    @Column
     declare description: string;
 }

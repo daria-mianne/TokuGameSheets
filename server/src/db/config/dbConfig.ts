@@ -1,10 +1,11 @@
-import { Dialect } from "sequelize";
+import { Dialect } from 'sequelize';
 
-export default {
-    HOST: 'localhost',
-    USER: 'postgres',
-    PASSWORD: 'postgres',
-    DB: 'tokusheets',
+export const dbConfig = {
+    database: 'tokusheets',
+    username: 'postgres',
+    password: 'postgres',
+    host: 'db',
+    port: 5432,
     dialect: 'postgres' as Dialect,
     pool: {
         max: 5,

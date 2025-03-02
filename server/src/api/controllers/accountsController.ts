@@ -1,2 +1,1 @@
-export class AccountsController {
-}
+export class AccountsController {}

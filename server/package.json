@@ -2,10 +2,9 @@
     "name": "tokugamesheets-server",
     "private": true,
     "version": "0.0.0",
-    "type": "module",
     "main": "main.js",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && tsc-alias",
         "dev": "NODE_ENV='dev' nodemon",
         "start": "NODE_ENV='production' node ./dist/main.js",
         "lint": "eslint --fix .; prettier --write .",
@@ -18,7 +17,9 @@
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
         "express": "^4.21.2",
+        "pg": "^8.13.3",
         "pg-hstore": "^2.3.4",
+        "reflect-metadata": "^0.2.2",
         "sequelize": "^6.37.5",
         "sequelize-typescript": "^2.1.6",
         "typescript": "^5.7.3"
@@ -27,13 +28,14 @@
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
         "@types/validator": "^13.12.2",
-        "nodemon": "^3.1.9"
+        "nodemon": "^3.1.9",
+        "tsc-alias": "^1.8.11"
     },
     "nodemonConfig": {
         "watch": [
             "src"
         ],
-        "exec": "tsc && node ./dist/main.js",
+        "exec": "tsc && tsc-alias && node ./dist/main.js",
         "ext": "ts,js,json"
     }
 }

@@ -9,9 +9,7 @@ export default defineConfig((env) => {
     const envVars = loadEnv(env.mode, './');
     const apiPort = 5000;
     const serverAPIPath = envVars.VITE_SERVER_API_PATH;
-    const serverHost = process.env.FROMDOCKER
-        ? envVars.DOCKER_API_HOST ?? 'server'
-        : 'localhost';
+    const serverHost = process.env.FROMDOCKER ? (envVars.DOCKER_API_HOST ?? 'server') : 'localhost';
 
     return {
         envDir: './',
@@ -57,7 +55,7 @@ export default defineConfig((env) => {
                             });
                         }
                     },
-                }
+                },
             },
         },
     };
