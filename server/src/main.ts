@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import { InvitationsController } from '@controllers';
@@ -14,6 +13,8 @@ import { connection } from '@models';
 // FIXME: AUTH! ADD IT! ADD THE AUTH! YOU CAN'T LAUNCH LITERALLY ANYTHING WITHOUT AUTH!
 // FIXME: AUTH! ADD IT! ADD THE AUTH! YOU CAN'T LAUNCH LITERALLY ANYTHING WITHOUT AUTH!
 
+// TODO: Params/body validation throughout
+
 const app = express();
 
 // Register middlewares
@@ -28,34 +29,54 @@ app.get('/api/v0/hello', (_: Request, res: Response) => {
 
 // Invitations routes
 app.get('/api/v0/invitations', async (_: Request, res: Response) => {
-    const invitations = await InvitationsController.list();
-    res.status(200).json(invitations);
+    try {
+        const invitations = await InvitationsController.list();
+        res.status(200).json(invitations);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(error);
+    }
 });
 
 app.get('/api/v0/invitations/:guid', async (req: Request, res: Response) => {
-    const { guid } = req.params;
-    const invitation = await InvitationsController.findByGuid(guid);
-    if (invitation) {
-        res.status(200).json(invitation);
-    } else {
-        res.status(404).send();
+    try {
+        const { guid } = req.params;
+        const invitation = await InvitationsController.findByGuid(guid);
+        if (invitation) {
+            res.status(200).json(invitation);
+        } else {
+            res.status(404).send();
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(error);
     }
 });
 
 app.post('/api/v0/invitations', async (req: Request, res: Response) => {
-    const { userId } = req.params;
-    const invitation = await InvitationsController.create(Number(userId));
-    res.status(200).json(invitation);
+    try {
+        const { userId } = req.body;
+        const invitation = await InvitationsController.create(Number(userId));
+        res.status(200).json(invitation);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(error);
+    }
 });
 
-app.delete('/api/v0/invitations', async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const invitation = await InvitationsController.find(Number(id));
-    if (invitation) {
-        await invitation.destroy();
-        res.status(200).send();
-    } else {
-        res.status(404).send();
+app.delete('/api/v0/invitations/:id', async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const invitation = await InvitationsController.find(Number(id));
+        if (invitation) {
+            await invitation.destroy();
+            res.status(200).send();
+        } else {
+            res.status(404).send();
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json(error);
     }
 });
 

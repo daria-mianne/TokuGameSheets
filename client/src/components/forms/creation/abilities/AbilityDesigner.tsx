@@ -44,7 +44,14 @@ export default function AbilityDesigner() {
                 <label>
                     Ability Description (max length 10,000 chars):
                     <br />
-                    <textarea name='description' rows={4} cols={50} maxLength={10000} required style={{ resize: 'both' }} />
+                    <textarea
+                        name='description'
+                        rows={4}
+                        cols={50}
+                        maxLength={10000}
+                        required
+                        style={{ resize: 'both' }}
+                    />
                 </label>
                 <br />
                 <FormGroup>

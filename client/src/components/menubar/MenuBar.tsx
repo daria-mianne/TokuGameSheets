@@ -16,7 +16,8 @@ export function MenuBar() {
         'Ability Designer': '/ability-designer',
     };
 
-    const mappingToButtons = (buttons: ButtonMapping) => Object.keys(buttons).map((name) => <MenuButton name={name} destination={buttons[name]} />);
+    const mappingToButtons = (buttons: ButtonMapping) =>
+        Object.keys(buttons).map((name) => <MenuButton name={name} destination={buttons[name]} />);
 
     return (
         <>

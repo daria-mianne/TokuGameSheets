@@ -1,13 +1,19 @@
-import { Ability, Backstory, CharacterAbility, User } from '.';
+import 'reflect-metadata';
+import { 
+    // Ability,
+    Backstory,
+    // CharacterAbility,
+    User } from '.';
 import {
     AllowNull,
     AutoIncrement,
-    BelongsTo,
-    BelongsToMany,
+    // BelongsTo,
+    // BelongsToMany,
     Column,
     CreatedAt,
     DeletedAt,
-    HasOne,
+    ForeignKey,
+    // HasOne,
     Length,
     Model,
     PrimaryKey,
@@ -25,8 +31,12 @@ export class Character extends Model {
     @Column
     declare id: number;
 
-    @BelongsTo(() => User)
+    @ForeignKey(() => User)
+    @Column
     declare userId: number;
+
+    // @BelongsTo(() => User)
+    // declare user: User;
 
     @Length({ min: 1, max: 200 })
     @AllowNull(false)
@@ -42,7 +52,7 @@ export class Character extends Model {
     @Column
     declare pronouns: string;
 
-    @HasOne(() => Backstory)
+    @ForeignKey(() => Backstory)
     @AllowNull
     @Column
     declare backstoryId?: number;
@@ -56,6 +66,6 @@ export class Character extends Model {
     @DeletedAt
     declare deletedAt: Date;
 
-    @BelongsToMany(() => Ability, () => CharacterAbility)
-    declare abilities: Ability[];
+    // @BelongsToMany(() => Ability, () => CharacterAbility)
+    // declare abilities: Ability[];
 }

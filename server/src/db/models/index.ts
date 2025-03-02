@@ -1,24 +1,33 @@
 import { dbConfig } from '@config/dbConfig';
 import { Sequelize } from 'sequelize-typescript';
-import { Ability } from './ability';
-import { Backstory } from './backstory';
-import { Character } from './character';
-import { CharacterAbility } from './characterAbility';
-import { Invitation } from './invitation';
-import { PersonalityTrait } from './personalityTrait';
-import { Relationship } from './relationship';
-import { User } from './user';
+import { Ability } from './Ability';
+import { Backstory } from './Backstory';
+import { Character } from './Character';
+import { CharacterAbility } from './CharacterAbility';
+import { Invitation } from './Invitation';
+import { PersonalityTrait } from './PersonalityTrait';
+import { Relationship } from './Relationship';
+import { User } from './User';
 
 export const connection = new Sequelize({
     ...dbConfig,
 });
-connection.addModels([Ability, Backstory, Character, CharacterAbility, Invitation, PersonalityTrait, Relationship, User]);
+connection.addModels([
+    Ability,
+    Backstory,
+    Character,
+    CharacterAbility,
+    Invitation,
+    PersonalityTrait,
+    Relationship,
+    User
+]);
 
-export * from './ability';
-export * from './backstory';
-export * from './character';
-export * from './characterAbility';
-export * from './invitation';
-export * from './personalityTrait';
-export * from './relationship';
-export * from './user';
+export * from './Ability';
+export * from './Backstory';
+export * from './Character';
+export * from './CharacterAbility';
+export * from './Invitation';
+export * from './PersonalityTrait';
+export * from './Relationship';
+export * from './User';

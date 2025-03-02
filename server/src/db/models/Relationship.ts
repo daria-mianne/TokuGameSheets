@@ -1,5 +1,17 @@
-import { Character } from '.';
-import { AutoIncrement, Column, DataType, HasMany, Max, Min, Model, AllowNull, PrimaryKey, Table } from 'sequelize-typescript';
+import 'reflect-metadata';
+// import { Character } from '.';
+import {
+    AutoIncrement,
+    Column,
+    DataType,
+    // HasMany,
+    Max,
+    Min,
+    Model,
+    AllowNull,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 
 @Table({
     tableName: 'relationships',
@@ -22,6 +34,6 @@ export class Relationship extends Model {
     })
     declare description: string;
 
-    @HasMany(() => Character)
-    declare characterIds: number[];
+    // @HasMany(() => Character)
+    // declare characterIds: number[];
 }

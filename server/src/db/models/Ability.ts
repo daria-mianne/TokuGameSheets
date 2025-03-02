@@ -1,6 +1,18 @@
+import 'reflect-metadata';
 import { Character } from '.';
-import { AllowNull, AutoIncrement, BelongsToMany, Column, DataType, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
-import { CharacterAbility } from '.';
+import {
+    AllowNull,
+    AutoIncrement,
+    // BelongsToMany,
+    Column,
+    DataType,
+    ForeignKey,
+    Length,
+    Model,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
+// import { CharacterAbility } from '.';
 
 export enum AbilityType {
     ARMORY = 'armory',
@@ -33,6 +45,12 @@ export class Ability extends Model {
     @Column
     declare description: string;
 
-    @BelongsToMany(() => Character, () => CharacterAbility)
-    declare characters: Character[];
+    @ForeignKey(() => Character)
+    declare char1Id: number;
+
+    @ForeignKey(() => Character)
+    declare char2Id: number;
+
+    // @BelongsToMany(() => Character, () => CharacterAbility)
+    // declare characters: Character[];
 }

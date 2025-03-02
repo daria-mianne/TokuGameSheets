@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Invitation } from '@models';
 
 export class InvitationsController {

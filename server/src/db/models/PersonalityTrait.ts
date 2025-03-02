@@ -1,4 +1,7 @@
-import { AutoIncrement, BelongsTo, Column, Length, Model, AllowNull, PrimaryKey, Table } from 'sequelize-typescript';
+import 'reflect-metadata';
+import { AutoIncrement,
+    // BelongsTo,
+    Column, Length, Model, AllowNull, PrimaryKey, Table, ForeignKey } from 'sequelize-typescript';
 import { Character } from '.';
 
 @Table({
@@ -10,8 +13,12 @@ export class PersonalityTrait extends Model {
     @Column
     declare id: number;
 
-    @BelongsTo(() => Character)
+    @ForeignKey(() => Character)
+    @Column
     declare characterId: number;
+
+    // @BelongsTo(() => Character)
+    // declare character: Character;
 
     @Length({ min: 1, max: 1000 })
     @AllowNull(false)

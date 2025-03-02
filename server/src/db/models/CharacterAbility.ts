@@ -1,4 +1,5 @@
-import { ForeignKey, Model, Table } from 'sequelize-typescript';
+import 'reflect-metadata';
+import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { Character } from '.';
 import { Ability } from '.';
 
@@ -7,8 +8,10 @@ import { Ability } from '.';
 })
 export class CharacterAbility extends Model {
     @ForeignKey(() => Character)
+    @Column
     declare characterId: number;
 
     @ForeignKey(() => Ability)
+    @Column
     declare abilityId: number;
 }

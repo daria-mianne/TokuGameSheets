@@ -1,18 +1,19 @@
-import { DataTypes } from 'sequelize';
+import 'reflect-metadata';
 import { User } from '.';
 import {
     AutoIncrement,
-    BelongsTo,
     Column,
     CreatedAt,
     Default,
     DeletedAt,
-    ForeignKey,
     IsUUID,
     Model,
     AllowNull,
     PrimaryKey,
     Table,
+    DataType,
+    // BelongsTo ,
+    ForeignKey,
 } from 'sequelize-typescript';
 
 @Table({
@@ -25,7 +26,7 @@ export class Invitation extends Model {
     @Column
     declare id: number;
 
-    @Default(DataTypes.UUIDV4)
+    @Default(DataType.UUIDV4)
     @IsUUID(4)
     @AllowNull(false)
     @Column
@@ -35,8 +36,8 @@ export class Invitation extends Model {
     @Column
     declare invitingUserId: number;
 
-    @BelongsTo(() => User)
-    declare invitingUser: User;
+    // @BelongsTo(() => User)
+    // declare invitingUser: User;
 
     @CreatedAt
     declare createdAt: Date;

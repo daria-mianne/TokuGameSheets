@@ -1,12 +1,13 @@
-import { Character } from '.';
-import { Invitation } from '.';
+import 'reflect-metadata';
+// import { Character } from '.';
+// import { Invitation } from '.';
 import {
     AllowNull,
     AutoIncrement,
     Column,
     CreatedAt,
     DeletedAt,
-    HasMany,
+    // HasMany,
     Length,
     Model,
     PrimaryKey,
@@ -43,11 +44,11 @@ export class User extends Model {
     @Column
     declare isAdmin: boolean;
 
-    @HasMany(() => Character)
-    declare characters: Character[];
+    // @HasMany(() => Character)
+    // declare characters: Character[];
 
-    @HasMany(() => Invitation)
-    declare invitations: Invitation[];
+    // @HasMany(() => Invitation)
+    // declare invitations: Invitation[];
 
     @CreatedAt
     declare createdAt: Date;

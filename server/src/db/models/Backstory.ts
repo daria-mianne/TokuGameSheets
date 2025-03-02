@@ -1,4 +1,7 @@
-import { AutoIncrement, BelongsTo, Column, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import 'reflect-metadata';
+import { AutoIncrement,
+    // BelongsTo,
+    Column, ForeignKey, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { Character } from '.';
 
 @Table({
@@ -14,6 +17,10 @@ export class Backstory extends Model {
     @Column
     declare backstory: string;
 
-    @BelongsTo(() => Character)
+    @ForeignKey(() => Character)
+    @Column
     declare characterId: number;
+
+    // @BelongsTo(() => Character)
+    // declare character: Character;
 }

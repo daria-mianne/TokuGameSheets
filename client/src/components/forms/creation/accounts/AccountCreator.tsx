@@ -46,10 +46,21 @@ export default function AccountCreator() {
                             <>
                                 <label>
                                     Username (alphanumeric only, length between 5 and 100 chars){' '}
-                                    <input name='username' type='text' pattern='[a-zA-Z0-9]+' minLength={5} maxLength={100} required />
+                                    <input
+                                        name='username'
+                                        type='text'
+                                        pattern='[a-zA-Z0-9]+'
+                                        minLength={5}
+                                        maxLength={100}
+                                        required
+                                    />
                                 </label>
-                                {touched && validity.tooShort && <ErrorBanner message='Username must be at least 5 characters long' />}
-                                {touched && validity.patternMismatch && <ErrorBanner message='Username must be alphanumeric only' />}
+                                {touched && validity.tooShort && (
+                                    <ErrorBanner message='Username must be at least 5 characters long' />
+                                )}
+                                {touched && validity.patternMismatch && (
+                                    <ErrorBanner message='Username must be alphanumeric only' />
+                                )}
                             </>
                         )}
                     </FormControl>
@@ -67,10 +78,19 @@ export default function AccountCreator() {
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Password <input name='password' type='password' minlength={8} maxlength={128} pattern={passwordPattern} />
+                                    Password{' '}
+                                    <input
+                                        name='password'
+                                        type='password'
+                                        minlength={8}
+                                        maxlength={128}
+                                        pattern={passwordPattern}
+                                    />
                                 </label>
                                 {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
-                                {touched && validity.patternMismatch && <ErrorBanner message='Password does not contain required character types!' />}
+                                {touched && validity.patternMismatch && (
+                                    <ErrorBanner message='Password does not contain required character types!' />
+                                )}
                             </>
                         )}
                     </FormControl>
@@ -78,10 +98,13 @@ export default function AccountCreator() {
                         {({ touched }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Confirm password <input name='confirmPassword' type='password' minLength={8} maxlength={128} />
+                                    Confirm password{' '}
+                                    <input name='confirmPassword' type='password' minLength={8} maxlength={128} />
                                 </label>
                                 <div style={{ color: 'red' }}>
-                                    {touched && formData.confirmPassword !== formData.password && <ErrorBanner message='Passwords do not match!' />}
+                                    {touched && formData.confirmPassword !== formData.password && (
+                                        <ErrorBanner message='Passwords do not match!' />
+                                    )}
                                 </div>
                             </>
                         )}
@@ -93,7 +116,13 @@ export default function AccountCreator() {
                             <>
                                 <label>
                                     Display Name (alphanumeric only, max length 100 chars){' '}
-                                    <input name='displayName' type='text' pattern='[a-zA-Z0-9]+' maxLength={100} required={false} />
+                                    <input
+                                        name='displayName'
+                                        type='text'
+                                        pattern='[a-zA-Z0-9]+'
+                                        maxLength={100}
+                                        required={false}
+                                    />
                                 </label>
                                 {touched && formData.displayName !== '' && validity.tooShort && (
                                     <ErrorBanner message='Display name must be at least 5 characters long' />
@@ -105,13 +134,22 @@ export default function AccountCreator() {
                         )}
                     </FormControl>
                     <h3>Email</h3>
-                    <p>We only use your email address to assist with recovering your account and will never use it for any other purpose.</p>
+                    <p>
+                        We only use your email address to assist with recovering your account and will never use it for
+                        any other purpose.
+                    </p>
                     <FormControl name='recoveryEmail' class='form-input'>
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
                                     Recovery email address (max length 500 characters){' '}
-                                    <input name='recoveryEmail' type='email' pattern='.+@.+\..+' maxLength={500} required={false} />
+                                    <input
+                                        name='recoveryEmail'
+                                        type='email'
+                                        pattern='.+@.+\..+'
+                                        maxLength={500}
+                                        required={false}
+                                    />
                                 </label>
                                 {touched && formData.recoveryEmail !== '' && validity.patternMismatch && (
                                     <ErrorBanner message='Invalid email address!' />
@@ -124,9 +162,16 @@ export default function AccountCreator() {
                             <>
                                 <label>
                                     Confirm recovery email address{' '}
-                                    <input name='confirmEmail' type='email' maxLength={500} required={!!formData.recoveryEmail} />
+                                    <input
+                                        name='confirmEmail'
+                                        type='email'
+                                        maxLength={500}
+                                        required={!!formData.recoveryEmail}
+                                    />
                                 </label>
-                                {touched && formData.confirmEmail !== formData.recoveryEmail && <ErrorBanner message='Emails do not match!' />}
+                                {touched && formData.confirmEmail !== formData.recoveryEmail && (
+                                    <ErrorBanner message='Emails do not match!' />
+                                )}
                             </>
                         )}
                     </FormControl>
