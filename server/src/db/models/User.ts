@@ -4,16 +4,21 @@ import 'reflect-metadata';
 import {
     AllowNull,
     AutoIncrement,
+    BeforeCreate,
+    BeforeUpdate,
     Column,
     CreatedAt,
+    Default,
     DeletedAt,
     // HasMany,
     Length,
     Model,
     PrimaryKey,
     Table,
+    Unique,
     UpdatedAt,
 } from 'sequelize-typescript';
+import bcrypt from 'bcryptjs';
 
 @Table({
     tableName: 'users',
@@ -27,8 +32,13 @@ export class User extends Model {
 
     @Length({ min: 1, max: 100 })
     @AllowNull(false)
+    @Unique
     @Column
     declare username: string;
+
+    @AllowNull(false)
+    @Column
+    declare password: string;
 
     @Length({ min: 1, max: 100 })
     @AllowNull
@@ -40,6 +50,7 @@ export class User extends Model {
     @Column
     declare recoveryEmail?: string;
 
+    @Default(false)
     @AllowNull(false)
     @Column
     declare isAdmin: boolean;
@@ -58,4 +69,16 @@ export class User extends Model {
 
     @DeletedAt
     declare deletedAt: Date;
+
+    @BeforeCreate
+    @BeforeUpdate
+    static hashPassword(instance: User) {
+        if (instance.dataValues.password) {
+            instance.dataValues.password = bcrypt.hashSync(instance.dataValues.password, 10);
+        }
+    }
+
+    public async validPassword(password: string) {
+        return await bcrypt.compare(password, this.password); // this.password is hashed
+    }
 }

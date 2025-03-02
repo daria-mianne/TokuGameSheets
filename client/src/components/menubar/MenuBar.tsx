@@ -1,3 +1,4 @@
+import { useSessionStore } from '@datastore/sessionData';
 import { MenuButton } from './MenuButton';
 
 interface ButtonMapping {
@@ -5,11 +6,21 @@ interface ButtonMapping {
 }
 
 export function MenuBar() {
+    const { token } = useSessionStore();
+
     const standardButtons: ButtonMapping = {
         'Character Creator': '/characters/create',
         'Character Editor': '/characters/edit',
         'Character Viewer': '/characters/view',
     };
+
+    const rightSideButtons: ButtonMapping = 
+        token === null ? {
+            'Login': '/login',
+        } : {
+            'Account': '/myaccount',
+            'Logout': '/logout',
+        };
 
     const adminButtons: ButtonMapping = {
         'Invite Someone': '/invitation',
@@ -42,7 +53,7 @@ export function MenuBar() {
                         display: 'flex',
                     }}
                 >
-                    <MenuButton name='Account' destination='/account' />
+                    {mappingToButtons(rightSideButtons)}
                 </div>
             </div>
         </>

@@ -36,6 +36,9 @@ export class Invitation extends Model {
     @Column
     declare invitingUserId: number;
 
+    @Column
+    declare forAdmin: boolean;
+
     // @BelongsTo(() => User)
     // declare invitingUser: User;
 

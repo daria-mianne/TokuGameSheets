@@ -33,7 +33,7 @@ export default function AbilityDesigner() {
                 <label>
                     Ability Type:
                     <br />
-                    <select id='type' required>
+                    <select name='type' required>
                         <option value={AbilityType.ARMORY}>Armor / Weapon</option>
                         <option value={AbilityType.ICONIC}>Iconic</option>
                         <option value={AbilityType.PERSONAL}>Personal</option>

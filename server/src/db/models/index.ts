@@ -1,5 +1,5 @@
-import { dbConfig } from '@config/dbConfig';
-import { Sequelize } from 'sequelize-typescript';
+import { development as dbConfig } from '@config/config.json';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { Ability } from './Ability';
 import { Backstory } from './Backstory';
 import { Character } from './Character';
@@ -8,9 +8,10 @@ import { Invitation } from './Invitation';
 import { PersonalityTrait } from './PersonalityTrait';
 import { Relationship } from './Relationship';
 import { User } from './User';
+import { SessionToken } from './SessionToken';
 
 export const connection = new Sequelize({
-    ...dbConfig,
+    ...(dbConfig as SequelizeOptions),
 });
 connection.addModels([
     Ability,
@@ -20,6 +21,7 @@ connection.addModels([
     Invitation,
     PersonalityTrait,
     Relationship,
+    SessionToken,
     User
 ]);
 

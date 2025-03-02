@@ -8,15 +8,21 @@
         "dev": "NODE_ENV='dev' nodemon",
         "start": "NODE_ENV='production' node ./dist/main.js",
         "lint": "eslint --fix .; prettier --write .",
-        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"
+        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'",
+        "db:seed": "cd src/db && sequelize-cli db:seed:all",
+        "db:seed:undo": "cd src/db && sequelize-cli db:seed:undo",
+        "db:migrate": "cd src/db && sequelize-cli db:migrate",
+        "db:migrate:undo": "cd src/db && sequelize-cli db:migrate:undo"
     },
     "keywords": [],
     "author": "",
     "description": "",
     "dependencies": {
+        "bcryptjs": "^3.0.2",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
         "express": "^4.21.2",
+        "node-cron": "^3.0.3",
         "pg": "^8.13.3",
         "pg-hstore": "^2.3.4",
         "sequelize": "^6.37.5",
@@ -26,9 +32,11 @@
     "devDependencies": {
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
+        "@types/node-cron": "^3.0.11",
         "@types/validator": "^13.12.2",
         "nodemon": "^3.1.9",
         "reflect-metadata": "^0.2.2",
+        "sequelize-cli": "^6.6.2",
         "tsc-alias": "^1.8.11"
     },
     "nodemonConfig": {

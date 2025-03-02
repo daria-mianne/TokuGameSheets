@@ -1,4 +1,4 @@
-import { User } from './frontend/models/User';
+import { User } from '@models/user';
 
 declare global {
     export interface Window {

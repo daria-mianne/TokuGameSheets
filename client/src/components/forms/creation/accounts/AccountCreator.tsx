@@ -1,8 +1,11 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import ErrorBanner from '@components/forms/ErrorBanner';
 import { Form, FormControl } from '@shelacek/formica';
 import { AccountCreationData } from './types';
 import { FormControlValidationProps } from '@utils/externalTypes';
+import { useLocation } from 'preact-iso';
+import { checkInviteToken } from '@hooks/api/checkTokenValidity';
+import { signup } from '@hooks/api/users';
 
 const containsLowercase = '(?=.*[a-z])';
 const containsUppercase = '(?=.*[A-Z])';
@@ -10,21 +13,62 @@ const containsNumber = '(?=.*[0-9])';
 const containsSymbol = '(?=.*[@!#$%^&*\\(\\)_+=])';
 const passwordPattern = containsLowercase + containsUppercase + containsNumber + containsSymbol;
 
+const Loading = () => <p>Loading...</p>;
+
 export default function AccountCreator() {
+    const { query } = useLocation();
+    const inviteToken = query.token;
+    const [loading, setLoading] = useState(true);
+    const [validToken, setValidToken] = useState(false);
+    const [forAdmin, setForAdmin] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [successfulCreation, setSuccessfulCreation] = useState(false);
     const [formData, setFormData] = useState<AccountCreationData>({
         username: '',
         password: '',
         confirmPassword: '',
-        displayName: '',
-        recoveryEmail: '',
-        confirmEmail: '',
     });
+
+    useEffect(() => {
+        void checkInviteToken(inviteToken).then((checkResult) => {
+            if (checkResult.valid) {
+                setValidToken(true);
+                setForAdmin(checkResult.forAdmin);
+            } else {
+                setValidToken(false);
+            }
+            setLoading(false);
+        });
+    }, []);
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (!validToken) {
+        return (<>
+            <h1>Invalid Token</h1>
+            <p>Your invitation token is invalid.</p>
+        </>);
+    }
+
+    if (submitted) {
+        if (successfulCreation) {
+            return <p>Your account has been created successfully!</p>;
+        }
+        return <p>Failed to create your account! Please try again.</p>;
+    }
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
-            // TODO: API call
+            setLoading(true);
+            setSubmitted(true);
+            void signup(inviteToken, formData.username, formData.password, formData.displayName, formData.recoveryEmail, forAdmin)
+                .then((signupResult) => {
+                    setSuccessfulCreation(signupResult.id !== null);
+                    setLoading(false);
+                });
         }
-        console.log('Account Creation Form Data', formData); // TODO: Remove this
     };
 
     // FIXME: Make form check for valid token in URL query param, associate all submitted data with that token, and invalidate the token if the account creation is successful

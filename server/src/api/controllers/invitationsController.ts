@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Invitation } from '@models';
 
 export class InvitationsController {
@@ -18,10 +17,12 @@ export class InvitationsController {
         return await Invitation.findOne({ where: { guid } });
     };
 
-    public static delete = async (id: number): Promise<void> => {
+    public static delete = async (id: number): Promise<Invitation | null> => {
         const invitation = await this.find(id);
         if (invitation) {
             await invitation.destroy();
+            return invitation;
         }
+        return null;
     };
 }

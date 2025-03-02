@@ -10,6 +10,7 @@
             "react": ["node_modules/preact/compat/"],
             "react-dom": ["node_modules/preact/compat/"],
             "@components/*": ["src/components/*"],
+            "@datastore/*": ["src/datastore/*"],
             "@hooks/*": ["src/hooks/*"],
             "@models/*": ["src/models/*"],
             "@shared-models/*": ["../shared-models/*"],
