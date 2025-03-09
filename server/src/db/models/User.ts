@@ -28,7 +28,7 @@ export class User extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column
-    declare id: number;
+    declare id?: number;
 
     @Length({ min: 1, max: 100 })
     @AllowNull(false)

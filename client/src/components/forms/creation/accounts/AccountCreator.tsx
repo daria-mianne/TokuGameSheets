@@ -4,14 +4,14 @@ import { Form, FormControl } from '@shelacek/formica';
 import { AccountCreationData } from './types';
 import { FormControlValidationProps } from '@utils/externalTypes';
 import { useLocation } from 'preact-iso';
-import { checkInviteToken } from '@hooks/api/checkTokenValidity';
+import { checkInviteToken } from '@hooks/api/checkTokens';
 import { signup } from '@hooks/api/users';
 
 const containsLowercase = '(?=.*[a-z])';
 const containsUppercase = '(?=.*[A-Z])';
 const containsNumber = '(?=.*[0-9])';
-const containsSymbol = '(?=.*[@!#$%^&*\\(\\)_+=])';
-const passwordPattern = containsLowercase + containsUppercase + containsNumber + containsSymbol;
+const containsNonAlphanumeric = '(?=.*[^a-zA-Z0-9])';
+const passwordPattern = '^' + containsLowercase + containsUppercase + containsNumber + containsNonAlphanumeric + '.+$';
 
 const Loading = () => <p>Loading...</p>;
 
@@ -27,6 +27,9 @@ export default function AccountCreator() {
         username: '',
         password: '',
         confirmPassword: '',
+        displayName: '',
+        recoveryEmail: '',
+        confirmEmail: '',
     });
 
     useEffect(() => {
@@ -52,14 +55,16 @@ export default function AccountCreator() {
         </>);
     }
 
-    if (submitted) {
-        if (successfulCreation) {
-            return <p>Your account has been created successfully!</p>;
-        }
-        return <p>Failed to create your account! Please try again.</p>;
+    if (submitted && successfulCreation) {
+        return <p>Your account has been created successfully!</p>;
     }
 
     const handleSubmit = (event: Event) => {
+        if (formData.password !== formData.confirmPassword) {
+            // not true validation yet, so return early
+            return;
+        }
+
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             setLoading(true);
             setSubmitted(true);
@@ -77,6 +82,7 @@ export default function AccountCreator() {
     return (
         <>
             <h1>Account Creator</h1>
+            {submitted && !successfulCreation && <ErrorBanner message='Account creation failed. Please try again.' />}
             <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
                 <div
                     style={{
@@ -89,7 +95,7 @@ export default function AccountCreator() {
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Username (alphanumeric only, length between 5 and 100 chars){' '}
+                                    Username (alphanumeric only, no spaces, length between 5 and 100 chars){' '}
                                     <input
                                         name='username'
                                         type='text'
@@ -116,27 +122,28 @@ export default function AccountCreator() {
                         <li>Must contain an uppercase letter</li>
                         <li>Must contain a lowercase letter</li>
                         <li>Must contain a number</li>
-                        <li>Must contain at least one symbol from this list: !@#$%^&*()=_+</li>
+                        <li>Must contain at least one non-alphanumeric character (e.g. a symbol)</li>
                     </ul>
                     <FormControl name='password' class='form-input'>
                         {({ touched, validity }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Password{' '}
-                                    <input
-                                        name='password'
-                                        type='password'
-                                        minlength={8}
-                                        maxlength={128}
-                                        pattern={passwordPattern}
-                                    />
-                                </label>
-                                {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
-                                {touched && validity.patternMismatch && (
-                                    <ErrorBanner message='Password does not contain required character types!' />
-                                )}
-                            </>
-                        )}
+                                <>
+                                    <label>
+                                        Password{' '}
+                                        <input
+                                            name='password'
+                                            type='password'
+                                            minlength={8}
+                                            maxlength={128}
+                                            pattern={passwordPattern}
+                                        />
+                                    </label>
+                                    {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
+                                    {touched && validity.patternMismatch && (
+                                        <ErrorBanner message='Password does not contain required character types!' />
+                                    )}
+                                </>
+                            )
+                        }
                     </FormControl>
                     <FormControl name='confirmPassword' class='form-input'>
                         {({ touched }: FormControlValidationProps) => (
@@ -159,11 +166,12 @@ export default function AccountCreator() {
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Display Name (alphanumeric only, max length 100 chars){' '}
+                                    Display Name (alphanumeric only, spaces allowed, no leading/trailing spaces, between 5 and 100 chars){' '}
                                     <input
                                         name='displayName'
                                         type='text'
-                                        pattern='[a-zA-Z0-9]+'
+                                        pattern='(?!= )[a-zA-Z0-9 ]+(?<! )'
+                                        minLength={5}
                                         maxLength={100}
                                         required={false}
                                     />
@@ -172,7 +180,7 @@ export default function AccountCreator() {
                                     <ErrorBanner message='Display name must be at least 5 characters long' />
                                 )}
                                 {touched && formData.displayName !== '' && validity.patternMismatch && (
-                                    <ErrorBanner message='Display name must be alphanumeric only' />
+                                    <ErrorBanner message='Display name must be alphanumeric only; spaces are allowed, but not at the start and end' />
                                 )}
                             </>
                         )}

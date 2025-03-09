@@ -29,8 +29,8 @@ export const initInvitationRoutes = (app: Express) => {
 
     app.post('/api/v0/invitations', async (req: Request, res: Response) => {
         try {
-            const { userId } = req.body;
-            const invitation = await InvitationsController.create(Number(userId));
+            const { userId, forAdmin } = req.body;
+            const invitation = await InvitationsController.create(Number(userId), Boolean(forAdmin));
             res.status(200).json({ invitation });
         } catch (error) {
             console.error(error);

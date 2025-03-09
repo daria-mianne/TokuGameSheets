@@ -1,5 +1,3 @@
-import Invitation from "@models/invitation";
-
 export interface BadRequestResponse {
     status: 400;
 }
@@ -7,10 +5,6 @@ export interface BadRequestResponse {
 export interface ApiResponse {
     status: number;
     json: () => Promise<unknown>;
-}
-
-export interface GetInvitationResponse {
-    invitation: Invitation;
 }
 
 export type InvitationCheckResult = {

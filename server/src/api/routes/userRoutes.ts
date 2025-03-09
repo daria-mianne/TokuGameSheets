@@ -7,9 +7,24 @@ export const initUserRoutes = (app: Express) => {
     app.get('/api/v0/users/:id', async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const user = UsersController.find(Number(id));
+            const user = await UsersController.find(Number(id));
             if (user) {
                 res.status(200).json(user);
+            } else {
+                res.status(404).send();
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json(error);
+        }
+    });
+
+    app.get('/api/v0/users/:id/isAdmin', async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const user = await UsersController.find(Number(id));
+            if (user) {
+                res.status(200).json(user.isAdmin);
             } else {
                 res.status(404).send();
             }
