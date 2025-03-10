@@ -49,10 +49,12 @@ export default function AccountCreator() {
     }
 
     if (!validToken) {
-        return (<>
-            <h1>Invalid Token</h1>
-            <p>Your invitation token is invalid.</p>
-        </>);
+        return (
+            <>
+                <h1>Invalid Token</h1>
+                <p>Your invitation token is invalid.</p>
+            </>
+        );
     }
 
     if (submitted && successfulCreation) {
@@ -68,11 +70,17 @@ export default function AccountCreator() {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             setLoading(true);
             setSubmitted(true);
-            void signup(inviteToken, formData.username, formData.password, formData.displayName, formData.recoveryEmail, forAdmin)
-                .then((signupResult) => {
-                    setSuccessfulCreation(signupResult.id !== null);
-                    setLoading(false);
-                });
+            void signup(
+                inviteToken,
+                formData.username,
+                formData.password,
+                formData.displayName,
+                formData.recoveryEmail,
+                forAdmin
+            ).then((signupResult) => {
+                setSuccessfulCreation(signupResult.id !== null);
+                setLoading(false);
+            });
         }
     };
 
@@ -126,24 +134,23 @@ export default function AccountCreator() {
                     </ul>
                     <FormControl name='password' class='form-input'>
                         {({ touched, validity }: FormControlValidationProps) => (
-                                <>
-                                    <label>
-                                        Password{' '}
-                                        <input
-                                            name='password'
-                                            type='password'
-                                            minlength={8}
-                                            maxlength={128}
-                                            pattern={passwordPattern}
-                                        />
-                                    </label>
-                                    {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
-                                    {touched && validity.patternMismatch && (
-                                        <ErrorBanner message='Password does not contain required character types!' />
-                                    )}
-                                </>
-                            )
-                        }
+                            <>
+                                <label>
+                                    Password{' '}
+                                    <input
+                                        name='password'
+                                        type='password'
+                                        minlength={8}
+                                        maxlength={128}
+                                        pattern={passwordPattern}
+                                    />
+                                </label>
+                                {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
+                                {touched && validity.patternMismatch && (
+                                    <ErrorBanner message='Password does not contain required character types!' />
+                                )}
+                            </>
+                        )}
                     </FormControl>
                     <FormControl name='confirmPassword' class='form-input'>
                         {({ touched }: FormControlValidationProps) => (
@@ -166,7 +173,8 @@ export default function AccountCreator() {
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>
                                 <label>
-                                    Display Name (alphanumeric only, spaces allowed, no leading/trailing spaces, between 5 and 100 chars){' '}
+                                    Display Name (alphanumeric only, spaces allowed, no leading/trailing spaces, between
+                                    5 and 100 chars){' '}
                                     <input
                                         name='displayName'
                                         type='text'

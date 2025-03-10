@@ -1,5 +1,17 @@
-import { AllowNull, AutoIncrement, BeforeCreate, Column, CreatedAt, ForeignKey, Index, Model, PrimaryKey, Table, Unique } from "sequelize-typescript";
-import { User } from "./User";
+import {
+    AllowNull,
+    AutoIncrement,
+    BeforeCreate,
+    Column,
+    CreatedAt,
+    ForeignKey,
+    Index,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique,
+} from 'sequelize-typescript';
+import { User } from './User';
 import bcrypt from 'bcryptjs';
 
 @Table({
@@ -33,10 +45,10 @@ export class SessionToken extends Model {
     public static async validToken(token: string) {
         const foundToken = await SessionToken.findOne({
             where: {
-                token: async (hashedToken: string) => await bcrypt.compare(token, hashedToken)
-            }
+                token: async (hashedToken: string) => await bcrypt.compare(token, hashedToken),
+            },
         });
-        
+
         if (!foundToken) {
             return false;
         }

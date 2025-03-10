@@ -7,12 +7,14 @@ export interface ApiResponse {
     json: () => Promise<unknown>;
 }
 
-export type InvitationCheckResult = {
-    valid: true;
-    forAdmin: boolean;
-} | {
-    valid: false;
-}
+export type InvitationCheckResult =
+    | {
+          valid: true;
+          forAdmin: boolean;
+      }
+    | {
+          valid: false;
+      };
 
 export interface SuccessfulLoginResponse {
     token: string;

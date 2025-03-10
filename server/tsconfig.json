@@ -19,7 +19,7 @@
             "@jobs/*": ["src/jobs"],
             "@models/*": ["src/db/models/*"],
             "@routes/*": ["src/api/routes/*"],
-            "@util/*": ["src/util/*"],
+            "@util/*": ["src/util/*"]
         },
         "sourceMap": true,
         "outDir": "./dist",

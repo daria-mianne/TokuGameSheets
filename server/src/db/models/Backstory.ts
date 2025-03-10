@@ -1,7 +1,14 @@
 import 'reflect-metadata';
-import { AutoIncrement,
+import {
+    AutoIncrement,
     // BelongsTo,
-    Column, ForeignKey, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
+    Column,
+    ForeignKey,
+    Length,
+    Model,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 import { Character } from '.';
 
 @Table({

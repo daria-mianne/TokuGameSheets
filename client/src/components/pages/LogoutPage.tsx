@@ -1,4 +1,4 @@
-import { useSessionStore } from "@datastore/sessionData";
+import { useSessionStore } from '@datastore/sessionData';
 
 export default function LogoutPage() {
     const { token, clearToken } = useSessionStore();
@@ -7,5 +7,5 @@ export default function LogoutPage() {
         return <p>Logging you out...</p>;
     }
 
-    return <p>You have been successfully logged out.</p>
+    return <p>You have been successfully logged out.</p>;
 }

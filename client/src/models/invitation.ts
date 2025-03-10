@@ -1,4 +1,3 @@
-
 export default interface Invitation {
     id: number;
     guid: string;

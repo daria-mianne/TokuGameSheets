@@ -1,9 +1,10 @@
 import 'reflect-metadata';
-import { 
+import {
     // Ability,
     Backstory,
     // CharacterAbility,
-    User } from '.';
+    User,
+} from '.';
 import {
     AllowNull,
     AutoIncrement,

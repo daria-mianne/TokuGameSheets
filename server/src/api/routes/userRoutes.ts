@@ -35,14 +35,7 @@ export const initUserRoutes = (app: Express) => {
     });
 
     app.post('/api/v0/signup', async (req: Request, res: Response) => {
-        const {
-            inviteToken,
-            username,
-            displayName,
-            password,
-            recoveryEmail,
-            isAdmin,
-        } = req.body;
+        const { inviteToken, username, displayName, password, recoveryEmail, isAdmin } = req.body;
 
         const invitation = await InvitationsController.findByGuid(inviteToken);
         if (!invitation) {
@@ -58,7 +51,7 @@ export const initUserRoutes = (app: Express) => {
             console.error(error);
             res.status(500).json(error);
         }
-    })
+    });
 
     app.post('/api/v0/login', async (req: Request, res: Response) => {
         const { username, password } = req.body;
@@ -88,17 +81,17 @@ export const initUserRoutes = (app: Express) => {
             res.status(500).json(error);
             return;
         }
-        
+
         res.status(401).send();
     });
 
     app.post('/api/v0/restoreSession', async (req: Request, res: Response) => {
         const { token } = req.body;
-        if (token && await SessionToken.validToken(token)) {
+        if (token && (await SessionToken.validToken(token))) {
             res.status(200).send();
             return;
         }
 
         res.status(401).send();
-    })
-}
+    });
+};

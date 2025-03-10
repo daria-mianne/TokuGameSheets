@@ -42,9 +42,11 @@ export const initInvitationRoutes = (app: Express) => {
         try {
             const { id } = req.params;
             const invitation = await InvitationsController.delete(Number(id));
-            if (invitation) { // got back the deleted invitation
+            if (invitation) {
+                // got back the deleted invitation
                 res.status(200).send();
-            } else { // got back null, representing an absent record
+            } else {
+                // got back null, representing an absent record
                 res.status(404).send();
             }
         } catch (error) {
@@ -52,4 +54,4 @@ export const initInvitationRoutes = (app: Express) => {
             res.status(500).json(error);
         }
     });
-}
+};

@@ -1,4 +1,3 @@
-
 import { Home } from '@components/pages/Home';
 import { FourOhFour } from '@components/pages/404';
 import { lazy, Route, Router, useLocation } from 'preact-iso';
@@ -23,16 +22,18 @@ export default function AppRouter() {
         }
     }, [token, path]);
 
-    return (<Router>
-        <Route path='/' component={Home} />
-        <Route path='/login' component={LoginForm} />
-        <Route path='/logout' component={LogoutPage} />
-        <Route path='/signup' component={AccountCreator} />
-        <Route path='/invitation' component={InvitationCreator} />
-        <Route path='/ability-designer' component={AbilityDesigner} />
-        <Route path='/account-creator/' component={AccountCreator} />
-        <Route path='/characters/create' component={CharacterCreator} />
-        <Route path='/myaccount' component={AccountPage} />
-        <Route default component={FourOhFour} />
-    </Router>);
+    return (
+        <Router>
+            <Route path='/' component={Home} />
+            <Route path='/login' component={LoginForm} />
+            <Route path='/logout' component={LogoutPage} />
+            <Route path='/signup' component={AccountCreator} />
+            <Route path='/invitation' component={InvitationCreator} />
+            <Route path='/ability-designer' component={AbilityDesigner} />
+            <Route path='/account-creator/' component={AccountCreator} />
+            <Route path='/characters/create' component={CharacterCreator} />
+            <Route path='/myaccount' component={AccountPage} />
+            <Route default component={FourOhFour} />
+        </Router>
+    );
 }

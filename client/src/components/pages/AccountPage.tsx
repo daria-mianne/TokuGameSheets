@@ -1,4 +1,3 @@
-
 export default function AccountPage() {
     const user = window.currentUser;
 
@@ -17,5 +16,5 @@ export default function AccountPage() {
             <h2>Account Creation Date</h2>
             {user.createdAt}
         </>
-    )
+    );
 }

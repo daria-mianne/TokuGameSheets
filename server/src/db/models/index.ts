@@ -22,7 +22,7 @@ connection.addModels([
     PersonalityTrait,
     Relationship,
     SessionToken,
-    User
+    User,
 ]);
 
 export * from './Ability';

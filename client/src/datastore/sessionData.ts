@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
 export interface SessionState {
     token: string | null;
@@ -14,7 +14,8 @@ export const useSessionStore = create<SessionState>()(
                 token: null,
                 setToken: (token: string) => set({ token }),
                 clearToken: () => set({ token: null }),
-            }), {
+            }),
+            {
                 name: 'session-data',
                 partialize: (state) =>
                     Object.fromEntries(

@@ -1,4 +1,3 @@
-
 export const oneMinute = 60;
 export const oneHour = oneMinute * 60;
 export const oneDay = oneHour * 24;

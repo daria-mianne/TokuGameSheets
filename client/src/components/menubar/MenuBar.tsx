@@ -14,13 +14,15 @@ export function MenuBar() {
         'Character Viewer': '/characters/view',
     };
 
-    const rightSideButtons: ButtonMapping = 
-        token === null ? {
-            'Login': '/login',
-        } : {
-            'Account': '/myaccount',
-            'Logout': '/logout',
-        };
+    const rightSideButtons: ButtonMapping =
+        token === null
+            ? {
+                  Login: '/login',
+              }
+            : {
+                  Account: '/myaccount',
+                  Logout: '/logout',
+              };
 
     const adminButtons: ButtonMapping = {
         'Invite Someone': '/invitation',
