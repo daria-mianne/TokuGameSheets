@@ -20,7 +20,6 @@ export const apiGet = async (endpoint: string, queryParams?: object): Promise<Ap
 };
 
 export const apiPost = async (endpoint: string, body?: object): Promise<ApiResponse | BadRequestResponse> => {
-    console.log(`attempting post to ${endpoint} with`, body);
     return await fetch(`${apiBaseUrl}/${endpoint}`, {
         method: 'POST',
         headers: {

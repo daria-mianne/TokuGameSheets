@@ -4,7 +4,7 @@ import { Form, FormControl } from '@shelacek/formica';
 import { AccountCreationData } from './types';
 import { FormControlValidationProps } from '@utils/externalTypes';
 import { useLocation } from 'preact-iso';
-import { checkInviteToken } from '@hooks/api/checkTokens';
+import { isInviteTokenValid } from '@hooks/api/tokens';
 import { signup } from '@hooks/api/users';
 
 const containsLowercase = '(?=.*[a-z])';
@@ -33,7 +33,7 @@ export default function AccountCreator() {
     });
 
     useEffect(() => {
-        void checkInviteToken(inviteToken).then((checkResult) => {
+        void isInviteTokenValid(inviteToken).then((checkResult) => {
             if (checkResult.valid) {
                 setValidToken(true);
                 setForAdmin(checkResult.forAdmin);

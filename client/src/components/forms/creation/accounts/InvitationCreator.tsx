@@ -1,8 +1,10 @@
 import { Form } from '@shelacek/formica';
 import { useState } from 'preact/hooks';
 import { InvitationData } from './types';
+import { createInviteToken } from '@hooks/api/tokens';
 
 export default function InvitationCreator() {
+    const [inviteLink, setInviteLink] = useState<string | null>(null);
     const [formData, setFormData] = useState<InvitationData>({
         isAdmin: false,
         recipient: '',
@@ -11,10 +13,19 @@ export default function InvitationCreator() {
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
-            // TODO: API call
+            if (!window.currentUser) {
+                console.error("Shouldn't have been able to submit the form without a logged-in user!");
+                return;
+            }
+            void createInviteToken(window.currentUser.id, formData.recipient, formData.isAdmin).then((token) => {
+                setInviteLink(`https://tokusheets.rec97.space/signup/${token}`);
+            });
         }
-        console.log('Invitation Form Data', formData); // TODO: Remove this
     };
+
+    if (!window.currentUser?.isAdmin) {
+        return <p>Only admins can create invitations, sorry.</p>
+    }
 
     return (
         <>
@@ -36,6 +47,7 @@ export default function InvitationCreator() {
                     <input type='submit' value='Submit' />
                 </div>
             </Form>
+            {inviteLink && <p>Created invitation! While we work on adding the ability to send emails from the server, please send this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a></p>}
         </>
     );
 }

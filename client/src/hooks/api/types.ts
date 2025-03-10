@@ -1,3 +1,5 @@
+import { User } from "@models/user";
+
 export interface BadRequestResponse {
     status: 400;
 }
@@ -18,10 +20,12 @@ export type InvitationCheckResult =
 
 export interface SuccessfulLoginResponse {
     token: string;
+    user: User;
 }
 
 export interface LoginResult {
     token: string | null;
+    user: User | null;
 }
 
 export interface SignupResult {

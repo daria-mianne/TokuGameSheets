@@ -1,7 +1,7 @@
 import { apiPost } from './requestUtils/fetching';
 import { LoginResult, SignupResult, SuccessfulLoginResponse } from './types';
 
-export default async function login(username: string, password: string): Promise<LoginResult> {
+export async function login(username: string, password: string): Promise<LoginResult> {
     const apiResponse = await apiPost('login', {
         username,
         password,
@@ -9,7 +9,7 @@ export default async function login(username: string, password: string): Promise
     if (apiResponse.status === 200) {
         return (await apiResponse.json()) as SuccessfulLoginResponse;
     }
-    return { token: null };
+    return { token: null, user: null };
 }
 
 export async function signup(
@@ -33,4 +33,8 @@ export async function signup(
         return response as SignupResult;
     }
     return { id: null };
+}
+
+export async function logout(token: string) {
+    await apiPost('logout', { token });
 }

@@ -1,4 +1,4 @@
-export default interface Invitation {
+export interface Invitation {
     id: number;
     guid: string;
     invitingUserId: number;

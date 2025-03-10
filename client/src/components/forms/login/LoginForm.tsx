@@ -2,7 +2,7 @@ import { Form } from '@shelacek/formica';
 import { useState } from 'preact/hooks';
 import { LoginData } from './types';
 import { useSessionStore } from '@datastore/sessionData';
-import login from '@hooks/api/users';
+import { login } from '@hooks/api/users';
 import ErrorBanner from '@components/forms/ErrorBanner';
 import { useLocation } from 'preact-iso';
 
@@ -20,6 +20,7 @@ export default function LoginForm() {
             login(formData.username, formData.password).then((loginResult) => {
                 if (loginResult.token) {
                     setToken(loginResult.token);
+                    window.currentUser = loginResult.user;
                     setLoginFailed(false);
                     route(decodeURI(query.redirectUri));
                 } else {
