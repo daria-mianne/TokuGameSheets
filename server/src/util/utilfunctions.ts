@@ -9,22 +9,22 @@ export function addRoute(
     endpoint: string,
     routeHandler: (req: Request, res: Response) => Promise<void>
 ): void {
-    let appMethod;
+    const path = `/api/${apiVersion}/${endpoint}`;
+    const callback = errorCatcher(routeHandler);
     switch (method) {
         case 'post':
-            appMethod = app.post;
+            app.post(path, callback);
             break;
         case 'put':
-            appMethod = app.put;
+            app.put(path, callback);
             break;
         case 'delete':
-            appMethod = app.delete;
+            app.delete(path, callback);
             break;
         case 'get':
         default:
-            appMethod = app.get;
+            app.get(path, callback);
     }
-    appMethod(`/api/${apiVersion}/${endpoint}`, errorCatcher(routeHandler));
 }
 
 /**
