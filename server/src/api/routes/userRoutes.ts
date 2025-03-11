@@ -69,8 +69,8 @@ export const initUserRoutes = (app: Express) => {
         const { token } = req.body;
         const sessionToken = await SessionToken.findOne({
             where: {
-                token
-            }
+                token,
+            },
         });
         if (!sessionToken) {
             res.status(404).send();

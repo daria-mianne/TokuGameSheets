@@ -13,7 +13,7 @@ export default function LogoutPage() {
             });
         }
     }, [token]);
-    
+
     if (token) {
         return <p>Logging you out...</p>;
     }

@@ -20,11 +20,7 @@ export function initAbilityRoutes(app: Express) {
     });
 
     addRoute(app, 'post', 'v0', 'abilities', async (req: Request, res: Response) => {
-        const {
-            adminOnly,
-            type,
-            description,
-        } = req.body;
+        const { adminOnly, type, description } = req.body;
         const ability = await Ability.create({
             adminOnly,
             type,
@@ -35,11 +31,7 @@ export function initAbilityRoutes(app: Express) {
 
     addRoute(app, 'post', 'v0', 'abilities/:id', async (req: Request, res: Response) => {
         const { id } = req.params;
-        const {
-            adminOnly,
-            type,
-            description,
-        } = req.body;
+        const { adminOnly, type, description } = req.body;
         const ability = await Ability.findByPk(id);
         if (!ability) {
             res.status(404).send();
@@ -55,14 +47,14 @@ export function initAbilityRoutes(app: Express) {
         if (description !== undefined) {
             ability.description = description;
         }
-        
+
         try {
             await ability.save();
             res.status(200).send();
         } catch (validationError) {
             res.status(400).json(validationError);
         }
-    })
+    });
 
     addRoute(app, 'delete', 'v0', 'abilities/:id', async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -73,5 +65,5 @@ export function initAbilityRoutes(app: Express) {
         }
 
         res.status(404).send();
-    })
+    });
 }

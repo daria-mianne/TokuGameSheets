@@ -26,14 +26,14 @@ export async function isAdminSession(token: string): Promise<boolean> {
     const apiResponse = await apiGet(`sessions/${token}/isAdmin`);
     if (apiResponse.status !== 200) return false;
 
-    return await apiResponse.json() as boolean;
+    return (await apiResponse.json()) as boolean;
 }
 
 export async function createInviteToken(userId: number, recipient: string, forAdmin: boolean) {
     const apiResponse = await apiPost('invitations', {
         userId,
         recipient,
-        forAdmin
+        forAdmin,
     });
     if (apiResponse.status === 200) {
         const { guid } = (await apiResponse.json()) as Invitation;

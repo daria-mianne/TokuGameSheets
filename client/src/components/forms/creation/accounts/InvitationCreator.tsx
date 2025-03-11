@@ -24,7 +24,7 @@ export default function InvitationCreator() {
     };
 
     if (!window.currentUser?.isAdmin) {
-        return <p>Only admins can create invitations, sorry.</p>
+        return <p>Only admins can create invitations, sorry.</p>;
     }
 
     return (
@@ -47,7 +47,12 @@ export default function InvitationCreator() {
                     <input type='submit' value='Submit' />
                 </div>
             </Form>
-            {inviteLink && <p>Created invitation! While we work on adding the ability to send emails from the server, please send this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a></p>}
+            {inviteLink && (
+                <p>
+                    Created invitation! While we work on adding the ability to send emails from the server, please send
+                    this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a>
+                </p>
+            )}
         </>
     );
 }
