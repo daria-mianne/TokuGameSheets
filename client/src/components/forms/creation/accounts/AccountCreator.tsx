@@ -132,6 +132,10 @@ export default function AccountCreator() {
                         <li>Must contain a number</li>
                         <li>Must contain at least one non-alphanumeric character (e.g. a symbol)</li>
                     </ul>
+                    <p>
+                        This site and its backend were developed by one person. Please do not reuse passwords here, in
+                        case I fucked up the security somehow.
+                    </p>
                     <FormControl name='password' class='form-input'>
                         {({ touched, validity }: FormControlValidationProps) => (
                             <>

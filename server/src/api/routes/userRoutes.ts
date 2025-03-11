@@ -2,6 +2,8 @@ import { InvitationsController, UsersController } from '@controllers';
 import { Express, Request, Response } from 'express';
 import { SessionToken } from '@models/SessionToken';
 import { addRoute } from '@util/utilfunctions';
+import { User } from '@models';
+import { sha256 } from '@util/hashing';
 
 export const initUserRoutes = (app: Express) => {
     addRoute(app, 'get', 'v0', 'users/:id', async (req: Request, res: Response) => {
@@ -66,10 +68,11 @@ export const initUserRoutes = (app: Express) => {
     });
 
     addRoute(app, 'post', 'v0', 'logout', async (req: Request, res: Response) => {
-        const { token } = req.body;
+        const { token } = req.body as { token: string };
+        const hashedToken = await sha256(token);
         const sessionToken = await SessionToken.findOne({
             where: {
-                token,
+                token: hashedToken,
             },
         });
         if (!sessionToken) {
@@ -82,12 +85,19 @@ export const initUserRoutes = (app: Express) => {
     });
 
     addRoute(app, 'post', 'v0', 'restoreSession', async (req: Request, res: Response) => {
-        const { token } = req.body;
-        if (token && (await SessionToken.validToken(token))) {
-            res.status(200).send();
+        const { token } = req.body as { token: string };
+        const hashedToken = await sha256(token);
+        const sessionToken = await SessionToken.findOne({
+            where: {
+                token: hashedToken, // FIXME
+            },
+        });
+        if (!sessionToken) {
+            res.status(401).send();
             return;
         }
 
-        res.status(401).send();
+        const user = await User.findByPk(sessionToken.userId);
+        res.status(200).send(user);
     });
 };

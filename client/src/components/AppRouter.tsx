@@ -18,7 +18,8 @@ export default function AppRouter() {
 
     useEffect(() => {
         if (!token && !['/login', '/signup'].includes(path)) {
-            route(`/login?redirectUri=${encodeURIComponent(url)}`, true);
+            const redirectUri = `/login?redirectUri=${encodeURIComponent(url.includes('logout') ? '/' : url)}`;
+            route(redirectUri, true);
         }
     }, [token, path]);
 

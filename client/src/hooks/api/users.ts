@@ -1,3 +1,4 @@
+import { User } from '@models/user';
 import { apiPost } from './requestUtils/fetching';
 import { LoginResult, SignupResult, SuccessfulLoginResponse } from './types';
 
@@ -10,6 +11,14 @@ export async function login(username: string, password: string): Promise<LoginRe
         return (await apiResponse.json()) as SuccessfulLoginResponse;
     }
     return { token: null, user: null };
+}
+
+export async function restoreSession(token: string) {
+    const apiResponse = await apiPost('restoreSession', { token });
+    if (apiResponse.status === 200) {
+        return (await apiResponse.json()) as User;
+    }
+    return null;
 }
 
 export async function signup(

@@ -12,7 +12,7 @@ import {
     Unique,
 } from 'sequelize-typescript';
 import { User } from './User';
-import bcrypt from 'bcryptjs';
+import { sha256 } from '@util/hashing';
 
 @Table({
     tableName: 'session_tokens',
@@ -39,13 +39,13 @@ export class SessionToken extends Model {
 
     @BeforeCreate
     static async generateToken(instance: SessionToken) {
-        instance.token = await bcrypt.hash(instance.token, 0);
+        instance.token = await sha256(instance.token);
     }
 
     public static async validToken(token: string) {
         const foundToken = await SessionToken.findOne({
             where: {
-                token: async (hashedToken: string) => await bcrypt.compare(token, hashedToken),
+                token: await sha256(token),
             },
         });
 
