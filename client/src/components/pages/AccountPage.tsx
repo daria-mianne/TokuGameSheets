@@ -1,6 +1,10 @@
 export default function AccountPage() {
     const user = window.currentUser;
 
+    if (!user) {
+        return <p>Not logged in</p>;
+    }
+
     return (
         <>
             <h1>My Account</h1>
@@ -12,7 +16,7 @@ export default function AccountPage() {
             <h2>Email</h2>
             {user.recoveryEmail}
             <h2>Is Admin?</h2>
-            {user.isAdmin}
+            {String(user.isAdmin) /* need explicit string conversion for boolean here */}
             <h2>Account Creation Date</h2>
             {user.createdAt}
         </>

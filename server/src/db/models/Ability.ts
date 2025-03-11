@@ -1,12 +1,10 @@
 import 'reflect-metadata';
-import { Character } from '.';
 import {
     AllowNull,
     AutoIncrement,
     // BelongsToMany,
     Column,
     DataType,
-    ForeignKey,
     Length,
     Model,
     PrimaryKey,
@@ -44,12 +42,6 @@ export class Ability extends Model {
     @Length({ min: 1, max: 10000 })
     @Column
     declare description: string;
-
-    @ForeignKey(() => Character)
-    declare char1Id: number;
-
-    @ForeignKey(() => Character)
-    declare char2Id: number;
 
     // @BelongsToMany(() => Character, () => CharacterAbility)
     // declare characters: Character[];

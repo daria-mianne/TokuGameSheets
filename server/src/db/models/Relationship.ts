@@ -11,7 +11,9 @@ import {
     AllowNull,
     PrimaryKey,
     Table,
+    ForeignKey,
 } from 'sequelize-typescript';
+import { Character } from './Character';
 
 @Table({
     tableName: 'relationships',
@@ -33,6 +35,12 @@ export class Relationship extends Model {
         type: DataType.STRING(1000),
     })
     declare description: string;
+
+    @ForeignKey(() => Character)
+    declare char1Id: number;
+
+    @ForeignKey(() => Character)
+    declare char2Id: number;
 
     // @HasMany(() => Character)
     // declare characterIds: number[];
