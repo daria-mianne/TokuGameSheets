@@ -19,11 +19,11 @@ export default function InvitationCreator() {
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
-            if (!window.currentUser) {
+            if (!currentUser) {
                 console.error("Shouldn't have been able to submit the form without a logged-in user!");
                 return;
             }
-            void createInviteToken(window.currentUser.id, formData.recipient, formData.isAdmin).then((token) => {
+            void createInviteToken(currentUser.id, formData.recipient, formData.isAdmin).then((token) => {
                 setInviteLink(`https://tokusheets.rec97.space/signup/${token}`);
             });
         }
