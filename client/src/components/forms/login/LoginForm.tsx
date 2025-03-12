@@ -5,6 +5,7 @@ import { useSessionStore } from '@datastore/sessionData';
 import { login } from '@hooks/api/users';
 import ErrorBanner from '@components/forms/ErrorBanner';
 import { useLocation } from 'preact-iso';
+import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 
 export default function LoginForm() {
     const [formData, setFormData] = useState<LoginData>({
@@ -14,13 +15,14 @@ export default function LoginForm() {
     const [loginFailed, setLoginFailed] = useState(false);
     const { setToken } = useSessionStore();
     const { route, query } = useLocation();
+    const { setCurrentUser } = useMemoryOnlyDataStore();
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             login(formData.username, formData.password).then((loginResult) => {
-                if (loginResult.token) {
+                if (loginResult.token && loginResult.user) {
                     setToken(loginResult.token);
-                    window.currentUser = loginResult.user;
+                    setCurrentUser(loginResult.user);
                     setLoginFailed(false);
                     route(decodeURI(query.redirectUri));
                 } else {
