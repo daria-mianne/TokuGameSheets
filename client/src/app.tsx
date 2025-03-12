@@ -4,12 +4,14 @@ import AppRouter from '@components/AppRouter';
 import { useSessionStore } from '@datastore/sessionData';
 import { useEffect } from 'preact/hooks';
 import { restoreSession } from '@hooks/api/users';
+import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 
 export function App() {
     const { token } = useSessionStore();
+    const { currentUser, setCurrentUser, clearCurrentUser } = useMemoryOnlyDataStore();
     useEffect(() => {
-        if (token && !window.currentUser) {
-            void restoreSession(token).then((user) => (window.currentUser = user));
+        if (token && !currentUser) {
+            void restoreSession(token).then((user) => user ? setCurrentUser(user) : clearCurrentUser());
         }
     }, []);
 

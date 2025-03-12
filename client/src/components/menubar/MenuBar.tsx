@@ -1,5 +1,6 @@
 import { useSessionStore } from '@datastore/sessionData';
 import { MenuButton } from './MenuButton';
+import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 
 interface ButtonMapping {
     [name: string]: string;
@@ -7,6 +8,7 @@ interface ButtonMapping {
 
 export function MenuBar() {
     const { token } = useSessionStore();
+    const { currentUser } = useMemoryOnlyDataStore();
 
     const standardButtons: ButtonMapping = {
         'Character Creator': '/characters/create',
@@ -44,9 +46,7 @@ export function MenuBar() {
             >
                 <MenuButton name='Home' destination='/' />
                 {
-                    // FIXME: Make this check window.currentUser.isAdmin when the login functionality is added https://github.com/daria-mianne/TokuGameSheets/issues/5 and remove the eslint comment
-                    // eslint-disable-next-line no-constant-condition
-                    true ? mappingToButtons(adminButtons) : ''
+                    currentUser?.isAdmin ? mappingToButtons(adminButtons) : ''
                 }
                 {mappingToButtons(standardButtons)}
                 <div
