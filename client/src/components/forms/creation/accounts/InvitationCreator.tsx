@@ -1,5 +1,5 @@
 import { Form } from '@shelacek/formica';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { InvitationData } from './types';
 import { createInviteToken } from '@hooks/api/tokens';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
@@ -10,7 +10,12 @@ export default function InvitationCreator() {
         isAdmin: false,
         recipient: '',
     });
+    const [showAdminWarning, setShowAdminWarning] = useState(false);
     const { currentUser } = useMemoryOnlyDataStore();
+    useEffect(() => {
+        const isAdmin = currentUser?.isAdmin;
+        setShowAdminWarning(!isAdmin);
+    }, [currentUser]);
 
     const handleSubmit = (event: Event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
@@ -26,8 +31,8 @@ export default function InvitationCreator() {
 
     return (
         <>
-            {currentUser?.isAdmin && <p>Only admins can create invitations, sorry.</p>}
-            {!currentUser?.isAdmin && (
+            {showAdminWarning && <p>Only admins can create invitations, sorry.</p>}
+            {!showAdminWarning && (
                 <>
                     <h1>Invitation Creator</h1>
                     <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>

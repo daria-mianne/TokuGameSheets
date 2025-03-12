@@ -4,13 +4,28 @@ import { SessionToken } from '@models/SessionToken';
 import { addRoute } from '@util/utilfunctions';
 import { User } from '@models';
 import { sha256 } from '@util/hashing';
+import { pick } from 'lodash';
+
+const limitUserData = (user: User | null) => {
+    if (user === null) return null;
+    return pick(user, [
+        'id',
+        'username',
+        'displayName',
+        'recoveryEmail',
+        'isAdmin',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+    ]);
+}
 
 export const initUserRoutes = (app: Express) => {
     addRoute(app, 'get', 'v0', 'users/:id', async (req: Request, res: Response) => {
         const { id } = req.params;
         const user = await UsersController.find(Number(id));
         if (user) {
-            res.status(200).json(user);
+            res.status(200).json(limitUserData(user));
         } else {
             res.status(404).send();
         }
@@ -58,7 +73,7 @@ export const initUserRoutes = (app: Express) => {
                 });
                 res.status(200).json({
                     token,
-                    user,
+                    user: limitUserData(user),
                 });
                 return;
             }
@@ -98,6 +113,6 @@ export const initUserRoutes = (app: Express) => {
         }
 
         const user = await User.findByPk(sessionToken.userId);
-        res.status(200).send(user);
+        res.status(200).json(limitUserData(user));
     });
 };
