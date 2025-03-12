@@ -42,7 +42,7 @@ export default function AccountCreator() {
             }
             setLoading(false);
         });
-    }, []);
+    }, [inviteToken]);
 
     if (loading) {
         return <Loading />;
