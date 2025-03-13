@@ -1,6 +1,6 @@
 import { LocationProvider, ErrorBoundary } from 'preact-iso';
 import { MenuBar } from '@components/menubar/MenuBar';
-import AppRouter from '@components/AppRouter';
+import AppRouter from '@components/routing/AppRouter';
 import { useSessionStore } from '@datastore/sessionData';
 import { useEffect } from 'preact/hooks';
 import { restoreSession } from '@hooks/api/users';
