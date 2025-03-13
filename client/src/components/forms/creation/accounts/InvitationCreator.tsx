@@ -24,7 +24,7 @@ export default function InvitationCreator() {
                 return;
             }
             void createInviteToken(currentUser.id, formData.recipient, formData.isAdmin).then((token) => {
-                setInviteLink(`https://tokusheets.rec97.space/signup/${token}`);
+                setInviteLink(`https://tokusheets.rec97.space/signup?token=${token}`);
             });
         }
     };

@@ -17,7 +17,7 @@ export default function AppRouter() {
     const { path, url, route } = useLocation();
 
     useEffect(() => {
-        if (!token && !path.startsWith('/login') && !path.startsWith('/signup/')) {
+        if (!token && !['/login', '/signup'].includes(path)) {
             const redirectUri = `/login?redirectUri=${encodeURIComponent(url.includes('logout') ? '/' : url)}`;
             route(redirectUri, true);
         }
@@ -28,7 +28,7 @@ export default function AppRouter() {
             <Route path='/' component={Home} />
             <Route path='/login' component={LoginForm} />
             <Route path='/logout' component={LogoutPage} />
-            <Route path='/signup/:id' component={AccountCreator} />
+            <Route path='/signup' component={AccountCreator} />
             <Route path='/invitation' component={InvitationCreator} />
             <Route path='/ability-designer' component={AbilityDesigner} />
             <Route path='/account-creator/' component={AccountCreator} />
