@@ -27,7 +27,7 @@ export function MenuBar() {
               };
 
     const adminButtons: ButtonMapping = {
-        'Invite Someone': '/invitation',
+        'Invite Someone': '/invite',
         'Ability Designer': '/ability-designer',
     };
 
@@ -45,9 +45,7 @@ export function MenuBar() {
                 }}
             >
                 <MenuButton name='Home' destination='/' />
-                {
-                    currentUser?.isAdmin ? mappingToButtons(adminButtons) : ''
-                }
+                {currentUser?.isAdmin ? mappingToButtons(adminButtons) : ''}
                 {mappingToButtons(standardButtons)}
                 <div
                     style={{

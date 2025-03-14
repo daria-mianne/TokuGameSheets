@@ -18,7 +18,7 @@ const limitUserData = (user: User | null) => {
         'updatedAt',
         'deletedAt',
     ]);
-}
+};
 
 export const initUserRoutes = (app: Express) => {
     addRoute(app, 'get', 'v0', 'users/:id', async (req: Request, res: Response) => {

@@ -26,7 +26,7 @@ export default function AppRouter() {
             <LoggedInRoute path='/myaccount' component={AccountPage} />
 
             {/* Routes you have to be logged into an admin account to hit */}
-            <AdminRoute path='/invitation' component={InvitationCreator} />
+            <AdminRoute path='/invite' component={InvitationCreator} />
             <AdminRoute path='/ability-designer' component={AbilityDesigner} />
 
             {/* Default route */}

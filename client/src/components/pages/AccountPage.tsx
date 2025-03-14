@@ -1,5 +1,5 @@
-import { useMemoryOnlyDataStore } from "@datastore/memoryOnlyData";
-import { useEffect, useState } from "preact/hooks";
+import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
+import { useEffect, useState } from 'preact/hooks';
 
 export default function AccountPage() {
     const [showNotLoggedInWarning, setShowNotLoggedInWarning] = useState(false);

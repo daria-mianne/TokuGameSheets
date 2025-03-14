@@ -42,8 +42,8 @@ export default function InvitationCreator() {
             </Form>
             {inviteLink && (
                 <p>
-                    Created invitation! While we work on adding the ability to send emails from the server,
-                    please send this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a>
+                    Created invitation! While we work on adding the ability to send emails from the server, please send
+                    this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a>
                 </p>
             )}
         </>

@@ -11,7 +11,7 @@ export function App() {
     const { currentUser, setCurrentUser, clearCurrentUser } = useMemoryOnlyDataStore();
     useEffect(() => {
         if (token && !currentUser) {
-            void restoreSession(token).then((user) => user ? setCurrentUser(user) : clearCurrentUser());
+            void restoreSession(token).then((user) => (user ? setCurrentUser(user) : clearCurrentUser()));
         }
     }, []);
 
