@@ -17,7 +17,7 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        return queryInterface.sequelize.transaction((t) => {
+        return await queryInterface.sequelize.transaction((t) => {
             return queryInterface.removeColumn('users', 'password', { transaction: t });
         });
     },

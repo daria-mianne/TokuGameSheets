@@ -1,8 +1,7 @@
 import { Home } from '@components/pages/Home';
 import { FourOhFour } from '@components/pages/404';
 import { lazy, Route, Router } from 'preact-iso';
-import { AdminRoute } from './AdminRoute';
-import { LoggedInRoute } from './LoggedInRoute';
+import { AdminRoute, LoggedInRoute } from './constraints';
 
 const LoginForm = lazy(() => import('@components/forms/login/LoginForm'));
 const LogoutPage = lazy(() => import('@components/pages/LogoutPage'));

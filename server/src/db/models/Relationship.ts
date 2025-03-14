@@ -32,7 +32,7 @@ export class Relationship extends Model {
 
     @AllowNull(false)
     @Column({
-        type: DataType.STRING(1000),
+        type: DataType.TEXT,
     })
     declare description: string;
 

@@ -1,24 +1,35 @@
 // import { SimpleTextField } from '../fields/SimpleTextField';
 import { Form, FormGroup } from '@shelacek/formica';
 import { useState } from 'preact/hooks';
-import { AbilityDesign, AbilityType } from './types';
+import { Ability, AbilityType } from '@models/ability';
+import { createAbility } from '@hooks/api/abilities';
 
 export default function AbilityDesigner() {
-    const [formData, setFormData] = useState<AbilityDesign>({
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [successfulCreation, setSuccessfulCreation] = useState(false);
+    const [formData, setFormData] = useState<Ability>({
         name: '',
+        adminOnly: false,
         type: AbilityType.ARMORY,
         description: '',
         mechanics: null,
     });
 
     const handleSubmit = (event: Event) => {
+        setSubmitted(true);
         if ((event.target as HTMLFormElement)?.checkValidity()) {
-            // TODO: API call
+            setLoading(true);
+            void createAbility(formData).then((id) => {
+                setLoading(false);
+                setSuccessfulCreation(!!id);
+            });
+        } else {
+            setLoading(false);
+            setSuccessfulCreation(false);
         }
-        console.log('Ability Designer Form Data', formData); // TODO: Remove this
     };
 
-    // TODO: More advanced permissioning than just "is admin? yes/no"
     return (
         <>
             <h1>Ability Designer</h1>
@@ -28,6 +39,13 @@ export default function AbilityDesigner() {
                     <br />
                     <input name='name' type='text' maxLength={100} required />
                 </label>
+                <br />
+                <br />
+                <label>
+                    Should only admins be able to see this ability?{' '}
+                    <input name='adminOnly' type='checkbox' />
+                </label>
+                <br />
                 <br />
                 <label>
                     Ability Type:
@@ -39,6 +57,7 @@ export default function AbilityDesigner() {
                         <option value={AbilityType.TEAM}>Team</option>
                     </select>
                 </label>
+                <br />
                 <br />
                 <label>
                     Ability Description (max length 10,000 chars):
@@ -53,6 +72,7 @@ export default function AbilityDesigner() {
                     />
                 </label>
                 <br />
+                <br />
                 <FormGroup>
                     <h2>Ability Mechanics</h2>
                     &nbsp;&nbsp;&nbsp;&nbsp;This section to come in a later update.
@@ -61,6 +81,9 @@ export default function AbilityDesigner() {
                 <br />
                 <button type='submit'>Submit form</button>
             </Form>
+            {submitted && loading && <p>Creating your ability...</p>}
+            {submitted && !loading && successfulCreation && <p>Successfully created your ability!</p>}
+            {submitted && !loading && !successfulCreation && <p>Failed to create your ability. Please try again.</p>}
         </>
     );
 }

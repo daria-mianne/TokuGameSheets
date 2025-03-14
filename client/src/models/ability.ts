@@ -7,9 +7,11 @@ export enum AbilityType {
 
 export type AbilityMechanics = null; // FIXME: Add real AbilityMechanics type
 
-export interface AbilityDesign {
+export interface Ability {
+    id?: number;
+    adminOnly: boolean;
     name: string;
     type: AbilityType;
     description: string;
-    mechanics: AbilityMechanics;
+    mechanics?: AbilityMechanics; // TODO: Make this non-optional when it's actually implemented
 }

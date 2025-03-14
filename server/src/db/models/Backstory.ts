@@ -3,6 +3,7 @@ import {
     AutoIncrement,
     // BelongsTo,
     Column,
+    DataType,
     ForeignKey,
     Length,
     Model,
@@ -21,7 +22,9 @@ export class Backstory extends Model {
     declare id: number;
 
     @Length({ min: 0, max: 1000000 })
-    @Column
+    @Column({
+        type: DataType.TEXT
+    })
     declare backstory: string;
 
     @ForeignKey(() => Character)

@@ -28,3 +28,9 @@ export const apiPost = async (endpoint: string, body?: object): Promise<ApiRespo
         body: JSON.stringify(body),
     });
 };
+
+export const apiDelete = async (endpoint: string): Promise<ApiResponse | BadRequestResponse> => {
+    return await fetch(`${apiBaseUrl}/${endpoint}`, {
+        method: 'DELETE',
+    });
+};

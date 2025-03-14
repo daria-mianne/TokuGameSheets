@@ -8,6 +8,7 @@ import {
     BeforeUpdate,
     Column,
     CreatedAt,
+    DataType,
     Default,
     DeletedAt,
     // HasMany,
@@ -47,7 +48,9 @@ export class User extends Model {
 
     @Length({ min: 5, max: 500 })
     @AllowNull
-    @Column
+    @Column({
+        type: DataType.TEXT
+    })
     declare recoveryEmail?: string;
 
     @Default(false)

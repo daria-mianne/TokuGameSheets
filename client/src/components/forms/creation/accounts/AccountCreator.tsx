@@ -178,12 +178,12 @@ export default function AccountCreator() {
                             <>
                                 <label>
                                     Display Name (alphanumeric only, spaces allowed, no leading/trailing spaces, between
-                                    5 and 100 chars){' '}
+                                    1 and 100 chars){' '}
                                     <input
                                         name='displayName'
                                         type='text'
                                         pattern='(?!= )[a-zA-Z0-9 ]+(?<! )'
-                                        minLength={5}
+                                        minLength={1}
                                         maxLength={100}
                                         required={false}
                                     />

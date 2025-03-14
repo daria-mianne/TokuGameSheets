@@ -20,13 +20,14 @@ export function initAbilityRoutes(app: Express) {
     });
 
     addRoute(app, 'post', 'v0', 'abilities', async (req: Request, res: Response) => {
-        const { adminOnly, type, description } = req.body;
+        const { adminOnly, name, type, description } = req.body;
         const ability = await Ability.create({
             adminOnly,
+            name,
             type,
             description,
         });
-        res.status(200).json(ability);
+        res.status(200).json(ability.id);
     });
 
     addRoute(app, 'post', 'v0', 'abilities/:id', async (req: Request, res: Response) => {

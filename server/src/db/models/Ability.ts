@@ -39,8 +39,15 @@ export class Ability extends Model {
     declare type: AbilityType;
 
     @AllowNull(false)
-    @Length({ min: 1, max: 10000 })
+    @Length({ min: 1, max: 100 })
     @Column
+    declare name: string;
+
+    @AllowNull(false)
+    @Length({ min: 1, max: 10000 })
+    @Column({
+        type: DataType.TEXT
+    })
     declare description: string;
 
     // @BelongsToMany(() => Character, () => CharacterAbility)
