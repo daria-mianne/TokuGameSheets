@@ -4,6 +4,7 @@ import { Route, RouteProps, useLocation } from "preact-iso";
 import { useEffect } from "preact/hooks";
 import { RouteConstraint } from "./routeConstraints";
 
+/** Constraints will be checked in order and any constraint failing will prevent the processing of later ones. */
 export function ConstrainedRoute<Props>(props: {
     routeProps: RouteProps<Props> & Partial<Props>,
     constraints: RouteConstraint[]

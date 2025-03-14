@@ -4,7 +4,10 @@ interface RouteFunction {
     (url: string, replace?: boolean): void;
 }
 
-/** This function should return true if the constraint passed and false if it failed. */
+/**
+ * This function should return true if the constraint passed and false if it failed.
+ * The function should handle its own failure state, such as by redirecting the user to another route.
+ */
 export interface RouteConstraint {
     (currentUser: User | null, url: string, route: RouteFunction): boolean;
 }
