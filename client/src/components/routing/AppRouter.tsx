@@ -5,7 +5,7 @@ import { AdminRoute } from './AdminRoute';
 import { LoggedInRoute } from './LoggedInRoute';
 
 const LoginForm = lazy(() => import('@components/forms/login/LoginForm'));
-const LogoutPage = lazy(() => import('../pages/LogoutPage'));
+const LogoutPage = lazy(() => import('@components/pages/LogoutPage'));
 const InvitationCreator = lazy(() => import('@components/forms/creation/accounts/InvitationCreator'));
 const AccountCreator = lazy(() => import('@components/forms/creation/accounts/AccountCreator'));
 const AbilityDesigner = lazy(() => import('@components/forms/creation/abilities/AbilityDesigner'));
