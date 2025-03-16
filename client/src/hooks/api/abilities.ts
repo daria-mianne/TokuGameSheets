@@ -1,5 +1,5 @@
-import { Ability } from "@models/ability";
-import { apiDelete, apiGet, apiPost } from "./requestUtils/fetching";
+import { Ability } from '@models/ability';
+import { apiDelete, apiGet, apiPost } from './requestUtils/fetching';
 
 export async function getAbility(id: number) {
     const apiResponse = await apiGet(`abilities/${id}`);

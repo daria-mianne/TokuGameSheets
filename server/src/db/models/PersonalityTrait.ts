@@ -32,7 +32,7 @@ export class PersonalityTrait extends Model {
     @Length({ min: 1, max: 1000 })
     @AllowNull(false)
     @Column({
-        type: DataType.TEXT
+        type: DataType.TEXT,
     })
     declare description: string;
 }

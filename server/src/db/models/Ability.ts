@@ -46,7 +46,7 @@ export class Ability extends Model {
     @AllowNull(false)
     @Length({ min: 1, max: 10000 })
     @Column({
-        type: DataType.TEXT
+        type: DataType.TEXT,
     })
     declare description: string;
 

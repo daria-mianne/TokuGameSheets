@@ -42,8 +42,7 @@ export default function AbilityDesigner() {
                 <br />
                 <br />
                 <label>
-                    Should only admins be able to see this ability?{' '}
-                    <input name='adminOnly' type='checkbox' />
+                    Should only admins be able to see this ability? <input name='adminOnly' type='checkbox' />
                 </label>
                 <br />
                 <br />

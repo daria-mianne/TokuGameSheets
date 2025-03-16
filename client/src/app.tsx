@@ -10,7 +10,7 @@ export function App() {
     const { token } = useSessionStore();
     const { currentUser, setCurrentUser, clearCurrentUser } = useMemoryOnlyDataStore();
     const [readyToShow, setReadyToShow] = useState(false);
-    
+
     useEffect(() => {
         if (token && !currentUser) {
             setReadyToShow(false);

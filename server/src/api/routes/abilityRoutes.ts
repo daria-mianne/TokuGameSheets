@@ -60,11 +60,12 @@ export function initAbilityRoutes(app: Express) {
     addRoute(app, 'delete', 'v0', 'abilities/:id', async (req: Request, res: Response) => {
         const { id } = req.params;
         const ability = await Ability.findByPk(id);
-        if (ability) {
-            res.status(200).json(ability);
+        if (!ability) {
+            res.status(404).send();
             return;
         }
 
-        res.status(404).send();
+        await ability.destroy();
+        res.status(200).send();
     });
 }

@@ -23,11 +23,12 @@ export interface NpcRelationship {
     description: string;
 }
 
-export interface CharacterDetails {
+export interface Character {
+    id?: number;
     name: string;
     pronouns: string;
     color: RangerColor;
     personalityTraits: { trait: string }[];
-    personalAbilities: never[]; // FIXME: Real type when ability creation is more done
+    personalAbilities?: never[]; // FIXME: Real type when ability creation is more done
     npcRelationships: NpcRelationship[];
 }

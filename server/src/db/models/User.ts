@@ -49,7 +49,7 @@ export class User extends Model {
     @Length({ min: 5, max: 500 })
     @AllowNull
     @Column({
-        type: DataType.TEXT
+        type: DataType.TEXT,
     })
     declare recoveryEmail?: string;
 

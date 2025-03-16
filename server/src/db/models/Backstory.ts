@@ -23,7 +23,7 @@ export class Backstory extends Model {
 
     @Length({ min: 0, max: 1000000 })
     @Column({
-        type: DataType.TEXT
+        type: DataType.TEXT,
     })
     declare backstory: string;
 
