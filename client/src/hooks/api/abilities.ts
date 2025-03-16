@@ -30,16 +30,10 @@ export async function updateAbility(ability: Ability) {
         throw new Error('Must have ability id to update ability');
     }
     const apiResponse = await apiPost(`abilities/${ability.id}`, ability);
-    if (apiResponse.status === 200) {
-        return true;
-    }
-    return false;
+    return apiResponse.status === 200;
 }
 
 export async function deleteAbility(id: number) {
     const apiResponse = await apiDelete(`abilities/${id}`);
-    if (apiResponse.status === 200) {
-        return true;
-    }
-    return false;
+    return apiResponse.status === 200;
 }

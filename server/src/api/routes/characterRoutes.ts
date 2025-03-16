@@ -28,7 +28,7 @@ export function initCharacterRoutes(app: Express) {
             pronouns,
             backstoryId: backstory.id,
         });
-        res.status(200).json(character);
+        res.status(200).json(character.id);
     });
 
     addRoute(app, 'post', 'v0', 'characters/:id', async (req: Request, res: Response) => {
