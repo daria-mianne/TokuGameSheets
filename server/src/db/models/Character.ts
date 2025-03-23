@@ -22,6 +22,19 @@ import {
     UpdatedAt,
 } from 'sequelize-typescript';
 
+export enum RangerColor {
+    UNKNOWN = 'unknown',
+    RED = 'red',
+    ORANGE = 'orange',
+    YELLOW = 'yellow',
+    GREEN = 'green',
+    BLUE = 'blue',
+    PURPLE = 'purple',
+    SILVER = 'silver',
+    GOLD = 'gold',
+    // TODO: more?
+}
+
 @Table({
     tableName: 'characters',
     paranoid: true,
@@ -43,6 +56,9 @@ export class Character extends Model {
     @AllowNull(false)
     @Column
     declare name: string;
+
+    @Column
+    declare rangerColor?: RangerColor;
 
     @AllowNull(false)
     @Column

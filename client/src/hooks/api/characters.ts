@@ -1,5 +1,5 @@
-import { Character } from "@models/character";
-import { apiDelete, apiGet, apiPost } from "./requestUtils/fetching";
+import { Character } from '@models/character';
+import { apiDelete, apiGet, apiPost } from './requestUtils/fetching';
 
 export async function getCharacter(id: number) {
     const apiResponse = await apiGet(`characters/${id}`);
@@ -11,6 +11,14 @@ export async function getCharacter(id: number) {
 
 export async function listCharacters() {
     const apiResponse = await apiGet('characters');
+    if (apiResponse.status === 200) {
+        return (await apiResponse.json()) as Character[];
+    }
+    return [];
+}
+
+export async function listNpcs() {
+    const apiResponse = await apiGet('npcs');
     if (apiResponse.status === 200) {
         return (await apiResponse.json()) as Character[];
     }

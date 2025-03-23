@@ -6,14 +6,13 @@ import { FormControlValidationProps } from '@utils/externalTypes';
 import { useLocation } from 'preact-iso';
 import { isInviteTokenValid } from '@hooks/api/tokens';
 import { signup } from '@hooks/api/users';
+import { Loading } from '@components/Loading';
 
 const containsLowercase = '(?=.*[a-z])';
 const containsUppercase = '(?=.*[A-Z])';
 const containsNumber = '(?=.*[0-9])';
 const containsNonAlphanumeric = '(?=.*[^a-zA-Z0-9])';
 const passwordPattern = '^' + containsLowercase + containsUppercase + containsNumber + containsNonAlphanumeric + '.+$';
-
-const Loading = () => <p>Loading...</p>;
 
 export default function AccountCreator() {
     const { query } = useLocation();
@@ -64,6 +63,9 @@ export default function AccountCreator() {
     const handleSubmit = (event: Event) => {
         if (formData.password !== formData.confirmPassword) {
             // not true validation yet, so return early
+            setLoading(false);
+            setSubmitted(false);
+            setSuccessfulCreation(false);
             return;
         }
 

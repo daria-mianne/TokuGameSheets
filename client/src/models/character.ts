@@ -1,4 +1,5 @@
 export enum RangerColor {
+    NOT_A_RANGER = 'not a ranger',
     UNKNOWN = 'unknown',
     RED = 'red',
     ORANGE = 'orange',
@@ -12,23 +13,33 @@ export enum RangerColor {
 }
 
 export enum RelationshipValence {
-    POSITIVE = 'positive',
-    NEUTRAL = 'neutral',
-    NEGATIVE = 'negative',
+    POSITIVE = 1,
+    NEUTRAL = 0,
+    NEGATIVE = -1,
 }
 
 export interface NpcRelationship {
-    name: string;
+    id?: number;
+    npcId: number;
     valence: RelationshipValence;
+    description: string;
+}
+
+export interface PersonalityTrait {
+    id?: number;
+    characterId?: number;
     description: string;
 }
 
 export interface Character {
     id?: number;
+    userId: number; // the user who owns this character
+    isNpc: boolean;
     name: string;
     pronouns: string;
-    color: RangerColor;
-    personalityTraits: { trait: string }[];
-    personalAbilities?: never[]; // FIXME: Real type when ability creation is more done
+    backstoryText: string;
+    color: RangerColor | null;
+    personalityTraits: PersonalityTrait[];
+    personalAbilities?: number[];
     npcRelationships: NpcRelationship[];
 }
