@@ -162,7 +162,6 @@ export default function CharacterCreator() {
                 This section to come in a later update.
                 <br />
                 <h2>Notable NPC Relationships</h2>
-                <p>LEAVE THIS SECTION BLANK FOR NOW! IT WILL NOT WORK UNTIL PROPERLY UPDATED</p>
                 <p>Player characters must have a minimum of {MIN_NPC_RELATIONSHIPS} NPC relationship(s).</p>
                 <div
                     style={{
