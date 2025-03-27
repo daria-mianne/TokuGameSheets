@@ -1,13 +1,5 @@
 import 'reflect-metadata';
-import {
-    AutoIncrement,
-    Column,
-    DataType,
-    Length,
-    Model,
-    PrimaryKey,
-    Table,
-} from 'sequelize-typescript';
+import { AutoIncrement, Column, DataType, Length, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
 @Table({
     tableName: 'backstories',

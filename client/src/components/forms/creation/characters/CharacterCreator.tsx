@@ -171,12 +171,15 @@ export default function CharacterCreator() {
                 >
                     <FormArray name='npcRelationships'>
                         <label>
-                            NPC name{' '}<select name='npcId' required>
-                                {npcs.filter((npc) => npc.id !== undefined).map((npc, index) => (
-                                    <option key={index} value={npc.id!}>
-                                        {npc.name}
-                                    </option>
-                                ))}
+                            NPC name{' '}
+                            <select name='npcId' required>
+                                {npcs
+                                    .filter((npc) => npc.id !== undefined)
+                                    .map((npc, index) => (
+                                        <option key={index} value={npc.id!}>
+                                            {npc.name}
+                                        </option>
+                                    ))}
                             </select>
                         </label>
                         <br />
