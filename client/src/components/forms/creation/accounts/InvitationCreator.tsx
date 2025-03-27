@@ -1,49 +1,67 @@
-import { Form } from '@shelacek/formica';
-import { useState } from 'preact/hooks';
-import { InvitationData } from './types';
 import { createInviteToken } from '@hooks/api/tokens';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
+import { email, required, SubmitHandler, useForm } from '@modular-forms/preact';
+import { Invitation } from '@models/invitation';
+import { TextInput } from '@components/forms/inputs/TextInput';
+import { FormFooter } from '@components/forms/inputs/FormFooter';
 
 export default function InvitationCreator() {
-    const [inviteLink, setInviteLink] = useState<string | null>(null);
-    const [formData, setFormData] = useState<InvitationData>({
-        isAdmin: false,
-        recipient: '',
-    });
+    const [inviteForm, { Form, Field }] = useForm<Invitation>();
     const { currentUser } = useMemoryOnlyDataStore();
 
-    const handleSubmit = (event: Event) => {
+    const handleSubmit: SubmitHandler<Invitation> = async (values, event) => {
         if ((event.target as HTMLFormElement)?.checkValidity()) {
-            void createInviteToken(currentUser!.id, formData.recipient, formData.isAdmin).then((token) => {
-                setInviteLink(`https://tokusheets.rec97.space/signup?token=${token}`);
-            });
+            return createInviteToken(currentUser!.id, values.recipient, values.forAdmin);
         }
+    };
+
+    const getInviteLink = (guid: string) => {
+        const href = `https://tokusheets.rec97.space/signup?token=${guid}`;
+        return <a href={href}>{href}</a>;
     };
 
     return (
         <>
             <h1>Invitation Creator</h1>
-            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <div
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
                     }}
                 >
-                    <label>
-                        Make user an admin? <input type='checkbox' name='isAdmin'></input>
-                    </label>
-                    <br />
-                    <label>
-                        Recipient email <input type='email' name='recipient' maxLength={500} required />
-                    </label>
-                    <input type='submit' value='Submit' />
+                    <Field name='forAdmin' type='boolean'>
+                        {(_, props) => (
+                            <label>
+                                Should the invited user be an admin? <input {...props} type='checkbox' />
+                            </label>
+                        )}
+                    </Field>
+                    <Field
+                        name='recipient'
+                        validate={[
+                            required('Please enter the recipient email address'),
+                            email('The email address is improperly formatted'),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='email'
+                                label='Recipient email'
+                                value={field.value}
+                                error={field.error}
+                                required
+                            />
+                        )}
+                    </Field>
+                    <FormFooter of={inviteForm} />
                 </div>
             </Form>
-            {inviteLink && (
+            {inviteForm.response.value.message && (
                 <p>
                     Created invitation! While we work on adding the ability to send emails from the server, please send
-                    this link to your desired recipient: <a href={inviteLink}>{inviteLink}</a>
+                    this link to your desired recipient: {getInviteLink(inviteForm.response.value.message)}
                 </p>
             )}
         </>

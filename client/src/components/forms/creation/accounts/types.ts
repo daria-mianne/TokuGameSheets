@@ -1,13 +1,8 @@
-export interface AccountCreationData {
+export type AccountCreationData = {
     username: string;
     password: string;
     confirmPassword: string;
     displayName?: string;
     recoveryEmail?: string;
     confirmEmail?: string;
-}
-
-export interface InvitationData {
-    isAdmin: boolean;
-    recipient: string;
-}
+};

@@ -9,11 +9,14 @@
         "start": "NODE_ENV='production' vite",
         "lint": "eslint --fix .; prettier --write .",
         "preview": "vite preview",
-        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"
+        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
     },
     "dependencies": {
         "@babel/plugin-transform-react-jsx-source": "^7.25.9",
-        "@shelacek/formica": "^2.0.2",
+        "@modular-forms/preact": "^0.12.1",
+        "@preact/signals": "^1.3.2",
         "@types/lodash": "^4.17.15",
         "cors": "^2.8.5",
         "dotenv": "^16.4.7",
@@ -25,7 +28,14 @@
         "zustand": "^5.0.3"
     },
     "devDependencies": {
+        "@chromatic-com/storybook": "^3.2.6",
         "@preact/preset-vite": "^2.10.1",
+        "@storybook/addon-essentials": "^8.6.11",
+        "@storybook/blocks": "^8.6.11",
+        "@storybook/experimental-addon-test": "^8.6.11",
+        "@storybook/preact": "^8.6.11",
+        "@storybook/preact-vite": "^8.6.11",
+        "@storybook/test": "^8.6.11",
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
         "@types/node": "^22.13.5",
@@ -35,10 +45,16 @@
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.9",
         "prettier": "^3.3.3",
+        "storybook": "^8.6.11",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.3",
         "typescript-eslint": "^8.11.0",
         "vite": "^6.1.1",
         "vite-tsconfig-paths": "^5.1.4"
+    },
+    "overrides": {
+        "dependencies": {
+            "preact": "^10.24.1"
+        }
     }
 }

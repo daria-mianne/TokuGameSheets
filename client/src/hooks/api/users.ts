@@ -1,6 +1,7 @@
 import { User } from '@models/user';
 import { apiPost } from './requestUtils/fetching';
 import { LoginResult, SignupResult, SuccessfulLoginResponse } from './types';
+import { FormResponse } from '@modular-forms/preact';
 
 export async function login(username: string, password: string): Promise<LoginResult> {
     const apiResponse = await apiPost('login', {
@@ -28,7 +29,7 @@ export async function signup(
     displayName?: string,
     recoveryEmail?: string,
     isAdmin?: boolean
-): Promise<SignupResult> {
+): Promise<FormResponse<SignupResult>> {
     const apiResponse = await apiPost('signup', {
         inviteToken,
         username,
@@ -38,10 +39,12 @@ export async function signup(
         isAdmin,
     });
     if (apiResponse.status === 200) {
-        const response = await apiResponse.json();
-        return response as SignupResult;
+        return {
+            status: 'success',
+            data: (await apiResponse.json()) as SignupResult,
+        };
     }
-    return { id: null };
+    return { status: 'error' };
 }
 
 export async function logout(token: string) {

@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import { LoginData } from './types';
 import { useSessionStore } from '@datastore/sessionData';
 import { login } from '@hooks/api/users';
-import ErrorBanner from '@components/forms/ErrorBanner';
+import { ErrorBanner } from '@components/banners/ErrorBanner';
 import { useLocation } from 'preact-iso';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 

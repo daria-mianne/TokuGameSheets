@@ -1,6 +1,7 @@
 import { Invitation } from '@models/invitation';
 import { apiGet, apiPost } from './requestUtils/fetching';
 import { InvitationCheckResult } from './types';
+import { FormResponse } from '@modular-forms/preact';
 
 export async function isInviteTokenValid(token: string): Promise<InvitationCheckResult> {
     const apiResponse = await apiGet(`invitations/${token}`);
@@ -29,15 +30,23 @@ export async function isAdminSession(token: string): Promise<boolean> {
     return (await apiResponse.json()) as boolean;
 }
 
-export async function createInviteToken(userId: number, recipient: string, forAdmin: boolean) {
+export async function createInviteToken(
+    userId: number,
+    recipient: string,
+    forAdmin: boolean
+): Promise<FormResponse<Invitation>> {
     const apiResponse = await apiPost('invitations', {
         userId,
         recipient,
         forAdmin,
     });
     if (apiResponse.status === 200) {
-        const { guid } = (await apiResponse.json()) as Invitation;
-        return guid;
+        return {
+            status: 'success',
+            data: (await apiResponse.json()) as Invitation,
+        };
     }
-    return null;
+    return {
+        status: 'error',
+    };
 }

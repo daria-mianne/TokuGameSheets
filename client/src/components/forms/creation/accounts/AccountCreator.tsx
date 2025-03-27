@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'preact/hooks';
-import ErrorBanner from '@components/forms/ErrorBanner';
-import { Form, FormControl } from '@shelacek/formica';
 import { AccountCreationData } from './types';
-import { FormControlValidationProps } from '@utils/externalTypes';
 import { useLocation } from 'preact-iso';
 import { isInviteTokenValid } from '@hooks/api/tokens';
 import { signup } from '@hooks/api/users';
 import { Loading } from '@components/Loading';
+import { Button } from '@components/base';
+import { custom, email, maxLength, minLength, pattern, required, SubmitHandler, useForm } from '@modular-forms/preact';
+import { TextInput } from '@components/forms/inputs/TextInput';
 
-const containsLowercase = '(?=.*[a-z])';
-const containsUppercase = '(?=.*[A-Z])';
-const containsNumber = '(?=.*[0-9])';
-const containsNonAlphanumeric = '(?=.*[^a-zA-Z0-9])';
-const passwordPattern = '^' + containsLowercase + containsUppercase + containsNumber + containsNonAlphanumeric + '.+$';
+const containsLowercase = /(?=.*[a-z])/;
+const containsUppercase = /(?=.*[A-Z])/;
+const containsNumber = /(?=.*[0-9])/;
+const containsNonAlphanumeric = /(?=.*[^a-zA-Z0-9])/;
 
 export default function AccountCreator() {
     const { query } = useLocation();
@@ -21,23 +20,14 @@ export default function AccountCreator() {
     const [validToken, setValidToken] = useState(false);
     const [forAdmin, setForAdmin] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const [successfulCreation, setSuccessfulCreation] = useState(false);
-    const [formData, setFormData] = useState<AccountCreationData>({
-        username: '',
-        password: '',
-        confirmPassword: '',
-        displayName: '',
-        recoveryEmail: '',
-        confirmEmail: '',
-    });
+    const [successfulCreation] = useState(false);
+    const [accountForm, { Form, Field }] = useForm<AccountCreationData>();
 
     useEffect(() => {
         void isInviteTokenValid(inviteToken).then((checkResult) => {
+            setValidToken(checkResult.valid);
             if (checkResult.valid) {
-                setValidToken(true);
                 setForAdmin(checkResult.forAdmin);
-            } else {
-                setValidToken(false);
             }
             setLoading(false);
         });
@@ -60,40 +50,35 @@ export default function AccountCreator() {
         return <p>Your account has been created successfully!</p>;
     }
 
-    const handleSubmit = (event: Event) => {
-        if (formData.password !== formData.confirmPassword) {
+    const handleSubmit: SubmitHandler<AccountCreationData> = async (values, event) => {
+        if (values.password !== values.confirmPassword) {
             // not true validation yet, so return early
             setLoading(false);
             setSubmitted(false);
-            setSuccessfulCreation(false);
             return;
         }
 
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             setLoading(true);
             setSubmitted(true);
-            void signup(
+            return signup(
                 inviteToken,
-                formData.username,
-                formData.password,
-                formData.displayName,
-                formData.recoveryEmail,
+                values.username,
+                values.password,
+                values.displayName,
+                values.recoveryEmail,
                 forAdmin
             ).then((signupResult) => {
-                setSuccessfulCreation(signupResult.id !== null);
                 setLoading(false);
+                return signupResult;
             });
         }
     };
 
-    // FIXME: Make form check for valid token in URL query param, associate all submitted data with that token, and invalidate the token if the account creation is successful
-    //        (requires https://github.com/daria-mianne/TokuGameSheets/issues/4 and part of https://github.com/daria-mianne/TokuGameSheets/issues/12 to be done)
-
     return (
         <>
             <h1>Account Creator</h1>
-            {submitted && !successfulCreation && <ErrorBanner message='Account creation failed. Please try again.' />}
-            <Form class='validated' value={formData} onChange={setFormData} onSubmit={handleSubmit}>
+            <Form class='validated' onSubmit={handleSubmit}>
                 <div
                     style={{
                         display: 'flex',
@@ -101,147 +86,135 @@ export default function AccountCreator() {
                     }}
                 >
                     <h2>Required Fields</h2>
-                    <FormControl name='username' class='form-input'>
-                        {({ touched, validity }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Username (alphanumeric only, no spaces, length between 5 and 100 chars){' '}
-                                    <input
-                                        name='username'
-                                        type='text'
-                                        pattern='[a-zA-Z0-9]+'
-                                        minLength={5}
-                                        maxLength={100}
-                                        required
-                                    />
-                                </label>
-                                {touched && validity.tooShort && (
-                                    <ErrorBanner message='Username must be at least 5 characters long' />
-                                )}
-                                {touched && validity.patternMismatch && (
-                                    <ErrorBanner message='Username must be alphanumeric only' />
-                                )}
-                            </>
+                    <Field
+                        name='username'
+                        validate={[
+                            required('Please enter a username'),
+                            minLength(5, 'Your username must contain at least 5 characters'),
+                            maxLength(100, 'Your username must contain at most 100 characters'),
+                            pattern(/^[a-zA-Z\d]+$/, 'Your password must only contain alphanumeric characters'),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='text'
+                                label='Username (alphanumeric only, no spaces, length between 5 and 100 chars)'
+                                value={field.value}
+                                error={field.error}
+                                required
+                            />
                         )}
-                    </FormControl>
-                    <br />
-                    <h3>Password</h3>
-                    Requirements:
-                    <ul>
-                        <li>Must be 8 to 128 characters</li>
-                        <li>Must contain an uppercase letter</li>
-                        <li>Must contain a lowercase letter</li>
-                        <li>Must contain a number</li>
-                        <li>Must contain at least one non-alphanumeric character (e.g. a symbol)</li>
-                    </ul>
-                    <p>
-                        This site and its backend were developed by one person. Please do not reuse passwords here, in
-                        case I fucked up the security somehow.
-                    </p>
-                    <FormControl name='password' class='form-input'>
-                        {({ touched, validity }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Password{' '}
-                                    <input
-                                        name='password'
-                                        type='password'
-                                        minlength={8}
-                                        maxlength={128}
-                                        pattern={passwordPattern}
-                                    />
-                                </label>
-                                {touched && validity.tooShort && <ErrorBanner message='Password is too short!' />}
-                                {touched && validity.patternMismatch && (
-                                    <ErrorBanner message='Password does not contain required character types!' />
-                                )}
-                            </>
+                    </Field>
+                    <Field
+                        name='password'
+                        validate={[
+                            required('Please enter a password'),
+                            minLength(8, 'Your password must contain at least 8 characters'),
+                            maxLength(128, 'Your password must contain at most 128 characters'),
+                            pattern(containsLowercase, 'Your password must contain a lowercase letter'),
+                            pattern(containsUppercase, 'Your password must contain an uppercase letter'),
+                            pattern(containsNumber, 'Your password must contain a digit'),
+                            pattern(containsNonAlphanumeric, 'Your password must contain a non-alphanumeric character'),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='password'
+                                label='Password'
+                                value={field.value}
+                                error={field.error}
+                                required
+                            />
                         )}
-                    </FormControl>
-                    <FormControl name='confirmPassword' class='form-input'>
-                        {({ touched }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Confirm password{' '}
-                                    <input name='confirmPassword' type='password' minLength={8} maxlength={128} />
-                                </label>
-                                <div style={{ color: 'red' }}>
-                                    {touched && formData.confirmPassword !== formData.password && (
-                                        <ErrorBanner message='Passwords do not match!' />
-                                    )}
-                                </div>
-                            </>
+                    </Field>
+                    <Field
+                        name='confirmPassword'
+                        validate={[
+                            custom(
+                                (value) =>
+                                    value ===
+                                    accountForm.internal.fields.password?.value
+                                        .value /* there's GOTTA be a better way than this */,
+                                'Your passwords must match'
+                            ),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='password'
+                                label='Confirm Password'
+                                value={field.value}
+                                error={field.error}
+                                required
+                            />
                         )}
-                    </FormControl>
-                    <br />
+                    </Field>
                     <h2>Optional Fields</h2>
-                    <FormControl name='displayName' class='form-input'>
-                        {({ touched, validity }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Display Name (alphanumeric only, spaces allowed, no leading/trailing spaces, between
-                                    1 and 100 chars){' '}
-                                    <input
-                                        name='displayName'
-                                        type='text'
-                                        pattern='(?!= )[a-zA-Z0-9 ]+(?<! )'
-                                        minLength={1}
-                                        maxLength={100}
-                                        required={false}
-                                    />
-                                </label>
-                                {touched && formData.displayName !== '' && validity.tooShort && (
-                                    <ErrorBanner message='Display name must be at least 5 characters long' />
-                                )}
-                                {touched && formData.displayName !== '' && validity.patternMismatch && (
-                                    <ErrorBanner message='Display name must be alphanumeric only; spaces are allowed, but not at the start and end' />
-                                )}
-                            </>
+                    <Field
+                        name='displayName'
+                        validate={[
+                            pattern(
+                                /^[a-zA-Z0-9 ]+$/,
+                                'Your display name must only contain alphanumeric characters and spaces'
+                            ),
+                            pattern(/^[a-zA-Z0-9]/, 'Your display name must not start with whitespace'),
+                            pattern(/[a-zA-Z0-9]$/, 'Your display name must not end with whitespace'),
+                            maxLength(100, 'Your display name must contain at most 100 characters'),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='text'
+                                label='Display Name'
+                                value={field.value}
+                                error={field.error}
+                            />
                         )}
-                    </FormControl>
-                    <h3>Email</h3>
-                    <p>
-                        We only use your email address to assist with recovering your account and will never use it for
-                        any other purpose.
-                    </p>
-                    <FormControl name='recoveryEmail' class='form-input'>
-                        {({ touched, validity }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Recovery email address (max length 500 characters){' '}
-                                    <input
-                                        name='recoveryEmail'
-                                        type='email'
-                                        pattern='.+@.+\..+'
-                                        maxLength={500}
-                                        required={false}
-                                    />
-                                </label>
-                                {touched && formData.recoveryEmail !== '' && validity.patternMismatch && (
-                                    <ErrorBanner message='Invalid email address!' />
-                                )}
-                            </>
+                    </Field>
+                    <Field
+                        name='recoveryEmail'
+                        validate={[
+                            email('The email address is improperly formatted'),
+                            maxLength(500, 'Your email address must contain at most 500 characters'),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='email'
+                                label='Recovery Email - We will only ever use your email address to assist with recovering your account'
+                                value={field.value}
+                                error={field.error}
+                            />
                         )}
-                    </FormControl>
-                    <FormControl name='confirmEmail' class='form-input'>
-                        {({ touched }: FormControlValidationProps) => (
-                            <>
-                                <label>
-                                    Confirm recovery email address{' '}
-                                    <input
-                                        name='confirmEmail'
-                                        type='email'
-                                        maxLength={500}
-                                        required={!!formData.recoveryEmail}
-                                    />
-                                </label>
-                                {touched && formData.confirmEmail !== formData.recoveryEmail && (
-                                    <ErrorBanner message='Emails do not match!' />
-                                )}
-                            </>
+                    </Field>
+                    <Field
+                        name='confirmEmail'
+                        validate={[
+                            custom(
+                                (value) =>
+                                    value ===
+                                    accountForm.internal.fields.recoveryEmail?.value
+                                        .value /* there's GOTTA be a better way than this */,
+                                'Your emails must match'
+                            ),
+                        ]}
+                    >
+                        {(field, props) => (
+                            <TextInput
+                                {...props}
+                                type='email'
+                                label='Confirm Email'
+                                value={field.value}
+                                error={field.error}
+                            />
                         )}
-                    </FormControl>
-                    <input type='submit' value='Submit' />
+                    </Field>
+                    <Button primary label='Submit' />
                 </div>
             </Form>
         </>

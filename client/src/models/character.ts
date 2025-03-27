@@ -18,20 +18,20 @@ export enum RelationshipValence {
     NEGATIVE = -1,
 }
 
-export interface NpcRelationship {
+export type NpcRelationship = {
     id?: number;
     npcId: number;
     valence: RelationshipValence;
     description: string;
-}
+};
 
-export interface PersonalityTrait {
+export type PersonalityTrait = {
     id?: number;
     characterId?: number;
     description: string;
-}
+};
 
-export interface Character {
+export type Character = {
     id?: number;
     userId: number; // the user who owns this character
     isNpc: boolean;
@@ -42,4 +42,4 @@ export interface Character {
     personalityTraits: PersonalityTrait[];
     personalAbilities?: number[];
     npcRelationships: NpcRelationship[];
-}
+};

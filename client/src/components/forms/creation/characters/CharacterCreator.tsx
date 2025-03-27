@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'preact/hooks';
-import { Form, FormAction, FormArray } from '@shelacek/formica';
 import { Character, RangerColor, RelationshipValence } from '@models/character';
 import { startCase } from 'lodash';
 import { createCharacter, listNpcs } from '@hooks/api/characters';
-import ErrorBanner from '@components/forms/ErrorBanner';
 import { Loading } from '@components/Loading';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 import { getEnumKeys } from '@utils/enumUtils';
+import { maxLength, required, SubmitHandler, useForm } from '@modular-forms/preact';
+import { TextInput } from '@components/forms/inputs/TextInput';
+import { TextAreaInput } from '@components/forms/inputs/TextAreaInput';
+import { FormFooter } from '@components/forms/inputs/FormFooter';
 
 const MIN_PERSONALITY_TRAITS = 1;
 const MIN_NPC_RELATIONSHIPS = 2;
 
 export default function CharacterCreator() {
     const [loading, setLoading] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
-    const [successfulCreation, setSuccessfulCreation] = useState(false);
     const { currentUser } = useMemoryOnlyDataStore();
-    const [formData, setFormData] = useState<Character>({
+    const [characterForm, { Form, Field, FieldArray }] = useForm<Character>({
         userId: currentUser?.id ?? -1,
         name: '',
         pronouns: '',
@@ -44,38 +44,23 @@ export default function CharacterCreator() {
         listNpcs().then(setNpcs);
     }, []);
 
-    const handleChange = (value: Character) => {
-        if (formData.personalityTraits.length < MIN_PERSONALITY_TRAITS) {
-            // TODO: Invalidate form
-        }
-        if (formData.npcRelationships.length < MIN_NPC_RELATIONSHIPS) {
-            // TODO: Invalidate form
-        }
-        setFormData(value);
-    };
-
-    const handleSubmit = (event: Event) => {
-        console.log(formData);
+    const handleSubmit: SubmitHandler<Character> = async (values, event) => {
         if (
-            !formData.isNpc &&
-            (formData.personalityTraits.length < MIN_PERSONALITY_TRAITS ||
-                formData.npcRelationships.length < MIN_NPC_RELATIONSHIPS)
+            !values.isNpc &&
+            (values.personalityTraits.length < MIN_PERSONALITY_TRAITS ||
+                values.npcRelationships.length < MIN_NPC_RELATIONSHIPS)
         ) {
             // not true validation yet, so return early
             setLoading(false);
-            setSubmitted(true);
-            setSuccessfulCreation(false);
             return;
         }
 
         if ((event.target as HTMLFormElement)?.checkValidity()) {
             setLoading(true);
-            setSubmitted(true);
             void createCharacter({
-                ...formData,
-                color: formData.color === RangerColor.NOT_A_RANGER ? null : formData.color,
-            }).then((charId) => {
-                setSuccessfulCreation(charId !== null);
+                ...values,
+                color: values.color === RangerColor.NOT_A_RANGER ? null : values.color,
+            }).then(() => {
                 setLoading(false);
             });
         } else {
@@ -87,37 +72,70 @@ export default function CharacterCreator() {
         return <Loading />;
     }
 
+    // TODO: I hate looking at this thing lol, make the code prettier somehow
     return (
         <>
             <h1>Character Creator</h1>
-            {submitted && !successfulCreation && <ErrorBanner message='Character creation failed. Please try again.' />}
-            <Form class='validated' value={formData} onChange={handleChange} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <h2>Basic Attributes</h2>
-                <label>
-                    Character Name (max length 200 chars):
-                    <br />
-                    <input type='text' name='name' maxLength={200} required />
-                </label>
-                <br />
-                <label>
-                    Character Pronouns (max length 100 chars):
-                    <br />
-                    <input type='text' name='pronouns' maxLength={100} required />
-                </label>
-                <br />
-                <label>
-                    Ranger Color:
-                    <br />
-                    <select name='color' required>
-                        {Object.values(RangerColor).map((color) => (
-                            <option value={color}>{startCase(color)}</option>
-                        ))}
-                    </select>
-                </label>
-                <br />
-                <label>
-                    Character is an NPC: <input type='checkbox' name='isNpc' />
-                </label>
+                <Field
+                    name='name'
+                    validate={[
+                        maxLength(200, "Your character's name must contain at most 200 characters"),
+                        required("Please enter your character's name"),
+                    ]}
+                >
+                    {(field, props) => (
+                        <TextInput
+                            {...props}
+                            type='text'
+                            label='Character Name'
+                            value={field.value}
+                            error={field.error}
+                            required
+                        />
+                    )}
+                </Field>
+                <Field
+                    name='pronouns'
+                    validate={[
+                        maxLength(100, "Your character's pronouns must contain at most 100 characters"),
+                        required("Please enter your character's pronouns"),
+                    ]}
+                >
+                    {(field, props) => (
+                        <TextInput
+                            {...props}
+                            type='text'
+                            label='Pronouns'
+                            value={field.value}
+                            error={field.error}
+                            required
+                        />
+                    )}
+                </Field>
+                <Field name='color'>
+                    {(field, props) => (
+                        <label>
+                            Ranger Color{' '}
+                            <select {...props} required>
+                                {Object.values(RangerColor).map((color, index) => (
+                                    <option key={index} value={color} selected={field.value.value?.includes(color)}>
+                                        {startCase(color)}
+                                    </option>
+                                ))}
+                            </select>
+                            <br />
+                        </label>
+                    )}
+                </Field>
+                <Field name='isNpc' type='boolean'>
+                    {(_, props) => (
+                        <label>
+                            Is this character an NPC? <input {...props} type='checkbox' />
+                        </label>
+                    )}
+                </Field>
                 <h2>Personality Traits</h2>
                 <p>Max length 1,000 chars each.</p>
                 <p>Player characters must have a minimum of {MIN_PERSONALITY_TRAITS} personality trait(s).</p>
@@ -127,35 +145,31 @@ export default function CharacterCreator() {
                         flexDirection: 'column',
                     }}
                 >
-                    <FormArray name='personalityTraits'>
-                        <div style={{ flexDirection: 'row' }}>
-                            <label>
-                                Trait <input type='text' name='description' maxLength={1000} required />
-                            </label>
-                            <FormAction>
-                                {(actionProps) => {
-                                    if (actionProps?.remove)
-                                        return (
-                                            <button type='button' onClick={actionProps.remove}>
-                                                Remove Trait
-                                            </button>
-                                        );
-                                    return null;
-                                }}
-                            </FormAction>
-                        </div>
-                    </FormArray>
-                    <FormAction name='personalityTraits' item={{ trait: '' }}>
-                        {(actionProps) => {
-                            if (actionProps?.add)
-                                return (
-                                    <button type='button' onClick={actionProps.add}>
-                                        Add another Trait
-                                    </button>
-                                );
-                            return null;
-                        }}
-                    </FormAction>
+                    <FieldArray name='personalityTraits'>
+                        {(fieldArray) =>
+                            fieldArray.items.value.map((item, index) => (
+                                <div key={item}>
+                                    <Field
+                                        name={`personalityTraits.${index}.description`}
+                                        validate={[
+                                            maxLength(1000, 'Personality traits must contain at most 1000 characters'),
+                                            required('Please enter a description for your personality trait'),
+                                        ]}
+                                    >
+                                        {(field, props) => (
+                                            <TextInput
+                                                {...props}
+                                                type='text'
+                                                value={field.value}
+                                                error={field.error}
+                                                required
+                                            />
+                                        )}
+                                    </Field>
+                                </div>
+                            ))
+                        }
+                    </FieldArray>
                 </div>
                 <br />
                 <h2>Personal Abilities</h2>
@@ -169,78 +183,98 @@ export default function CharacterCreator() {
                         flexDirection: 'column',
                     }}
                 >
-                    <FormArray name='npcRelationships'>
-                        <label>
-                            NPC name{' '}
-                            <select name='npcId' required>
-                                {npcs
-                                    .filter((npc) => npc.id !== undefined)
-                                    .map((npc, index) => (
-                                        <option key={index} value={npc.id!}>
-                                            {npc.name}
-                                        </option>
-                                    ))}
-                            </select>
-                        </label>
-                        <br />
-                        <label>
-                            Relationship Type{' '}
-                            <select name='valence' required>
-                                {getEnumKeys(RelationshipValence).map((valence, index) => (
-                                    <option key={index} value={RelationshipValence[valence]}>
-                                        {startCase(valence.toLocaleLowerCase())}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                        <br />
-                        <label>
-                            Relationship Description (max length 1,000 chars){' '}
-                            <textarea
-                                name='description'
-                                rows={1}
-                                maxLength={1000}
-                                required
-                                style={{
-                                    resize: 'both',
-                                }}
-                            />
-                        </label>
-                        <br />
-                        <FormAction>
-                            {(actionProps) => {
-                                if (actionProps?.remove)
-                                    return (
-                                        <button type='button' onClick={actionProps.remove}>
-                                            Remove Relationship
-                                        </button>
-                                    );
-                                return null;
-                            }}
-                        </FormAction>
-                    </FormArray>
-                    <FormAction
-                        name='npcRelationships'
-                        item={{
-                            name: '',
-                            valence: RelationshipValence.NEUTRAL,
-                            description: '',
-                        }}
-                    >
-                        {(actionProps) => {
-                            if (actionProps?.add)
-                                return (
-                                    <button type='button' onClick={actionProps.add}>
-                                        Add another NPC Relationship
-                                    </button>
-                                );
-                            return null;
-                        }}
-                    </FormAction>
+                    <FieldArray name='npcRelationships'>
+                        {(fieldArray) =>
+                            fieldArray.items.value.map((item, index) => (
+                                <div key={item}>
+                                    <Field
+                                        name={`npcRelationships.${index}.npcId`}
+                                        validate={[required('Please select an NPC for this relationship')]}
+                                    >
+                                        {(field, props) => (
+                                            <label>
+                                                NPC{' '}
+                                                <select {...props} required>
+                                                    {npcs
+                                                        .filter((npc) => npc.id !== undefined)
+                                                        .map((npc, index) => (
+                                                            <option
+                                                                key={index}
+                                                                value={npc.id!}
+                                                                selected={field.value.value === npc.id!}
+                                                            >
+                                                                {npc.name}
+                                                            </option>
+                                                        ))}
+                                                </select>
+                                            </label>
+                                        )}
+                                    </Field>
+                                    <Field
+                                        name={`npcRelationships.${index}.valence`}
+                                        validate={[required('Please select a type for this relationship')]}
+                                    >
+                                        {(field, props) => (
+                                            <label>
+                                                Relationship Type{' '}
+                                                <select {...props} required>
+                                                    {getEnumKeys(RelationshipValence).map((valence, index) => (
+                                                        <option
+                                                            key={index}
+                                                            value={RelationshipValence[valence]}
+                                                            selected={
+                                                                field.value.value === RelationshipValence[valence]
+                                                            }
+                                                        >
+                                                            {startCase(valence.toLocaleLowerCase())}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </label>
+                                        )}
+                                    </Field>
+                                    <Field
+                                        name={`npcRelationships.${index}.description`}
+                                        validate={[
+                                            maxLength(
+                                                1000,
+                                                'Relationship descriptions must contain at most 1000 characters'
+                                            ),
+                                            required('Please enter a description for this relationship'),
+                                        ]}
+                                    >
+                                        {(field, props) => (
+                                            <TextAreaInput
+                                                {...props}
+                                                label='Relationship Description'
+                                                value={field.value}
+                                                error={field.error}
+                                                required
+                                            />
+                                        )}
+                                    </Field>
+                                </div>
+                            ))
+                        }
+                    </FieldArray>
                 </div>
                 <h2>Backstory</h2>
-                <textarea name='backstoryText' rows={10} maxLength={1000000} style={{ resize: 'both' }} />
-                <input type='submit' value='Submit' />
+                <Field
+                    name='backstoryText'
+                    validate={[maxLength(1000000, 'Backstories must contain at most 1,000,000 characters')]}
+                >
+                    {(field, props) => (
+                        <TextAreaInput
+                            {...props}
+                            rows={10}
+                            cols={200}
+                            style={{ resize: 'both' }}
+                            value={field.value}
+                            error={field.error}
+                        />
+                    )}
+                </Field>
+                <FormFooter of={characterForm} />
             </Form>
         </>
     );
