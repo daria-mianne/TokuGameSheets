@@ -29,13 +29,13 @@ export function initCharacterRoutes(app: Express) {
 
     addRoute(app, 'post', 'v0', 'characters', async (req: Request, res: Response) => {
         const { userId, name, isNpc, pronouns, backstoryText, color, personalityTraits, npcRelationships } = req.body;
-        const backstory = await Backstory.create({ backstory: backstoryText });
+        const backstory = backstoryText ? await Backstory.create({ backstory: backstoryText }) : null;
         const character = await Character.create({
             userId,
             name,
             isNpc,
             pronouns,
-            backstoryId: backstory.id,
+            backstoryId: backstory?.id,
             rangerColor: color,
         });
         await Promise.all([
