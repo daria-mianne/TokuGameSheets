@@ -9,6 +9,7 @@ import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 export function App() {
     const { token } = useSessionStore();
     const { currentUser, setCurrentUser, clearCurrentUser } = useMemoryOnlyDataStore();
+    // TODO: Get user's settings
     const [readyToShow, setReadyToShow] = useState(false);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export function App() {
 
     return (
         <div
+            className='dark' // TODO: skip this if the user enabled light mode
             style={{
                 backgroundColor: '#242424',
                 color: 'rgba(255, 255, 255, 0.87)',
