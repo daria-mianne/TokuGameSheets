@@ -17,7 +17,12 @@
         "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'"
     },
     "devDependencies": {
-        "concurrently": "^9.1.2"
+        "@eslint/js": "^9.23.0",
+        "@typescript-eslint/parser": "^8.11.0",
+        "concurrently": "^9.1.2",
+        "eslint": "^9.23.0",
+        "prettier": "^3.5.3",
+        "typescript-eslint": "^8.28.0"
     },
     "engines": {
         "npm": ">=10.0.0 <11.0.0",

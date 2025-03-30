@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 import preact from '@preact/preset-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -30,6 +31,7 @@ export default defineConfig((env) => {
                 },
             }),
             tsconfigPaths(),
+            tailwindcss(),
         ],
         server: {
             allowedHosts: ['tokusheets.rec97.space'],

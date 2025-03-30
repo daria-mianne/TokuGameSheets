@@ -1,5 +1,4 @@
 import { ButtonHTMLAttributes } from 'preact/compat';
-import './button.css';
 
 export type ButtonSize = 'small' | 'medium' | 'large';
 

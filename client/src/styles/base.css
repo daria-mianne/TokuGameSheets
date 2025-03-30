@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@import '@tailwindcss/preflight';
+
+@layer base {
+    /* Disable transitions */
+    .disable-transitions,
+    .disable-transitions * {
+        transition: none !important;
+    }
+
+    /* Typography */
+    /* TODO */
+
+    /* Links */
+    /* TODO */
+}
