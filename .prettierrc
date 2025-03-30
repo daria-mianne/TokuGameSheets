@@ -1,7 +1,7 @@
 {
     "plugins": ["prettier-plugin-tailwindcss"],
     "tailwindStylesheet": "./client/src/styles/base.css",
-    "tailwindConfig": "./client/tailwind.confis.ts",
+    "tailwindConfig": "./client/tailwind.config.ts",
     "trailingComma": "es5",
     "singleQuote": true,
     "jsxSingleQuote": true,

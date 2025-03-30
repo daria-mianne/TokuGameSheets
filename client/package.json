@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "NODE_ENV='dev' vite",
-        "build": "vite build --emptyOutDir",
+        "build": "npm run build-css; vite build --emptyOutDir",
+        "build-css": "tailwindcss -i ./src/styles/base.css -o ./src/styles/built.css",
         "start": "NODE_ENV='production' vite",
         "preview": "vite preview",
         "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'",

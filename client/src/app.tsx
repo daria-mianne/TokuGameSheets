@@ -31,21 +31,16 @@ export function App() {
     return (
         <div
             className='dark' // TODO: skip this if the user enabled light mode
-            style={{
-                backgroundColor: '#242424',
-                color: 'rgba(255, 255, 255, 0.87)',
-                fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
-                fontSynthesis: 'none',
-                textRendering: 'optimizeLegibility',
-            }}
         >
-            <MenuBar />
-            <LocationProvider>
-                <ErrorBoundary>
-                    {readyToShow && <AppRouter />}
-                    {!readyToShow && <p>Loading...</p>}
-                </ErrorBoundary>
-            </LocationProvider>
+            <div className='dark:bg-gray-900 dark:text-gray-200'>
+                <MenuBar />
+                <LocationProvider>
+                    <ErrorBoundary>
+                        {readyToShow && <AppRouter />}
+                        {!readyToShow && <p>Loading...</p>}
+                    </ErrorBoundary>
+                </LocationProvider>
+            </div>
         </div>
     );
 }

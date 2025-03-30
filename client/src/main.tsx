@@ -5,5 +5,6 @@ if (process.env.NODE_ENV === 'development') {
 
 import { render } from 'preact';
 import { App } from './app.tsx';
+import './styles/built.css';
 
 render(<App />, document.getElementById('app')!);

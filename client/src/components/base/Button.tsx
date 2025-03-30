@@ -9,6 +9,15 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label: string;
 }
 
+const sizesToClasses = {
+    small: 'px-4 py-2 rounded-sm text-sm',
+    medium: 'px-8 py-4 rounded-md text-base',
+    large: 'px-16 py-8 rounded-lg text-large',
+};
+
+const lightColors = 'bg-blue-600 text-gray-100 hover:bg-blue-700 hover:text-gray-200';
+const darkColors = 'dark:bg-blue-800 dark:text-gray-300 dark:hover:bg-blue-900 dark:hover:text-gray-400';
+
 /**
  * Base Button component for the UI.
  *
@@ -23,9 +32,11 @@ export function Button({ primary = false, autoSize = false, size = 'medium', lab
         <button
             type='button'
             className={[
-                `button-${size}`,
+                sizesToClasses[size],
+                lightColors,
+                darkColors,
                 `button-${autoSize ? '' : 'non-'}resizable`,
-                `button-${primary ? 'primary' : 'secondary'}`,
+                `btn-${primary ? 'primary' : 'secondary'}`,
             ].join(' ')}
             {...props}
         >

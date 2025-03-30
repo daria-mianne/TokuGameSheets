@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 
 export default {
     darkMode: 'selector',
-    content: ['./src/components/**/*.{html,ts,tsx}', './src/stories/*.{html,ts,tsx}'],
+    content: ['./index.html', './src/components/**/*.{ts,tsx}', './src/stories/*.{ts,tsx}'],
     theme: {
         colors: {
             blue: '#2236b0',

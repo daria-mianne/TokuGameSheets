@@ -5,18 +5,13 @@ import { maxLength, required, SubmitHandler, useForm } from '@modular-forms/prea
 import { TextInput } from '@components/forms/inputs/TextInput';
 import { TextAreaInput } from '@components/forms/inputs/TextAreaInput';
 import { FormFooter } from '@components/forms/inputs/FormFooter';
+import { SelectInput } from '@components/forms/inputs/SelectInput';
 
 export default function AbilityDesigner() {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [successfulCreation, setSuccessfulCreation] = useState(false);
-    const [abilityForm, { Form, Field }] = useForm<Ability>({
-        name: '',
-        adminOnly: false,
-        type: AbilityType.ARMORY,
-        description: '',
-        mechanics: null,
-    });
+    const [abilityForm, { Form, Field }] = useForm<Ability>();
 
     const handleSubmit: SubmitHandler<Ability> = (values, event) => {
         setSubmitted(true);
@@ -63,24 +58,33 @@ export default function AbilityDesigner() {
                     )}
                 </Field>
                 <Field name='type' validate={[required('Please select an ability type')]}>
-                    {(_, props) => (
-                        <label>
-                            Ability Type{' '}
-                            <select {...props} required>
-                                <option key={0} value={AbilityType.ARMORY}>
-                                    Armor / Weapon
-                                </option>
-                                <option key={1} value={AbilityType.ICONIC}>
-                                    Iconic
-                                </option>
-                                <option key={2} value={AbilityType.PERSONAL}>
-                                    Personal
-                                </option>
-                                <option key={3} value={AbilityType.TEAM}>
-                                    Team
-                                </option>
-                            </select>
-                        </label>
+                    {(field, props) => (
+                        <SelectInput {...props} label='Ability Type' value={field.value} error={field.error} required>
+                            <option
+                                key={0}
+                                value={AbilityType.ARMORY}
+                                selected={field.value.value === AbilityType.ARMORY}
+                            >
+                                Armor / Weapon
+                            </option>
+                            <option
+                                key={1}
+                                value={AbilityType.ICONIC}
+                                selected={field.value.value === AbilityType.ICONIC}
+                            >
+                                Iconic
+                            </option>
+                            <option
+                                key={2}
+                                value={AbilityType.PERSONAL}
+                                selected={field.value.value === AbilityType.PERSONAL}
+                            >
+                                Personal
+                            </option>
+                            <option key={3} value={AbilityType.TEAM} selected={field.value.value === AbilityType.TEAM}>
+                                Team
+                            </option>
+                        </SelectInput>
                     )}
                 </Field>
                 <Field
