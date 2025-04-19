@@ -1,3 +1,4 @@
+import { ErrorBanner } from '@components/banners';
 import { ReadonlySignal, useComputed } from '@preact/signals';
 import { h, ComponentChildren } from 'preact';
 import { forwardRef, InputHTMLAttributes } from 'preact/compat';
@@ -35,6 +36,7 @@ export function BaseInput<T extends InputElementType>(inputType: string) {
                     </label>
                 )}
                 {inputElem}
+                {error.value && <ErrorBanner id={`${name}-input-error`} message={error} />}
             </div>
         );
     });

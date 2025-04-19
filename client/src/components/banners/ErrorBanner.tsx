@@ -1,8 +1,9 @@
+import { Signal } from '@preact/signals';
 import { BaseBanner } from './BaseBanner';
 
 interface ErrorBannerProps {
     id: string;
-    message: string;
+    message: string | Signal<string>;
 }
 
 export function ErrorBanner(props: ErrorBannerProps) {
