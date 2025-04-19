@@ -92,7 +92,7 @@ export default function AccountCreator() {
                             required('Please enter a username'),
                             minLength(5, 'Your username must contain at least 5 characters'),
                             maxLength(100, 'Your username must contain at most 100 characters'),
-                            pattern(/^[a-zA-Z\d]+$/, 'Your password must only contain alphanumeric characters'),
+                            pattern(/^[a-zA-Z\d]+$/, 'Your username must only contain alphanumeric characters'),
                         ]}
                     >
                         {(field, props) => (
@@ -214,7 +214,7 @@ export default function AccountCreator() {
                             />
                         )}
                     </Field>
-                    <Button primary label='Submit' />
+                    <Button primary type='submit' label='Submit' />
                 </div>
             </Form>
         </>

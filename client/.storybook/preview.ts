@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/preact';
+import '../src/styles/built.css';
 
 const preview: Preview = {
     parameters: {

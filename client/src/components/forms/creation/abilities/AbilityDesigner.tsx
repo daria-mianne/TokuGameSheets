@@ -98,7 +98,7 @@ export default function AbilityDesigner() {
                         <TextAreaInput
                             {...props}
                             label='Description'
-                            rows={4}
+                            rows={4} // TODO: figure out why intellisense thinks the rows property doesn't exist
                             cols={50}
                             style={{ resize: 'both' }}
                             value={field.value}

@@ -5,7 +5,7 @@ import { createCharacter, listNpcs } from '@hooks/api/characters';
 import { Loading } from '@components/Loading';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 import { getEnumKeys } from '@utils/enumUtils';
-import { insert, maxLength, remove, required, SubmitHandler, useForm } from '@modular-forms/preact';
+import { insert, maxLength, minLength, remove, required, SubmitHandler, useForm } from '@modular-forms/preact';
 import { TextInput } from '@components/forms/inputs/TextInput';
 import { TextAreaInput } from '@components/forms/inputs/TextAreaInput';
 import { FormFooter } from '@components/forms/inputs/FormFooter';
@@ -73,7 +73,6 @@ export default function CharacterCreator() {
         return <Loading />;
     }
 
-    // TODO: I hate looking at this thing lol, make the code prettier somehow
     return (
         <>
             <h1>Character Creator</h1>
@@ -97,7 +96,8 @@ export default function CharacterCreator() {
                         />
                     )}
                 </Field>
-                <Field
+                <Field    // TODO: I hate looking at this thing lol, make the code prettier somehow
+
                     name='pronouns'
                     validate={[
                         maxLength(100, "Your character's pronouns must contain at most 100 characters"),
@@ -146,7 +146,10 @@ export default function CharacterCreator() {
                         flexDirection: 'column',
                     }}
                 >
-                    <FieldArray name='personalityTraits'>
+                    {/* TODO: Turn this section into its own component */}
+                    <FieldArray name='personalityTraits' validate={[
+                        minLength(1, 'Character must have at least one trait')
+                    ]}>
                         {(fieldArray) =>
                             fieldArray.items.value.map((item, index) => (
                                 <div key={item} className='py-2 md:px-2' style={{
@@ -206,7 +209,10 @@ export default function CharacterCreator() {
                         flexDirection: 'column',
                     }}
                 >
-                    <FieldArray name='npcRelationships'>
+                    {/* TODO: Turn this section into its own component */}
+                    <FieldArray name='npcRelationships' validate={[
+                        minLength(2, 'Characters must have at least two relationships')
+                    ]}>
                         {(fieldArray) =>
                             fieldArray.items.value.map((item, index) => (
                                 <div key={item} className='py-2 md:px-2' style={{

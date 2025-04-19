@@ -10,12 +10,15 @@
     --color-amber-300: oklch(0.879 0.169 91.605);
     --color-amber-800: oklch(0.473 0.137 46.201);
     --color-amber-950: oklch(0.279 0.077 45.635);
+    --color-blue-300: oklch(0.809 0.105 251.813);
     --color-blue-600: oklch(0.546 0.245 262.881);
     --color-blue-700: oklch(0.488 0.243 264.376);
     --color-blue-900: oklch(0.379 0.146 265.522);
     --color-blue-950: oklch(0.282 0.091 267.935);
     --color-slate-500: oklch(0.554 0.046 257.417);
+    --color-slate-600: oklch(0.446 0.043 257.281);
     --color-slate-700: oklch(0.372 0.044 257.287);
+    --color-slate-900: oklch(0.208 0.042 265.755);
     --color-gray-100: oklch(0.967 0.003 264.542);
     --color-gray-200: oklch(0.928 0.006 264.531);
     --color-gray-300: oklch(0.872 0.01 258.338);
@@ -236,6 +239,9 @@
   .bg-blue-600 {
     background-color: var(--color-blue-600);
   }
+  .bg-slate-600 {
+    background-color: var(--color-slate-600);
+  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -289,6 +295,13 @@
       }
     }
   }
+  .hover\:bg-slate-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-slate-700);
+      }
+    }
+  }
   .hover\:text-gray-200 {
     &:hover {
       @media (hover: hover) {
@@ -315,6 +328,11 @@
       background-color: var(--color-blue-900);
     }
   }
+  .dark\:bg-gray-800 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-gray-800);
+    }
+  }
   .dark\:bg-gray-900 {
     @media (prefers-color-scheme: dark) {
       background-color: var(--color-gray-900);
@@ -335,6 +353,15 @@
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-blue-950);
+        }
+      }
+    }
+  }
+  .dark\:hover\:bg-slate-900 {
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-slate-900);
         }
       }
     }
@@ -401,7 +428,7 @@
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
   }
-  input, textarea {
+  input, textarea, select {
     border-radius: var(--radius-lg);
     border-color: var(--color-slate-500);
     background-color: var(--color-amber-200);
@@ -421,6 +448,13 @@
     border-color: var(--color-amber-300);
     @media (prefers-color-scheme: dark) {
       border-color: var(--color-amber-800);
+    }
+  }
+  button {
+    border-width: 0.1em;
+    border-color: var(--color-blue-300);
+    @media (prefers-color-scheme: dark) {
+      border-color: var(--color-blue-950);
     }
   }
 }
