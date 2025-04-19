@@ -1,14 +1,19 @@
 import { useSessionStore } from '@datastore/sessionData';
 import { MenuButton } from './MenuButton';
-import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
+import { MemoryOnlyData, useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 
 interface ButtonMapping {
     [name: string]: string;
 }
 
-export function MenuBar() {
+interface MenuBarProps {
+    // To allow mocking
+    dataStore?: MemoryOnlyData;
+};
+
+export function MenuBar(props: MenuBarProps) {
     const { token } = useSessionStore();
-    const { currentUser } = useMemoryOnlyDataStore();
+    const { currentUser } = props?.dataStore ?? useMemoryOnlyDataStore();
 
     const standardButtons: ButtonMapping = {
         'Character Creator': '/characters/create',

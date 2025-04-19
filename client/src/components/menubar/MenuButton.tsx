@@ -6,6 +6,7 @@ export interface MenuButtonProps {
     destination: string;
 }
 
+// TODO: Make this extend @components/base/Button
 export function MenuButton(props: MenuButtonProps) {
     const { name, destination } = props;
 

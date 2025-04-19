@@ -9,7 +9,7 @@
         "build-css": "tailwindcss -i ./src/styles/base.css -o ./src/styles/built.css",
         "start": "NODE_ENV='production' vite",
         "preview": "vite preview",
-        "test": "echo '!!!TEST STEP NOT YET IMPLEMENTED!!!'",
+        "test": "jest",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build"
     },
@@ -43,6 +43,7 @@
         "@types/node": "^22.13.5",
         "globals": "^15.11.0",
         "husky": "^9.1.6",
+        "jest": "^29.7.0",
         "lint-staged": "^15.2.10",
         "nodemon": "^3.1.9",
         "storybook": "^8.6.11",
