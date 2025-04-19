@@ -16,7 +16,7 @@ const sizesToClasses = {
 };
 
 const lightColors = 'bg-blue-600 text-gray-100 hover:bg-blue-700 hover:text-gray-200';
-const darkColors = 'dark:bg-blue-800 dark:text-gray-300 dark:hover:bg-blue-900 dark:hover:text-gray-400';
+const darkColors = 'dark:bg-blue-900 dark:text-gray-300 dark:hover:bg-blue-950 dark:hover:text-gray-400';
 
 /**
  * Base Button component for the UI.

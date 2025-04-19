@@ -9,7 +9,7 @@ type FormFooterProps = {
 export function FormFooter({ of: form }: FormFooterProps) {
     // FIXME: custom styling
     return (
-        <footer class='flex space-x-6 px-8 md:space-x-8 lg:hidden'>
+        <footer class='flex space-x-3 px-2 md:space-x-4'>
             <Button primary type='submit' label='Submit' />
             <Button type='button' label='Reset' onClick={() => reset(form)} />
         </footer>

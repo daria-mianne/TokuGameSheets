@@ -5,10 +5,11 @@ import { createCharacter, listNpcs } from '@hooks/api/characters';
 import { Loading } from '@components/Loading';
 import { useMemoryOnlyDataStore } from '@datastore/memoryOnlyData';
 import { getEnumKeys } from '@utils/enumUtils';
-import { maxLength, required, SubmitHandler, useForm } from '@modular-forms/preact';
+import { insert, maxLength, remove, required, SubmitHandler, useForm } from '@modular-forms/preact';
 import { TextInput } from '@components/forms/inputs/TextInput';
 import { TextAreaInput } from '@components/forms/inputs/TextAreaInput';
 import { FormFooter } from '@components/forms/inputs/FormFooter';
+import { Button } from '@components/base';
 
 const MIN_PERSONALITY_TRAITS = 1;
 const MIN_NPC_RELATIONSHIPS = 2;
@@ -148,7 +149,10 @@ export default function CharacterCreator() {
                     <FieldArray name='personalityTraits'>
                         {(fieldArray) =>
                             fieldArray.items.value.map((item, index) => (
-                                <div key={item}>
+                                <div key={item} className='py-2 md:px-2' style={{
+                                    display: 'flex',
+                                    flexDirection: 'row'
+                                }}>
                                     <Field
                                         name={`personalityTraits.${index}.description`}
                                         validate={[
@@ -166,10 +170,29 @@ export default function CharacterCreator() {
                                             />
                                         )}
                                     </Field>
+                                    <Button
+                                        label='Remove this trait'
+                                        size='small'
+                                        onClick={() =>
+                                            remove(characterForm, 'personalityTraits', {
+                                                at: index,
+                                            })
+                                        }
+                                    />
                                 </div>
                             ))
                         }
                     </FieldArray>
+                    <Button
+                        primary
+                        label='Add a trait'
+                        size='small'
+                        onClick={() =>
+                            insert(characterForm, 'personalityTraits', {
+                                value: { description: '' },
+                            })
+                        }
+                    />
                 </div>
                 <br />
                 <h2>Personal Abilities</h2>
@@ -186,7 +209,10 @@ export default function CharacterCreator() {
                     <FieldArray name='npcRelationships'>
                         {(fieldArray) =>
                             fieldArray.items.value.map((item, index) => (
-                                <div key={item}>
+                                <div key={item} className='py-2 md:px-2' style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}>
                                     <Field
                                         name={`npcRelationships.${index}.npcId`}
                                         validate={[required('Please select an NPC for this relationship')]}
@@ -253,10 +279,33 @@ export default function CharacterCreator() {
                                             />
                                         )}
                                     </Field>
+                                    <Button
+                                        label='Remove this relationship'
+                                        size='small'
+                                        onClick={() =>
+                                            remove(characterForm, 'npcRelationships', {
+                                                at: index,
+                                            })
+                                        }
+                                    />
                                 </div>
                             ))
                         }
                     </FieldArray>
+                    <Button
+                        primary
+                        label='Add a relationship'
+                        size='small'
+                        onClick={() =>
+                            insert(characterForm, 'npcRelationships', {
+                                value: {
+                                    npcId: -1,
+                                    valence: RelationshipValence.NEUTRAL,
+                                    description: ''
+                                },
+                            })
+                        }
+                    />
                 </div>
                 <h2>Backstory</h2>
                 <Field
